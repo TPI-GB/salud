@@ -9,7 +9,7 @@ Si no existe una base de datos, se crea una automáticamente.
 
 ## Integrantes
 
-- Hiribarren, Juan Martín
 - Almada Fondovila, Martín
-- Trinchero, Tomas
 - Bassi, Romina
+- Hiribarren, Juan Martín
+- Trinchero, Tomas
