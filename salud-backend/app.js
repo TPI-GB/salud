@@ -1,11 +1,13 @@
-require("dotenv").config();
-require("./config/database").connect();
 const express = require("express");
+const cors = require("cors");
+const appRoutes = require("./routes/appRoutes");
+
 const app = express();
 
-app.use(express.json());
+app.use(cors());
+// app.use(urlencoded({ extended: false }));
+// npmapp.use(json());
 
-// Logic goes here
+app.use("/v1", appRoutes);
 
 module.exports = app;
-
