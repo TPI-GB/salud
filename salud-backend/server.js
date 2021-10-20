@@ -1,7 +1,19 @@
-const express = require('express')
+require("dotenv").config();
+const app = require("./app");
+const connectDb = require("./db/mongodb");
+const { appConfig, dbConfig } = require("./config");
 
-const app = express()
+async function initApp(appConfig, dbConfig) {
+  try {
+    console.log(dbConfig);
+    await connectDb(dbConfig);
+    app.listen(appConfig.port, () =>
+      console.log(`listen on ${appConfig.port}`)
+    );
+  } catch (e) {
+    console.error(e);
+    process.exit(0);
+  }
+}
 
-const port = 8080
-
-app.listen(port, () => console.log(`listen on ${port}`))
+initApp(appConfig, dbConfig);
