@@ -36,7 +36,12 @@ async function addUser(req, res) {
   }
 }
 
+async function getUsuarios(req, res) {
+  const usuarios = await User.find().lean().exec()
+  res.status(200).send({ usuarios })
+}
+
 module.exports = {
   addUser,
-  //getProducts
+  getUsuarios
 };
