@@ -28,9 +28,6 @@ export default function Login() {
   return (
     <div className="loginBackground">
       <Box component="form" className="loginForm" >
-          <div>
-            <MostrarUsuarios />
-          </div>
           <div className="loginForm-logo">
             <LoginLogo />
           </div>
