@@ -3,6 +3,7 @@ import { Box, TextField, Button, InputAdornment, IconButton } from "@mui/materia
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
 import "./Login.scss"
+import MostrarUsuarios from "../MostrarUsuarios" 
 
 export default function Login() {
     const [valores, setValores] = useState({
@@ -27,6 +28,9 @@ export default function Login() {
   return (
     <div className="loginBackground">
       <Box component="form" className="loginForm" >
+          <div>
+            <MostrarUsuarios />
+          </div>
           <div className="loginForm-logo">
             <LoginLogo />
           </div>
