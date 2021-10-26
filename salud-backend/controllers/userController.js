@@ -37,23 +37,40 @@ async function addUser(req, res) {
 }
 
 async function getUsuarios(req, res) {
-  const usuarios = await User.find().lean().exec()
-  res.status(200).send({ usuarios })
+  const usuarios = await User.find().lean().exec();
+  res.status(200).send({ usuarios });
 }
 
 async function getUsuario(req, res) {
   try {
-    const id = req.params.id
+    const id = req.params.id;
 
-    const usuario = await User.findById(id)
+    const usuario = await User.findById(id);
 
-    res.status(200).send({ usuario })
-  } catch(e) {
+    res.status(200).send({ usuario });
+  } catch (e) {
     res.status(500).send({ message: e.message });
   }
 }
+
+async function updateUsuario(req, res) {
+  try {
+    const id = req.params.id;
+    const data = req.body;
+
+    const actualizado = await User.findOneAndUpdate({ _id: id }, data, {
+      new: true,
+    });
+
+    res.status(200).send({ actualizado });
+  } catch (e) {
+    res.status(500).send({ message: e.message });
+  }
+}
+
 module.exports = {
   addUser,
-  getUsuarios,
+  updateUsuario,
   getUsuario,
+  getUsuarios,
 };
