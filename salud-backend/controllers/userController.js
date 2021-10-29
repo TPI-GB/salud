@@ -157,7 +157,7 @@ async function updateUser(req, res) {
 
 module.exports = {
   updateUser,
-  getUsuario,
+  getUser,
   getUsers,
   registerUser,
   loginUser
