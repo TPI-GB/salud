@@ -2,12 +2,12 @@ import React, { useState } from "react"
 import { Box, TextField, Button, InputAdornment, IconButton } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
 import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
+import { loginUser } from '../../services'
 import "./Login.scss"
-import MostrarUsuarios from "../MostrarUsuarios" 
 
 export default function Login() {
     const [valores, setValores] = useState({
-        usuario: "",
+        email: "",
         contrasenia: "",
     })
     const [mostrarContrasenia, setMostrarContrasenia] = useState(false)
@@ -15,6 +15,11 @@ export default function Login() {
     const handleChange = (event) => {
         const {name, value} = event.target
         setValores({ ...valores, [name]: value })
+    }
+
+    const handleSubmit = async (event) => {
+      event.preventDefault()
+      await loginUser(valores)
     }
 
     const handleClickMostrarContrasenia = () => {
@@ -35,9 +40,9 @@ export default function Login() {
             fullWidth
             sx={{marginTop: "20px"}}
             required
-            label="Usuario"
-            name="usuario"
-            value={valores.usuario}
+            label="E-mail"
+            name="email"
+            value={valores.email}
             onChange={handleChange}
           />
           <TextField
@@ -62,8 +67,10 @@ export default function Login() {
             }}
           />
           <Button 
+            type="submit"
             sx={{marginTop: "20px"}}
             variant="outlined"
+            onClick={handleSubmit}
           >
             Ingresar
           </Button>
