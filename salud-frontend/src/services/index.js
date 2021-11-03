@@ -7,8 +7,6 @@ export async function loginUser (credentials) {
     const method = "Basic "
     const encriptado = method+token
 
-    console.log(encriptado)
-
     try {
         const response = await axios.post("http://localhost:8080/users/login", {}, {headers: {
             "Authorization": encriptado,
