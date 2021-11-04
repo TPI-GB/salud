@@ -34,11 +34,10 @@ async function registerUser(req, res) {
       }
 
     // Validar los inputs del usuario
-    if (!(email && contrasenia && nick && tipodocumento && numerodocumento)) {
+    if (!(email && contrasenia && tipodocumento && numerodocumento)) {
       res.status(400).send("Faltan campos requeridos!");
     }
 
-    // Revisar si el usuario ya existe
     // Validar si el usuario existe en la base de datos
     const oldUser = await User.findOne({ email });
 
