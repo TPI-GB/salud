@@ -1,20 +1,23 @@
 const mongoose = require("mongoose");
-const { appConfig } = require("../config");
 
 const Schema = mongoose.Schema;
 
 const UserSchema = Schema(
   {
-    nombre: String,
-    apellido: String,
+    nombre: {type: String, default: "John"},
+    apellido: {type: String, default: "Doe"},
     nick: { type: String, unique: true },
     roles: { type: Array, default: [] },
     contrasenia: { type: String, required: true },
-    mail: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
     activo: { type: Boolean, required: true, default: true },
     tipodocumento: { type: String, required: true },
     numerodocumento: { type: String, required: true },
     debecambiarcontrasenia: { type: Boolean, default: false },
+    token: { type: String }
+  },
+  { 
+    collection: 'users' 
   },
   {
     timestamps: true,
