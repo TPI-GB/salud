@@ -1,10 +1,9 @@
-import './App.css';
-import Login from './pages/login';
+import "./App.css";
+//import Login from "./pages/login";
+import Dashboard from "./components/Dashboard/Dashboard";
 
 function App() {
-  return (
-    <Login />
-  );
+  return <Dashboard />;
 }
 
 export default App;
