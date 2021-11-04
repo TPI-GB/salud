@@ -1,16 +1,19 @@
 const express = require("express");
-// const upload = require("../libs/storage");
+const auth = require("../middleware/auth");
+
 const {
-  addUser,
-  updateUsuario,
-  getUsuarios,
-  getUsuario,
+  updateUser,
+  getUsers,
+  getUser,
+  registerUser,
+  loginUser
 } = require("../controllers/userController");
 const api = express.Router();
 
-api.post("/", addUser);
-api.get("/", getUsuarios);
-api.get("/:id", getUsuario);
-api.put("/:id", updateUsuario);
+api.get("/", getUsers);
+api.get("/:id", getUser);
+api.put("/:id", updateUser);
+api.post("/register", auth, registerUser);
+api.post("/login", loginUser);
 
 module.exports = api;

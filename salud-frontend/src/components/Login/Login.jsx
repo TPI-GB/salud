@@ -1,21 +1,38 @@
 import React, { useState } from "react"
 import { Box, TextField, Button, InputAdornment, IconButton } from "@mui/material"
 import { Visibility, VisibilityOff } from "@mui/icons-material"
+import { useHistory } from "react-router-dom";
 import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
+import { loginUser } from '../../services'
 import "./Login.scss"
-import MostrarUsuarios from "../MostrarUsuarios" 
 
 export default function Login() {
     const [valores, setValores] = useState({
-        usuario: "",
+        email: "",
         contrasenia: "",
     })
     const [mostrarContrasenia, setMostrarContrasenia] = useState(false)
-
+    const [mostrarErrorAlIngresar, setMostrarErrorAlIngresar] = useState(false)
+    const history = useHistory();
+  
     const handleChange = (event) => {
         const {name, value} = event.target
         setValores({ ...valores, [name]: value })
     }
+
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      loginUser(valores).then((usuario) => {
+      // Guarga los datos del usuario registrado en localStorage
+          localStorage.setItem('user', JSON.stringify(usuario));
+      // Para que el hook useHistory funcione, este componente debe estar envuelto
+      // en un componente Router, de lo contrario history quedara indefinido
+          history.push("/home");
+        }
+        ).catch(
+          setMostrarErrorAlIngresar(true)
+        )
+      }
 
     const handleClickMostrarContrasenia = () => {
       setMostrarContrasenia(!mostrarContrasenia)
@@ -35,9 +52,9 @@ export default function Login() {
             fullWidth
             sx={{marginTop: "20px"}}
             required
-            label="Usuario"
-            name="usuario"
-            value={valores.usuario}
+            label="E-mail"
+            name="email"
+            value={valores.email}
             onChange={handleChange}
           />
           <TextField
@@ -61,9 +78,16 @@ export default function Login() {
               </InputAdornment>,
             }}
           />
+           {
+              mostrarErrorAlIngresar && (
+                <h3 className="loginForm-error">E-mail o contraseña inválidos, inténtelo de nuevo.</h3>
+              )            
+            }
           <Button 
+            type="submit"
             sx={{marginTop: "20px"}}
             variant="outlined"
+            onClick={handleSubmit}
           >
             Ingresar
           </Button>
