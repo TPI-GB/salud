@@ -7,7 +7,7 @@ const UserSchema = Schema(
     nombre: {type: String, default: "John"},
     apellido: {type: String, default: "Doe"},
     nick: { type: String, unique: true },
-    roles: { type: Array, default: [] },
+    roles: { type: Array, default: "" },
     contrasenia: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     activo: { type: Boolean, required: true, default: true },
