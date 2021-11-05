@@ -12,6 +12,7 @@ import Home from './pages/home';
 import MostrarUsuarios from './components/MostrarUsuarios';
 import NuevoPaciente from './components/NuevoPaciente/NuevoPaciente';
 import BuscarPaciente from './components/BuscarPaciente/BuscarPaciente';
+import FormularioDeUsuario from './components/FormularioUsuario/';
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
 	      <Route exact path="/MostrarUsuarios" component={MostrarUsuarios} />
         <Route exact path="/NuevoPaciente" component={NuevoPaciente} />
         <Route exact path="/BuscarPaciente" component={BuscarPaciente} />
+        <Route exact path="/Form" component={FormularioDeUsuario} />
+
       </div>
       </Switch>
     </Router>
