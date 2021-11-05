@@ -156,27 +156,17 @@ class UserController {
     if (!(email && contrasenia)) {
       res.status(400).send("Se requieren todos los campos!");
     }
-    // Validar si el usuario existe en la base de datos
-    const user = await User.findOne({ email });
 
-    if (user && (await bcrypt.compare(contrasenia, user.contrasenia))) {
-      // Crear Token
-      const token = jwt.sign(
-        { user_id: user._id, email },
-        process.env.TOKEN_KEY,
-        {
-          expiresIn: "5m",
-        }
-      );
+    const loginUserPromise = this.userService.loginUser(email, contrasenia);
 
-      // Agrega el token al usuario (NO A LA DB)
-      user.token = token;
-
-      // Usuario
-      return res.status(200).json(user);
-    }
-    res.status(400).send("Credenciales invalidas");
-    // Our register logic ends here
+    loginUserPromise
+      .then((userSuccess) => {
+        return res.status(200).json(userSuccess);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).send(err);
+      });
   }
 }
 

@@ -31,6 +31,7 @@ export default function Login() {
         }
         ).catch( (err) => {
           setMostrarErrorAlIngresar(true)
+          console.log(err);
         })
       }
 
