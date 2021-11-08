@@ -1,14 +1,9 @@
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  NavLink,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Pages
 import Login from "./pages/login";
-import Home from "./pages/home";
+import Home from "./pages/home/home";
 import MostrarUsuarios from "./components/MostrarUsuarios";
 import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
@@ -25,7 +20,6 @@ function App() {
       </Switch>
     </Router>
   );
-
 }
 
 export default App;
