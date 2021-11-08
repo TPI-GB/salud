@@ -25,6 +25,15 @@ class UserService {
     return user;
   }
 
+  async getUserByDocument(documentType, documentNumber) {
+    let user = await this.userRepository.findByDocument(
+      documentType,
+      documentNumber
+    );
+
+    return user;
+  }
+
   async registerUser(userData) {
     const {
       nombre,

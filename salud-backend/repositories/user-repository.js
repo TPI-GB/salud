@@ -13,6 +13,13 @@ class UserRepository {
     return await User.findOne({ email: email });
   }
 
+  async findByDocument(documentType, documentNumber) {
+    return await User.findOne({
+      tipodocumento: documentType,
+      numerodocumento: documentNumber,
+    });
+  }
+
   async register(userData) {
     let newUser = User(userData);
 
