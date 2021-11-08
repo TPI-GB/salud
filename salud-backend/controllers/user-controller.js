@@ -89,7 +89,6 @@ class UserController {
     oldUserPromise
       .then((oldUser) => {
         if (oldUser) {
-          console.log(oldUser);
           return res.status(409).send("El usuario ya existe");
         }
       })
@@ -130,8 +129,8 @@ class UserController {
         res.status(200).json(updatedUser);
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
         console.log(err);
+        res.status(400).json({ error: err });
       });
   }
 
