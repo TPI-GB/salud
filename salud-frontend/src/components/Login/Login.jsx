@@ -29,9 +29,10 @@ export default function Login() {
       // en un componente Router, de lo contrario history quedara indefinido
           history.push("/home");
         }
-        ).catch(
+        ).catch( (err) => {
           setMostrarErrorAlIngresar(true)
-        )
+          console.log(err);
+        })
       }
 
     const handleClickMostrarContrasenia = () => {

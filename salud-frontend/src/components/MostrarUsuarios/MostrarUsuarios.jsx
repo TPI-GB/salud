@@ -1,8 +1,6 @@
-//import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import ListSubheader from '@mui/material/ListSubheader';
 import React, { useState, useEffect } from "react";
 
 export default function PinnedSubheaderList() {
@@ -15,10 +13,10 @@ export default function PinnedSubheaderList() {
   
     const obtenerDatos = async () => {
       const response = await fetch(
-        `http://localhost:8080/v1/users`
+        `http://localhost:8080/users`
       );
       const respuesta = await response.json();
-      setUsuariosList(respuesta.usuarios);
+      setUsuariosList(respuesta);
     };  
 
     console.log(usuariosList);
@@ -37,10 +35,10 @@ export default function PinnedSubheaderList() {
       subheader={<li />}
     >
       {usuariosList.map((usuario) => (
-        <li key={`section-${usuario}`}>
+        <li key={usuario._id}>
           <ul>
-              <ListItem key={`item-${usuario}-${usuario}`}>
-                <ListItemText primary={`Nombre: ${usuario.nombre}`+ ` ` + `Apellido: ${usuario.apellido}`+ ` ` + `TipoDocumento: ${usuario.tipodocumento}`+ ` ` + `NumeroDocumento: ${usuario.numerodocumento}`} />
+              <ListItem key={usuario._id}>
+                <ListItemText primary={`Nombre: ${usuario.nombre} Apellido: ${usuario.apellido} TipoDocumento: ${usuario.tipodocumento} NumeroDocumento: ${usuario.numerodocumento}`} />
               </ListItem>
           </ul>
         </li>
