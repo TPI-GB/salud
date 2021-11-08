@@ -1,8 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { updateUser } from "../../API/Usuarios";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
+import { updateUser } from "../../services";
 
 export default function FormularioDeUsuario() {
   const { register, handleSubmit } = useForm();
@@ -21,7 +21,12 @@ export default function FormularioDeUsuario() {
           {...register("contrasenia")}
           required
         />
-        <input type="email" placeholder="Mail" {...register("mail")} required />
+        <input
+          type="email"
+          placeholder="Mail"
+          {...register("email")}
+          required
+        />
         <input
           type="text"
           placeholder="Tipo documento"
