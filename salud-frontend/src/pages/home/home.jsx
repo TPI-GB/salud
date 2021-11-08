@@ -1,14 +1,3 @@
-/* import React from "react";
-
-const Home = () => (
-  <section className="Home">
-    <h3>Esto es el Home</h3>
-  </section>
-)
-
-export default Home;
- */
-
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
@@ -17,7 +6,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -65,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -206,4 +194,8 @@ export default function PrimarySearchAppBar() {
       {renderMenu}
     </Box>
   );
+}
+
+export default function Home() {
+  return <PrimarySearchAppBar />
 }

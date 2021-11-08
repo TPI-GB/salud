@@ -80,7 +80,7 @@ class UserController {
         numerodocumento
       )
     ) {
-      return res.status(400).send("Faltan campos requeridos!");
+      return res.status(400).json("Faltan campos requeridos!");
     }
 
     // Validar si el usuario existe en la base de datos
@@ -89,8 +89,28 @@ class UserController {
     oldUserPromise
       .then((oldUser) => {
         if (oldUser) {
-          console.log(oldUser);
-          return res.status(409).send("El usuario ya existe");
+          return res
+            .status(409)
+            .json("Ya existe un usuario con el e-mail ingresado.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    const oldUserPromise2 = this.userService.getUserByDocument(
+      tipodocumento,
+      numerodocumento
+    );
+
+    oldUserPromise2
+      .then((oldUser) => {
+        if (oldUser) {
+          return res
+            .status(409)
+            .json(
+              "Ya existe un usuario con el tipo y numero de documento ingresado."
+            );
         }
       })
       .catch((err) => {
@@ -130,8 +150,8 @@ class UserController {
         res.status(200).json(updatedUser);
       })
       .catch((err) => {
-        res.status(400).json({ error: err });
         console.log(err);
+        res.status(400).json({ error: err });
       });
   }
 
@@ -154,7 +174,7 @@ class UserController {
 
     // Validar los inputs del usuario
     if (!(email && contrasenia)) {
-      res.status(400).send("Se requieren todos los campos!");
+      res.status(400).json("Se requieren todos los campos!");
     }
 
     const loginUserPromise = this.userService.loginUser(email, contrasenia);
@@ -165,7 +185,7 @@ class UserController {
       })
       .catch((err) => {
         console.log(err);
-        res.status(400).send(err);
+        res.status(400).json({ error: err });
       });
   }
 }

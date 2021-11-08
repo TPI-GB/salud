@@ -1,14 +1,15 @@
-//import * as React from 'react';
-import { Button } from "@mui/material";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListSubheader from "@mui/material/ListSubheader";
 import React, { useState, useEffect } from "react";
 import FormularioDeUsuario from "../FormularioUsuario/FormularioUsuario";
 
 export default function PinnedSubheaderList() {
   const [usuariosList, setUsuariosList] = useState([]);
+
+  useEffect(() => {
+    obtenerDatos();
+  }, []);
 
   useEffect(() => {
     obtenerDatos();
@@ -23,7 +24,7 @@ export default function PinnedSubheaderList() {
   console.log(usuariosList);
 
   return (
-    <div>
+    <>
       <List
         sx={{
           width: "100%",
@@ -37,19 +38,11 @@ export default function PinnedSubheaderList() {
         subheader={<li />}
       >
         {usuariosList.map((usuario) => (
-          <li key={`section-${usuario}`}>
+          <li key={usuario._id}>
             <ul>
-              <ListItem key={`item-${usuario}-${usuario}`}>
+              <ListItem key={usuario._id}>
                 <ListItemText
-                  primary={
-                    `Nombre: ${usuario.nombre}` +
-                    ` ` +
-                    `Apellido: ${usuario.apellido}` +
-                    ` ` +
-                    `TipoDocumento: ${usuario.tipodocumento}` +
-                    ` ` +
-                    `NumeroDocumento: ${usuario.numerodocumento}`
-                  }
+                  primary={`Nombre: ${usuario.nombre} Apellido: ${usuario.apellido} TipoDocumento: ${usuario.tipodocumento} NumeroDocumento: ${usuario.numerodocumento}`}
                 />
               </ListItem>
             </ul>
@@ -57,6 +50,6 @@ export default function PinnedSubheaderList() {
         ))}
       </List>
       <FormularioDeUsuario />
-    </div>
+    </>
   );
 }
