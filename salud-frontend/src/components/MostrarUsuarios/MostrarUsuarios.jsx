@@ -49,7 +49,6 @@ export default function PinnedSubheaderList() {
           </li>
         ))}
       </List>
-      <FormularioDeUsuario />
     </>
   );
 }

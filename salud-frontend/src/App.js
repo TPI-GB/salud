@@ -2,20 +2,13 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Pages
-<<<<<<< HEAD
-import Login from './pages/login';
-import Home from './pages/home';
-import MostrarUsuarios from './components/MostrarUsuarios';
-import NuevoPaciente from './components/NuevoPaciente/NuevoPaciente';
-import BuscarPaciente from './components/BuscarPaciente/BuscarPaciente';
-=======
 import Login from "./pages/login";
 import Home from "./pages/home/home";
 import MostrarUsuarios from "./components/MostrarUsuarios";
 import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
 import Dashboard from "./components/Dashboard/Dashboard";
->>>>>>> main
+import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 
 function App() {
   return (
@@ -27,6 +20,7 @@ function App() {
         <Route exact path="/NuevoPaciente" component={NuevoPaciente} />
         <Route exact path="/BuscarPaciente" component={BuscarPaciente} />
         <Route exact path="/Estadisticas" component={Dashboard} />
+        <Route exact path="/Formulario" component={FormularioDeUsuario} />
       </Switch>
     </Router>
   );

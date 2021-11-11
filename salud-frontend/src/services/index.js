@@ -22,12 +22,15 @@ export async function loginUser(credentials) {
 }
 
 export async function updateUser(data) {
+
+  console.log(data.roles);
+
   const { nombre, apellido, roles, contrasenia, email, tipodocumento, numerodocumento } = data
 
   const token = Buffer.from(email + ":" + contrasenia).toString("base64");
   const method = "Basic ";
   const encriptado = method + token;
-  const usuario = {nombre, apellido, roles:["lalala"], tipodocumento, numerodocumento};
+  const usuario = {nombre, apellido, roles, tipodocumento, numerodocumento};
   console.log(usuario);
   console.log(email);
   console.log(contrasenia);
