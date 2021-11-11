@@ -7,7 +7,7 @@ import Home from "./pages/home/home";
 import MostrarUsuarios from "./components/MostrarUsuarios";
 import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
-import Dashboard from "./components/Dashboard/Dashboard";
+import SearchMH from "./components/SearchMH";
 
 function App() {
   return (
@@ -17,8 +17,7 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/MostrarUsuarios" component={MostrarUsuarios} />
         <Route exact path="/NuevoPaciente" component={NuevoPaciente} />
-        <Route exact path="/BuscarPaciente" component={BuscarPaciente} />
-        <Route exact path="/Estadisticas" component={Dashboard} />
+        <Route exact path="/BuscarPaciente" component={SearchMH} />
       </Switch>
     </Router>
   );
