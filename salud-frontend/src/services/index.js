@@ -21,7 +21,7 @@ export async function loginUser(credentials) {
   return response;
 }
 
-export async function updateUser(data) {
+export async function createUser(data) {
 
   console.log(data.roles);
 
@@ -46,3 +46,7 @@ export async function updateUser(data) {
     }
   ); 
 }
+
+// export async function updateUser(data) {
+
+// }
