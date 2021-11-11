@@ -4,22 +4,22 @@ import '../Graphics/graphics.css'
 
 function Graphics(props){
     const data={
-        labels: ['Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto'],
+        labels: props.labels,
         datasets:[
             {
-            label: "NUEVOS PACIENTES",
+            label: "Pacientes activos",
             fill: true,
-            backgroundColor:'lime',
+            backgroundColor:'#a2cf6e',
             borderColor:"white",
-            pointBorderColor: 'lime',
+            pointBorderColor: '#007bb2',
             pointBorderWidth:1,
             pointHoverRadius:5,
             pointHoverBackgroundColor:'lime',
             pointHoverBorderColor: 'lime',
             pointRadius: 1,
             pointHitRadius: 10,
-            data: [10, 25, 17, 32, 57, 199],
-            lineTension: 0.4,
+            data: props.data,
+            lineTension: 0.5,
             }
         ]
     }

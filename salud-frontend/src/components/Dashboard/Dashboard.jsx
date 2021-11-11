@@ -7,8 +7,9 @@ import '../Dashboard/Dashboard.scss'
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import  CardHeader  from "../CardHeader/CardHeader.jsx";
+import CardHeader  from "../CardHeader/CardHeader.jsx";
 import Graphics from "../Graphics/graphics";
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -68,14 +69,12 @@ export default function Dashboard(props) {
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                   <CardHeader icono={<ShowChartIcon className={classes.iconos}/>}  titulo='4' texto="4" color='red'/>
 
-          
-
-          </Grid>
+            </Grid>
          </Grid>
          <Grid item xs={0} sm={0} md={1} lg={1} xl={1}></Grid>
          <Grid item xs={12} sm={12} md={5} lg={5} xl={5} classname={classes.container}>
-              <Graphics/>
-          </Grid>
+              <Graphics labels = {['Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto']}  data= {[10, 25, 17, 32, 57, 199]} />
+         </Grid>
           
         </Grid>
       </Grid>
