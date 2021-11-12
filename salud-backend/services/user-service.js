@@ -79,12 +79,13 @@ class UserService {
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "5m",
+          expiresIn: "1m",
         }
       );
-      // Agrega el token al usuario (NO A LA DB)
+      // EL TOKEN NO QUE EN EL USUARIO, PREGUNTAR!!!
       user.token = token;
-      return user;
+
+      return token;
     } else {
       throw "Credenciales inválidas";
     }
