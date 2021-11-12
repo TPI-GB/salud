@@ -27,7 +27,7 @@ export default function Login() {
           localStorage.setItem('user', JSON.stringify(usuario));
       // Para que el hook useHistory funcione, este componente debe estar envuelto
       // en un componente Router, de lo contrario history quedara indefinido
-          history.push("/home");
+          history.push("/");
         }
         ).catch( (err) => {
           setMostrarErrorAlIngresar(true)

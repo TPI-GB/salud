@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "../Navbar/Navbar";
 import 'fontsource-roboto';
-import '../Dashboard/Dashboard.scss'
+//import '../Dashboard/Dashboard.scss'
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import ShowChartIcon from '@mui/icons-material/ShowChart';

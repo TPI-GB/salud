@@ -82,10 +82,10 @@ class UserService {
           expiresIn: "1m",
         }
       );
-      // EL TOKEN NO QUE EN EL USUARIO, PREGUNTAR!!!
+      // Se guarda el token en el usuario si el login es exitoso.
       user.token = token;
 
-      return token;
+      return user;
     } else {
       throw "Credenciales inválidas";
     }
