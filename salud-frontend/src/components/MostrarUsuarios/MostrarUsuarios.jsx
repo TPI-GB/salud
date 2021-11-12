@@ -2,10 +2,15 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState, useEffect } from "react";
-import FormularioDeUsuario from "../FormularioUsuario/FormularioUsuario";
 import "./MostrarUsuarios.scss";
 import Card from "@mui/material/Card";
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 export default function PinnedSubheaderList() {
   const [usuariosList, setUsuariosList] = useState([]);
 
@@ -26,33 +31,25 @@ export default function PinnedSubheaderList() {
   console.log(usuariosList);
 
   return (
-    <Card className="Prueba" sx={{ minWidth: 275 }}>
-      <h1 className="Prueba">Usuarios actuales</h1>
-      <List
-        className="Prueba"
-        sx={{
-          width: "100%",
-          maxWidth: 360,
-          bgcolor: "background.paper",
-          position: "relative",
-          overflow: "auto",
-          maxHeight: 300,
-          "& ul": { padding: 0 },
-        }}
-        subheader={<li />}
-      >
-        {usuariosList.map((usuario) => (
-          <li key={usuario._id}>
-            <ul>
-              <ListItem key={usuario._id}>
-                <ListItemText
-                  primary={`Nombre: ${usuario.nombre} Apellido: ${usuario.apellido} TipoDocumento: ${usuario.tipodocumento} NumeroDocumento: ${usuario.numerodocumento}`}
-                />
-              </ListItem>
-            </ul>
-          </li>
-        ))}
-      </List>
-    </Card>
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <h1 className="Prueba">Usuarios actuales</h1>
+          <List className="Prueba">
+            {usuariosList.map((usuario) => (
+              <li key={usuario._id}>
+                <ul>
+                  <ListItem key={usuario._id}>
+                    <ListItemText
+                      primary={`Nombre: ${usuario.nombre} Apellido: ${usuario.apellido} TipoDocumento: ${usuario.tipodocumento} NumeroDocumento: ${usuario.numerodocumento}`}
+                    />
+                  </ListItem>
+                </ul>
+              </li>
+            ))}
+          </List>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }

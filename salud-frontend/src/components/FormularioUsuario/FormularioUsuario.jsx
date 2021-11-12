@@ -14,7 +14,6 @@ import Button from "@mui/material/Button";
 
 //probando card
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import "./FormularioUsuario.scss";
 export default function FormularioDeUsuario() {
   const { register, handleSubmit } = useForm();
@@ -80,6 +79,7 @@ export default function FormularioDeUsuario() {
               <TextField
                 id="outlined-basic"
                 type="number"
+                pattern=".{8}"
                 label="Numero documento"
                 {...register("numerodocumento")}
               />
@@ -125,7 +125,7 @@ export default function FormularioDeUsuario() {
               </FormGroup>
             </Stack>
             <Button
-              className="Prueba"
+              className="Boton"
               onClick={handleSubmit(onSubmit)}
               variant="contained"
               color="success"
