@@ -13,6 +13,7 @@ const UserSchema = Schema(
     tipodocumento: { type: String, required: true },
     numerodocumento: { type: String, required: true },
     debecambiarcontrasenia: { type: Boolean, default: false },
+    token: { type: String },
   },
   {
     collection: "users",
