@@ -22,7 +22,7 @@ export default function FormularioDeUsuario() {
 
   return (
     <div>
-      <Card sx={{ minWidth: 275 }}>
+      <Card className="Prueba" sx={{ minWidth: 275 }}>
         <FormControl className="Prueba" onSubmit={handleSubmit(onSubmit)}>
           <Box
             component="form"
