@@ -9,6 +9,7 @@ import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
 import Dashboard from "./components/Dashboard/Dashboard";
 import GuardedRoute from "./components/GuardedRoute";
+import SearchMH from "./components/SearchMH";
 
 function App() {
   return (
