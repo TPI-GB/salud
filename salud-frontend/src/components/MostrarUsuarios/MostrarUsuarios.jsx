@@ -3,6 +3,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import React, { useState, useEffect } from "react";
 import FormularioDeUsuario from "../FormularioUsuario/FormularioUsuario";
+import "./MostrarUsuarios.scss";
+import Card from "@mui/material/Card";
 
 export default function PinnedSubheaderList() {
   const [usuariosList, setUsuariosList] = useState([]);
@@ -24,8 +26,10 @@ export default function PinnedSubheaderList() {
   console.log(usuariosList);
 
   return (
-    <>
+    <Card className="Prueba" sx={{ minWidth: 275 }}>
+      <h1 className="Prueba">Usuarios actuales</h1>
       <List
+        className="Prueba"
         sx={{
           width: "100%",
           maxWidth: 360,
@@ -49,6 +53,6 @@ export default function PinnedSubheaderList() {
           </li>
         ))}
       </List>
-    </>
+    </Card>
   );
 }
