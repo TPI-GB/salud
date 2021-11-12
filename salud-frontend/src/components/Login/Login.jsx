@@ -24,7 +24,7 @@ export default function Login() {
       event.preventDefault()
       loginUser(valores).then((usuario) => {
       // Guarga los datos del usuario registrado en localStorage
-          localStorage.setItem('user', JSON.stringify(usuario));
+          sessionStorage.setItem('user', JSON.stringify(usuario));
       // Para que el hook useHistory funcione, este componente debe estar envuelto
       // en un componente Router, de lo contrario history quedara indefinido
           history.push("/");

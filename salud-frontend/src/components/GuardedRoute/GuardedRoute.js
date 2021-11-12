@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 const jwt = require("jsonwebtoken");
 
 export default function GuardedRoute({ component: Component, ...rest }) {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   function isExpired() {
     const { exp } = jwt.decode(user.data.token);

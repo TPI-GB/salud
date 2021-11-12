@@ -79,7 +79,7 @@ class UserService {
         { user_id: user._id, email },
         process.env.TOKEN_KEY,
         {
-          expiresIn: "1m",
+          expiresIn: "30m",
         }
       );
       // Se guarda el token en el usuario si el login es exitoso.
