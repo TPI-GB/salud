@@ -20,11 +20,3 @@ export async function loginUser(credentials) {
 
   return response;
 }
-
-export async function getMedicalHistory(id) {
-  const response = await axios.get(
-    `http://localhost:8080/medical-histories/${id}`
-  );
-
-  return response;
-}

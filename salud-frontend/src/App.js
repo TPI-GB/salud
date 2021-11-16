@@ -6,7 +6,8 @@ import Login from "./pages/login";
 import Home from "./pages/home/home";
 import MostrarUsuarios from "./components/MostrarUsuarios";
 import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
-import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
+import SearchMH from "./components/SearchMH";
+import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import GuardedRoute from "./components/GuardedRoute";
 
@@ -22,7 +23,12 @@ function App() {
           component={MostrarUsuarios}
         />
         <GuardedRoute exact path="/NuevoPaciente" component={NuevoPaciente} />
-        <GuardedRoute exact path="/BuscarPaciente" component={BuscarPaciente} />
+        <GuardedRoute exact path="/BuscarPaciente" component={SearchMH} />
+        <GuardedRoute
+          exact
+          path="/HistoriaClinica/:id"
+          component={MedicalHistory}
+        />
         <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
       </Switch>
     </Router>
