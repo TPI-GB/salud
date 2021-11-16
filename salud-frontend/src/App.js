@@ -8,6 +8,7 @@ import MostrarUsuarios from "./components/MostrarUsuarios";
 import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
 import Dashboard from "./components/Dashboard/Dashboard";
+import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import GuardedRoute from "./components/GuardedRoute";
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <GuardedRoute exact path="/NuevoPaciente" component={NuevoPaciente} />
         <GuardedRoute exact path="/BuscarPaciente" component={BuscarPaciente} />
         <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
+        <GuardedRoute exact path="/MostrarUsuarios" component={MostrarUsuarios} />
+        <GuardedRoute exact path="/Formulario" component={FormularioDeUsuario} />
       </Switch>
     </Router>
   );
