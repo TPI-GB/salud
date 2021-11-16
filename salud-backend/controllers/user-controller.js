@@ -162,7 +162,10 @@ class UserController {
       return res.status(400).json("Se requieren todos los campos!");
     }
 
-    const loginUserPromise = this.userService.loginUser(email, contrasenia);
+    const loginUserPromise = this.userService.loginUser(
+      email.toLowerCase(), // se pone en minusculas el email para no tener problemas en buscarlo
+      contrasenia
+    );
 
     loginUserPromise
       .then((userSuccess) => {

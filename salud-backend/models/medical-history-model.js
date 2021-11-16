@@ -20,7 +20,7 @@ const MedicalHistorySchema = Schema(
     estudios: [medicalTestSchema],
   },
   {
-    collection: "medical-histories",
+    collection: "medicalHistories",
   },
   {
     timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
