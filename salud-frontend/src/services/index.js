@@ -20,3 +20,10 @@ export async function loginUser(credentials) {
 
   return response;
 }
+
+export async function getUserCount() {
+  const response = await axios.get("http://localhost:8080/stats/");
+
+  return response;
+  // return await axios.get("http://localhost:8080/stats/");
+}

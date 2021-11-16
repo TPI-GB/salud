@@ -1,16 +1,14 @@
-const EstadisticasRepository = require("../repositories/estadisticas-repository");
+const StatisticsRepository = require("../repositories/estadisticas-repository");
 //const bcrypt = require("bcryptjs");
 //const jwt = require("jsonwebtoken");
 
-class EstadisticasService {
+class StatisticsService {
   constructor() {
-    this.estadisticasRepository = new EstadisticasRepository();
+    this.statisticsRepository = new StatisticsRepository();
   }
 
-  async getEstadisticasUsers() {
-    let estadisticasUsers = await this.estadisticasRepository.findAll();
-
-    return;
+  async getUsersStats() {
+    return this.statisticsRepository.findAll();
   }
 
   // async getUserById(id) {
@@ -91,4 +89,4 @@ class EstadisticasService {
   // }
   // }
 }
-module.exports = EstadisticasService;
+module.exports = StatisticsService;
