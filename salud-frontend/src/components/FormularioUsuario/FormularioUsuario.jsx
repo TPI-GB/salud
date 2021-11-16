@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import Stack from "@mui/material/Stack";
-import { FormControlLabel, Grid } from "@mui/material";
+import { FormControlLabel } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { createUser } from "../../services";
@@ -15,8 +15,15 @@ import Button from "@mui/material/Button";
 //probando card
 import Card from "@mui/material/Card";
 import "./FormularioUsuario.scss";
+
+//import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+
 export default function FormularioDeUsuario() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const onSubmit = (data) => createUser(data);
 
   return (
@@ -38,32 +45,67 @@ export default function FormularioDeUsuario() {
                 id="outlined-basic"
                 type="text"
                 label="Nombre"
-                {...register("nombre")}
+                {...register("nombre", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
               />
 
               <TextField
                 id="outlined-basic"
                 type="text"
                 label="Apellido"
-                {...register("apellido")}
+                {...register("apellido", {
+                  requiered: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
               />
             </div>
             <div>
               <TextField
                 id="outlined-basic"
                 type="password"
-                pattern=".{6}"
+                //pattern=".{6}"
                 label="Password"
-                {...register("password")}
-                required
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "La contraseña debe tener al menos 6 caracteres",
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
               />
 
               <TextField
                 id="outlined-basic"
                 type="email"
                 label="Mail"
-                {...register("email")}
-                required
+                placeholder="ejemplo@gmail.com"
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Necesitas este campo",
+                  },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "El formato no es correcto",
+                  },
+                })}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
               />
             </div>
 
@@ -72,16 +114,33 @@ export default function FormularioDeUsuario() {
                 id="outlined-basic"
                 type="text"
                 label="Tipo documento"
-                {...register("tipodocumento")}
-                required
+                {...register("tipodocumento", {
+                  required: {
+                    value: true,
+                    message: "Necesitas este campo",
+                  },
+                })}
+                error={Boolean(errors.tipodocumento)}
+                helperText={errors.tipodocumento?.message}
               />
 
               <TextField
                 id="outlined-basic"
-                type="number"
-                pattern=".{8}"
+                type="text"
+                //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
                 label="Numero documento"
-                {...register("numerodocumento")}
+                {...register("numerodocumento", {
+                  required: {
+                    value: true,
+                    message: "Necesitas este campo",
+                  },
+                  pattern: {
+                    value: "^[1-9]{1}[0-9]{6,7}$",
+                    message: "El formato no es correcto",
+                  },
+                })}
+                error={Boolean(errors.numerodocumento)}
+                helperText={errors.numerodocumento?.message}
               />
             </div>
             <Stack className="Prueba">
