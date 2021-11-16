@@ -1,12 +1,12 @@
 const express = require("express");
-const EstadisticasService = require("../services/estadisticas-service");
+const StatisticsService = require("../services/estadisticas-service");
 
-class EstadisticasController {
+class StatisticsController {
   constructor() {
-    this.estadisticasService = new EstadisticasService();
+    this.StatisticsService = new StatisticsService();
     this.router = express.Router();
     this.router.get("/", (req, res) => {
-      this.getEstadisticasUsers(req, res);
+      this.getCreatedUsers(req, res);
       // });
       //   this.router.get("/:id", (req, res) => {
       //     this.getUserById(req, res);
@@ -22,10 +22,10 @@ class EstadisticasController {
     });
   }
 
-  getEstadisticasUsers(req, res) {
-    let estadisticasPromise = this.estadisticasService.getUsers();
+  getCreatedUsers(req, res) {
+    let statsPromise = this.StatisticsService.getUsersStats();
 
-    usersPromise
+    statsPromise
       .then((users) => {
         res.status(200).json(users);
       })
@@ -36,4 +36,4 @@ class EstadisticasController {
   }
 }
 
-module.exports = EstadisticasController;
+module.exports = StatisticsController;
