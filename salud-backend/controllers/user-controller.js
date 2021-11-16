@@ -30,8 +30,8 @@ class UserController {
         res.status(200).json(users);
       })
       .catch((err) => {
-        console.log(err);
-        res.status(400).json({ error: err });
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
       });
   }
 
@@ -43,12 +43,12 @@ class UserController {
         res.status(200).json(user);
       })
       .catch((err) => {
-        console.log(err);
-        res.status(400).json({ error: err });
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
       });
   }
 
-  registerUser(req, res) {
+  async registerUser(req, res) {
     // La logica del registro empieza aca
     // Conseguir los inputs del usuario
     const { nombre, apellido, roles, tipodocumento, numerodocumento } =
@@ -83,60 +83,45 @@ class UserController {
       return res.status(400).json("Faltan campos requeridos!");
     }
 
-    // Validar si el usuario existe en la base de datos
-    const oldUserPromise = this.userService.getUserByEmail(email);
+    try {
+      // Validar si el usuario existe en la base de datos
 
-    oldUserPromise
-      .then((oldUser) => {
-        if (oldUser) {
-          return res
-            .status(409)
-            .json("Ya existe un usuario con el e-mail ingresado.");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      const oldUserByEmail = await this.userService.getUserByEmail(email);
 
-    const oldUserPromise2 = this.userService.getUserByDocument(
-      tipodocumento,
-      numerodocumento
-    );
+      if (oldUserByEmail) {
+        return res
+          .status(409)
+          .json("Ya existe un usuario con el e-mail ingresado.");
+      }
 
-    oldUserPromise2
-      .then((oldUser) => {
-        if (oldUser) {
-          return res
-            .status(409)
-            .json(
-              "Ya existe un usuario con el tipo y numero de documento ingresado."
-            );
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      const oldUserByDocumento = await this.userService.getUserByDocument(
+        tipodocumento,
+        numerodocumento
+      );
+      if (oldUserByDocumento) {
+        return res
+          .status(409)
+          .json(
+            "Ya existe un usuario con el tipo y numero de documento ingresado."
+          );
+      }
 
-    const userData = {
-      nombre,
-      apellido,
-      roles,
-      tipodocumento,
-      numerodocumento,
-      email,
-      contrasenia,
-    };
+      const userData = {
+        nombre,
+        apellido,
+        roles,
+        tipodocumento,
+        numerodocumento,
+        email,
+        contrasenia,
+      };
 
-    const userStoredPromise = this.userService.registerUser(userData);
-
-    // devolver el usuario guardado
-    userStoredPromise
-      .then((userStored) => {
-        return res.status(201).json(userStored);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      const userStored = await this.userService.registerUser(userData);
+      // devolver el usuario guardado
+      return res.status(201).json(userStored);
+    } catch (exception) {
+      console.log(exception);
+    }
   }
 
   updateUser(req, res) {
@@ -150,8 +135,8 @@ class UserController {
         res.status(200).json(updatedUser);
       })
       .catch((err) => {
-        console.log(err);
-        res.status(400).json({ error: err });
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
       });
   }
 
@@ -174,14 +159,17 @@ class UserController {
 
     // Validar los inputs del usuario
     if (!(email && contrasenia)) {
-      res.status(400).json("Se requieren todos los campos!");
+      return res.status(400).json("Se requieren todos los campos!");
     }
 
-    const loginUserPromise = this.userService.loginUser(email, contrasenia);
+    const loginUserPromise = this.userService.loginUser(
+      email.toLowerCase(), // se pone en minusculas el email para no tener problemas en buscarlo
+      contrasenia
+    );
 
     loginUserPromise
       .then((userSuccess) => {
-        return res.status(200).json(userSuccess);
+        res.status(200).json(userSuccess);
       })
       .catch((err) => {
         console.log(err);
