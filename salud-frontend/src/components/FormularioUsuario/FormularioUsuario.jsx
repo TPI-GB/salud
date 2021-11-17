@@ -42,7 +42,7 @@ export default function FormularioDeUsuario() {
 
             <div>
               <TextField
-                id="outlined-basic"
+                id="nombreid"
                 type="text"
                 label="Nombre"
                 {...register("nombre", {
@@ -51,27 +51,27 @@ export default function FormularioDeUsuario() {
                     message: "El campo es requerido",
                   },
                 })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
+                error={Boolean(errors.nombre)}
+                helperText={errors.nombre?.message}
               />
 
               <TextField
-                id="outlined-basic"
+                id="apellidoid"
                 type="text"
                 label="Apellido"
                 {...register("apellido", {
-                  requiered: {
+                  required: {
                     value: true,
                     message: "El campo es requerido",
                   },
                 })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
+                error={Boolean(errors.apellido)}
+                helperText={errors.apellido?.message}
               />
             </div>
             <div>
               <TextField
-                id="outlined-basic"
+                id="passwordid"
                 type="password"
                 //pattern=".{6}"
                 label="Password"
@@ -90,7 +90,7 @@ export default function FormularioDeUsuario() {
               />
 
               <TextField
-                id="outlined-basic"
+                id="emailid"
                 type="email"
                 label="Mail"
                 placeholder="ejemplo@gmail.com"
@@ -111,7 +111,7 @@ export default function FormularioDeUsuario() {
 
             <div>
               <TextField
-                id="outlined-basic"
+                id="tipodocid"
                 type="text"
                 label="Tipo documento"
                 {...register("tipodocumento", {
@@ -125,7 +125,7 @@ export default function FormularioDeUsuario() {
               />
 
               <TextField
-                id="outlined-basic"
+                id="numDocid"
                 type="text"
                 //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
                 label="Numero documento"
@@ -135,7 +135,7 @@ export default function FormularioDeUsuario() {
                     message: "Necesitas este campo",
                   },
                   pattern: {
-                    value: "^[1-9]{1}[0-9]{6,7}$",
+                    value: /^[1-9][0-9]{6,8}$/i,
                     message: "El formato no es correcto",
                   },
                 })}
