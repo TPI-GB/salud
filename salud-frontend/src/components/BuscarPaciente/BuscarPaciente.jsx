@@ -1,4 +1,3 @@
-import "./BuscarPaciente.scss";
 import React from 'react'
 
 const BuscarPaciente = () => (
