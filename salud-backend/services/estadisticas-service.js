@@ -8,7 +8,11 @@ class StatisticsService {
   }
 
   async getUsersStats() {
-    return this.statisticsRepository.findAll();
+    return this.statisticsRepository.findAllUsers();
+  }
+
+  async getHistoriesStats() {
+    return this.statisticsRepository.findAllHistories();
   }
 
   // async getUserById(id) {

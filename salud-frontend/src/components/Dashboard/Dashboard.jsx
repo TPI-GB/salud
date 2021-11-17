@@ -9,7 +9,7 @@ import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 import CardHeader  from "../CardHeader/CardHeader.jsx";
 import Graphics from "../Graphics/graphics";
-import { getUserCount } from '../../services/index'
+import { getHistoryCount, getUserCount } from '../../services/estadisticas-service'
 import { useState, useEffect } from "react";
 
 const useStyles = makeStyles(() => ({
@@ -34,12 +34,15 @@ const useStyles = makeStyles(() => ({
 
 export default function Dashboard(props) {
   const classes = useStyles();
-  const [userCountData, setUserCountData] = useState(null);
+  const [dashboardData, setDashboardData] = useState({userData:"" , historyData: ""});
   
   useEffect( () => {
     async function fetchData() {
       const respuesta = await getUserCount()
-      setUserCountData(respuesta.data);
+      const respuesta2 = await getHistoryCount()
+      
+      setDashboardData({userData: respuesta.data, 
+                     historyData: respuesta2.data});
     }
     fetchData()
   }, []);
@@ -54,12 +57,12 @@ export default function Dashboard(props) {
         <Grid container spacing={3} className={classes.container}>
           <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
             <CardHeader icono={<StackedBarChartIcon className={classes.iconos}/>} 
-                  titulo='Cantidad de Usuarios' texto= { userCountData } color='red'/>
+                  titulo='Cantidad de Usuarios' texto= { dashboardData.userData } color='red'/>
           </Grid>
           
           <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
-            <CardHeader icono={<DonutSmallIcon className={classes.iconos}/>} 
-                  titulo='Porcentaje de patologias' texto="Muestra las patologias mas comunes" color='red'/>          
+            <CardHeader icono={<ShowChartIcon className={classes.iconos}/>} 
+                  titulo='Cantidad de historias clinicas' texto= { dashboardData.historyData } color='red'/>          
           </Grid>
           
           <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
@@ -70,10 +73,10 @@ export default function Dashboard(props) {
                   
           <Grid container spacing={1} className={classes.container } xs={12} sm={6} md={6} lg={6} xl={6}>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                  <CardHeader icono={<ShowChartIcon className={classes.iconos}/>}  titulo='1' texto="1" color='red'/>
+                  <CardHeader icono={<DonutSmallIcon className={classes.iconos}/>}  titulo='1' texto="1" color='red'/>
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                  <CardHeader icono={<ShowChartIcon className={classes.iconos}/>}  titulo='2' texto="2" color='red'/>  
+                  <CardHeader icono={<DonutSmallIcon className={classes.iconos}/>}  titulo='2' texto="2" color='red'/>  
             </Grid>
             <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                   <CardHeader icono={<ShowChartIcon className={classes.iconos}/>}  titulo='3' texto="3" color='red'/>
