@@ -5,12 +5,12 @@ class StatisticsController {
   constructor() {
     this.StatisticsService = new StatisticsService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
+    this.router.get("/userCount", (req, res) => {
       this.getCreatedUsers(req, res);
-      // });
-      //   this.router.get("/:id", (req, res) => {
-      //     this.getUserById(req, res);
-      //   });
+    });
+    this.router.get("/historyCount", (req, res) => {
+      this.getHistoryCount(req, res);
+      //});
       //   this.router.post("/register", (req, res) => {
       //     this.registerUser(req, res);
       //   });
@@ -34,6 +34,18 @@ class StatisticsController {
         res.status(400).json({ error: err });
       });
   }
-}
 
+  getHistoryCount(req, res) {
+    let statsPromise = this.StatisticsService.getHistoriesStats();
+
+    statsPromise
+      .then((histories) => {
+        res.status(200).json(histories);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json({ error: err });
+      });
+  }
+}
 module.exports = StatisticsController;
