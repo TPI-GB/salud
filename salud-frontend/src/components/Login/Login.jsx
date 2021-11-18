@@ -11,7 +11,7 @@ import {
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
 import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
-import { loginUser } from "../../services";
+import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 
 export default function Login() {
