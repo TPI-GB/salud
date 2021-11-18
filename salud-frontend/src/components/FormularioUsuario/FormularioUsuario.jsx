@@ -71,11 +71,11 @@ export default function FormularioDeUsuario() {
             </div>
             <div>
               <TextField
-                id="passwordid"
+                id="contraseniaid"
                 type="password"
                 //pattern=".{6}"
-                label="Password"
-                {...register("password", {
+                label="Contraseña"
+                {...register("contrasenia", {
                   required: {
                     value: true,
                     message: "El campo es requerido",
