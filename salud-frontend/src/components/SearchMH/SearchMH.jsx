@@ -37,6 +37,7 @@ export default function SearchMH() {
   const handleFilterChange = (event) => {
     const value = event.target.value;
     setFilter(value);
+    setError({ show: false });
     if (value === "TODAS") {
       setSearchValue("");
     }
@@ -44,6 +45,7 @@ export default function SearchMH() {
 
   const handleDocChange = (event) => {
     setDocType(event.target.value);
+    setError({ show: false });
   };
 
   const validateSearchInput = () => {
@@ -138,6 +140,7 @@ export default function SearchMH() {
         <Collapse in={error.show}>
           <Alert
             severity="error"
+            sx={{ borderRadius: "25px", mt: 1 }}
             onClose={() => {
               setError({ message: "", show: false });
             }}
