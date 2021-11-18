@@ -1,26 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
-import { Box, Typography } from "@mui/material"
-import {getMedicalHistoryById} from "../../services/medicalHistoryService"
+import { Box, Typography } from "@mui/material";
+import { getMedicalHistoryById } from "../../services/medical-history-service";
 
 export default function MedicalHistory() {
-    const [medicalHistory, setMedicalHistory] = useState({});
+  const [medicalHistory, setMedicalHistory] = useState({});
 
-    const { id } = useParams()
+  const { id } = useParams();
 
-    useEffect(() => {
-        const getData = async () => {
-            const response = await getMedicalHistoryById(id);
-            setMedicalHistory(response.data);
-        }
-        getData();
-    }, [id]);
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getMedicalHistoryById(id);
+      setMedicalHistory(response.data);
+    };
+    getData();
+  }, [id]);
 
-    return (
-        <Box>
-            <Typography variant="h4" component="div" gutterBottom>
-                {`Numero de historia: ${medicalHistory.numeroHistoriaClinica}`}
-            </Typography>
-        </Box>
-    )
+  return (
+    <Box>
+      <Typography variant="h4" component="div" gutterBottom>
+        {`Numero de historia: ${medicalHistory.numeroHistoriaClinica}`}
+      </Typography>
+    </Box>
+  );
 }

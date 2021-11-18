@@ -9,6 +9,7 @@ import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
 import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
+import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import GuardedRoute from "./components/GuardedRoute";
 
 function App() {
@@ -30,6 +31,8 @@ function App() {
           component={MedicalHistory}
         />
         <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
+        <GuardedRoute exact path="/MostrarUsuarios" component={MostrarUsuarios} />
+        <GuardedRoute exact path="/Formulario" component={FormularioDeUsuario} />
       </Switch>
     </Router>
   );

@@ -17,7 +17,7 @@ import MedicalHistoriesList from "../MedicalHistoriesList";
 import {
   getAllMedicalHistories,
   getMedicalHistoryByDocument,
-} from "../../services/medicalHistoryService";
+} from "../../services/medical-history-service";
 import "./SearchMH.scss";
 
 // Preguntar por el useState porque imprime siempre que cambia de estado

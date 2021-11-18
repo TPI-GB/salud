@@ -1,1 +1,1 @@
-export { default } from "./medicalHistoriesList";
+export { default } from "./MedicalHistoriesList";
