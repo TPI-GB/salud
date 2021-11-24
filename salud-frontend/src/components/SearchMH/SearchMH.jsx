@@ -80,6 +80,11 @@ export default function SearchMH() {
 
   return (
     <>
+      <Box className="title">
+        <Typography variant="h2" component="h2">
+          Historias clínicas
+        </Typography>
+      </Box>
       <Paper
         component="form"
         sx={{
