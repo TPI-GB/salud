@@ -11,12 +11,6 @@ class MedicalHistoryController {
     this.router.get("/:id", (req, res) => {
       this.getMedicalHistoryById(req, res);
     });
-<<<<<<< HEAD
-=======
-    this.router.get("/:docType/:docNumber", (req, res) => {
-      this.getMedicalHistoryByDocument(req, res);
-    });
->>>>>>> 64fcbae0e1fb15b45d2fe3c06364b502925db308
     this.router.post("/create", (req, res) => {
       this.createMedicalHistory(req, res);
     });
@@ -65,37 +59,9 @@ class MedicalHistoryController {
       });
   }
 
-<<<<<<< HEAD
   createMedicalHistory(req, res) {
     const {
       numeroHistoriaClinica,
-=======
-  getMedicalHistoryByDocument(req, res) {
-    const docType = req.params.docType;
-    const docNumber = req.params.docNumber;
-
-    let medicalHistoryPromise =
-      this.medicalHistoryService.getMedicalHistoryByDocument(
-        docType,
-        docNumber
-      );
-
-    medicalHistoryPromise
-      .then((medicalHistory) => {
-        res.status(200).json(medicalHistory);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        res.status(400).json({ error: err.message });
-      });
-  }
-
-  createMedicalHistory(req, res) {
-    const {
-      numeroHistoriaClinica,
-      tipoDocumento,
-      numeroDocumento,
->>>>>>> 64fcbae0e1fb15b45d2fe3c06364b502925db308
       nombres,
       apellidos,
       nacionalidad,
@@ -109,11 +75,6 @@ class MedicalHistoryController {
 
     const medicalHistoryData = {
       numeroHistoriaClinica,
-<<<<<<< HEAD
-=======
-      tipoDocumento,
-      numeroDocumento,
->>>>>>> 64fcbae0e1fb15b45d2fe3c06364b502925db308
       nombres,
       apellidos,
       nacionalidad,
