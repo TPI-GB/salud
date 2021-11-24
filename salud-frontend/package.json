@@ -16,8 +16,13 @@
     "axios": "^0.24.0",
     "chart.js": "^3.6.0",
     "fontsource-roboto": "^4.0.0",
+<<<<<<< HEAD
     "jsonwebtoken": "^8.5.1",
     "material-table": "^1.69.3",
+=======
+    "material-table": "^1.69.3",
+    "jsonwebtoken": "^8.5.1",
+>>>>>>> 64fcbae0e1fb15b45d2fe3c06364b502925db308
     "react": "^17.0.2",
     "react-chartjs-2": "^3.3.0",
     "react-dom": "^17.0.2",
