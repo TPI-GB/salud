@@ -1,30 +1,33 @@
 import './App.css';
+import Navbar from './components/Header/Navbar';
 import {
   BrowserRouter as Router,
-  Routes,
+  Switch,
   Route,
 } from "react-router-dom";
-import Navbar from './components/NavBar/Navbar';
 
 //Pages
-import Login from './pages/login';
-import Home from './pages/home';
+import Login from './pages/login/Login';
+import Home from './pages/home/home';
 import MostrarUsuarios from './components/MostrarUsuarios/MostrarUsuarios';
-import NuevoPaciente from './components/NuevoPaciente/NuevoPaciente';
-import BuscarPaciente from './components/BuscarPaciente/BuscarPaciente';
+import NuevaHC from './pages/nuevaHC/NuevaHC';
+import BuscarHC from './pages/BuscarHC/BuscarHC';
+import FormularioUsuario from './components/FormularioUsuario/FormularioUsuario';
+//import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
   return (
     <Router>
-      <Navbar>
-        <Routes>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/MostrarUsuarios" component={MostrarUsuarios} />
-          <Route exact path="/NuevoPaciente" component={NuevoPaciente} />
-          <Route exact path="/BuscarPaciente" component={BuscarPaciente} />
-        </Routes>
-      </Navbar>
+      <Navbar />
+        <Switch>
+          <Route exact path="/pages/login" component={Login} />
+          <Route exact path="/pages/home" component={Home} />
+          <Route exact path="/components/MostrarUsuarios" component={MostrarUsuarios} />
+          <Route exact path="/pages/nuevaHC" component={NuevaHC} />
+          <Route exact path="/pages/buscarHC" component={BuscarHC} />
+          <Route exact path="/components/FormularioUsuario" component={FormularioUsuario} />
+          {/* <Route exact path="pages/dashboard/" component={Dashboard} /> */}
+        </Switch> 
     </Router>
   );
 }

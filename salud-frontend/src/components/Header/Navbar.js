@@ -8,9 +8,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
 function Navbar() {
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar, setSidebar] = useState(false);
 
-  const showSidebar = () => setSidebar(!sidebar) 
+  const showSidebar = () => setSidebar(!sidebar); 
 
   return(
     <>

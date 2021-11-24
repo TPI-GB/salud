@@ -1,19 +1,18 @@
 const express = require("express");
 const cors = require("cors");
-const userRoutes = require("./routes/userRoutes");
+const UserController = require("./controllers/user-controller");
+const MedicalHistoryController = require("./controllers/medical-history-controller");
 
 const app = express();
-const bodyParser = require("body-parser");
+const userController = new UserController();
+const medicalHistoryController = new MedicalHistoryController();
 
+// middleware
 app.use(cors());
-
-
 app.use(express.json());
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-
-app.use("/users", userRoutes);
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use("/users", userController.router);
+app.use("/medical-histories", medicalHistoryController.router);
 
 module.exports = app;
