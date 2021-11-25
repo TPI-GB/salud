@@ -28,6 +28,7 @@ export default function FormularioDeUsuario() {
       <Card className="Prueba" sx={{ minWidth: 275 }}>
         <FormControl onSubmit={handleSubmit(onSubmit)}>
           <Box
+            textAlign="center"
             component="form"
             sx={{
               "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -165,7 +166,7 @@ export default function FormularioDeUsuario() {
                 helperText={errors.numerodocumento?.message}
               />
             </div>
-            <Stack>
+            <Stack textAlign="center">
               Roles:
               <FormGroup className="Prueba">
                 <div>
