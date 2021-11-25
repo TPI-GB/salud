@@ -164,16 +164,18 @@ export default function PinnedSubheaderList() {
 
       <FormControlLabel
         control={<Checkbox />}
+        defaultChecked={checkedAux("Laboratorio", usuarioSeleccionado.roles)}
         label="Laboratorio"
         value="Laboratorio"
         {...register("roles")}
         onChange={(e) => rolesAux("Laboratorio", e)}
-        checked={laboratorio}
+        checked={checkedAux("Laboratorio", usuarioSeleccionado.roles)}
       />
       <FormControlLabel
         control={<Checkbox />}
         label="Recepcion"
         value="Recepcion"
+        defaultChecked={checkedAux("Recepcion", usuarioSeleccionado.roles)}
         {...register("roles")}
         onChange={(e) => rolesAux("Recepcion", e)}
         checked={checkedAux("Recepcion", usuarioSeleccionado.roles)}
@@ -182,6 +184,7 @@ export default function PinnedSubheaderList() {
         control={<Checkbox />}
         label="Secretaria"
         value="Secretaria"
+        defaultChecked={checkedAux("Secretaria", usuarioSeleccionado.roles)}
         {...register("roles")}
         onChange={(e) => rolesAux("Secretaria", e)}
         checked={checkedAux("Secretaria", usuarioSeleccionado.roles)}
@@ -190,6 +193,7 @@ export default function PinnedSubheaderList() {
         control={<Checkbox />}
         label="Director"
         value="Director"
+        defaultChecked={checkedAux("Director", usuarioSeleccionado.roles)}
         {...register("roles")}
         onChange={(e) => rolesAux("Director", e)}
         checked={checkedAux("Director", usuarioSeleccionado.roles)}
@@ -198,9 +202,10 @@ export default function PinnedSubheaderList() {
         control={<Checkbox />}
         label="Admin"
         value="Admin"
+        defaultChecked={checkedAux("Admin", usuarioSeleccionado.roles)}
         {...register("roles")}
         onChange={(e) => rolesAux("Admin", e)}
-        checked={true}
+        checked={checkedAux("Admin", usuarioSeleccionado.roles)}
       />
       <br />
       <TextField
