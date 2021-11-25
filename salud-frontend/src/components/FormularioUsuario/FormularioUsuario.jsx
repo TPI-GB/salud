@@ -122,13 +122,11 @@ export default function FormularioDeUsuario() {
               /> */}
 
               <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
-                <InputLabel id="demo-simple-select-label">
-                  Tipo documento
-                </InputLabel>
                 <Select
                   className="col-2"
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
+                  defaultValue="DNI"
                   {...register("tipodocumento", {
                     required: {
                       value: true,
