@@ -4,19 +4,16 @@ import { FormControlLabel } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { createUser } from "../../services";
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-
 import Button from "@mui/material/Button";
-
-//probando card
 import Card from "@mui/material/Card";
 import "./FormularioUsuario.scss";
-
-//import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 export default function FormularioDeUsuario() {
   const {
@@ -29,7 +26,7 @@ export default function FormularioDeUsuario() {
   return (
     <div>
       <Card className="Prueba" sx={{ minWidth: 275 }}>
-        <FormControl className="Prueba" onSubmit={handleSubmit(onSubmit)}>
+        <FormControl onSubmit={handleSubmit(onSubmit)}>
           <Box
             component="form"
             sx={{
@@ -75,7 +72,7 @@ export default function FormularioDeUsuario() {
                 type="password"
                 //pattern=".{6}"
                 label="Contraseña"
-                {...register("contrasenia", {
+                {...register("password", {
                   required: {
                     value: true,
                     message: "El campo es requerido",
@@ -110,7 +107,7 @@ export default function FormularioDeUsuario() {
             </div>
 
             <div>
-              <TextField
+              {/* <TextField
                 id="tipodocid"
                 type="text"
                 label="Tipo documento"
@@ -122,7 +119,34 @@ export default function FormularioDeUsuario() {
                 })}
                 error={Boolean(errors.tipodocumento)}
                 helperText={errors.tipodocumento?.message}
-              />
+              /> */}
+
+              <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
+                <InputLabel id="demo-simple-select-label">
+                  Tipo documento
+                </InputLabel>
+                <Select
+                  className="col-2"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  {...register("tipodocumento", {
+                    required: {
+                      value: true,
+                      message: "Necesitas este campo",
+                    },
+                  })}
+                  error={Boolean(errors.tipodocumento)}
+                  helperText={errors.tipodocumento?.message}
+                >
+                  <MenuItem value={"DNI"}>DNI</MenuItem>
+                  <MenuItem value={"Libreta de enrolamiento LE"}>
+                    Libreta de enrolamiento LE
+                  </MenuItem>
+                  <MenuItem value={"Libreta cívica LC"}>
+                    Libreta cívica LC
+                  </MenuItem>
+                </Select>
+              </FormControl>
 
               <TextField
                 id="numDocid"
@@ -143,7 +167,7 @@ export default function FormularioDeUsuario() {
                 helperText={errors.numerodocumento?.message}
               />
             </div>
-            <Stack className="Prueba">
+            <Stack>
               Roles:
               <FormGroup className="Prueba">
                 <div>
