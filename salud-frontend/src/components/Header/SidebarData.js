@@ -35,7 +35,7 @@ export const SidebarData = [
     },
     {
         title: 'Dashboard',
-        path: '/pages/dashboard',
+        path: '/components/Dashboard',
         icon: <DashboardIcon/>,
         cName: 'nav-text'
     },

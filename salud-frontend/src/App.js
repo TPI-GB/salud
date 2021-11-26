@@ -13,7 +13,7 @@ import MostrarUsuarios from './components/MostrarUsuarios/MostrarUsuarios';
 import NuevaHC from './pages/nuevaHC/NuevaHC';
 import BuscarHC from './pages/BuscarHC/BuscarHC';
 import FormularioUsuario from './components/FormularioUsuario/FormularioUsuario';
-//import Dashboard from './pages/dashboard/Dashboard';
+import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
   return (
@@ -26,7 +26,7 @@ function App() {
           <Route exact path="/pages/nuevaHC" component={NuevaHC} />
           <Route exact path="/pages/buscarHC" component={BuscarHC} />
           <Route exact path="/components/FormularioUsuario" component={FormularioUsuario} />
-          {/* <Route exact path="pages/dashboard/" component={Dashboard} /> */}
+          <Route exact path="/components/Dashboard/" component={Dashboard} /> 
         </Switch> 
     </Router>
   );

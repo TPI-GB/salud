@@ -4,19 +4,16 @@ import { FormControlLabel } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { createUser } from "../../services";
-
 import * as React from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
-
 import Button from "@mui/material/Button";
-
-//probando card
 import Card from "@mui/material/Card";
 import "./FormularioUsuario.scss";
-
-//import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
 
 export default function FormularioDeUsuario() {
   const {
@@ -29,8 +26,9 @@ export default function FormularioDeUsuario() {
   return (
     <div>
       <Card className="Prueba" sx={{ minWidth: 275 }}>
-        <FormControl className="Prueba" onSubmit={handleSubmit(onSubmit)}>
+        <FormControl onSubmit={handleSubmit(onSubmit)}>
           <Box
+            textAlign="center"
             component="form"
             sx={{
               "& .MuiTextField-root": { m: 1, width: "25ch" },
@@ -42,7 +40,7 @@ export default function FormularioDeUsuario() {
 
             <div>
               <TextField
-                id="outlined-basic"
+                id="nombreid"
                 type="text"
                 label="Nombre"
                 {...register("nombre", {
@@ -51,30 +49,30 @@ export default function FormularioDeUsuario() {
                     message: "El campo es requerido",
                   },
                 })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
+                error={Boolean(errors.nombre)}
+                helperText={errors.nombre?.message}
               />
 
               <TextField
-                id="outlined-basic"
+                id="apellidoid"
                 type="text"
                 label="Apellido"
                 {...register("apellido", {
-                  requiered: {
+                  required: {
                     value: true,
                     message: "El campo es requerido",
                   },
                 })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
+                error={Boolean(errors.apellido)}
+                helperText={errors.apellido?.message}
               />
             </div>
             <div>
               <TextField
-                id="outlined-basic"
+                id="contraseniaid"
                 type="password"
                 //pattern=".{6}"
-                label="Password"
+                label="Contraseña"
                 {...register("password", {
                   required: {
                     value: true,
@@ -90,7 +88,7 @@ export default function FormularioDeUsuario() {
               />
 
               <TextField
-                id="outlined-basic"
+                id="emailid"
                 type="email"
                 label="Mail"
                 placeholder="ejemplo@gmail.com"
@@ -110,8 +108,8 @@ export default function FormularioDeUsuario() {
             </div>
 
             <div>
-              <TextField
-                id="outlined-basic"
+              {/* <TextField
+                id="tipodocid"
                 type="text"
                 label="Tipo documento"
                 {...register("tipodocumento", {
@@ -122,10 +120,35 @@ export default function FormularioDeUsuario() {
                 })}
                 error={Boolean(errors.tipodocumento)}
                 helperText={errors.tipodocumento?.message}
-              />
+              /> */}
+
+              <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
+                <Select
+                  className="col-2"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  defaultValue="DNI"
+                  {...register("tipodocumento", {
+                    required: {
+                      value: true,
+                      message: "Necesitas este campo",
+                    },
+                  })}
+                  error={Boolean(errors.tipodocumento)}
+                  helperText={errors.tipodocumento?.message}
+                >
+                  <MenuItem value={"DNI"}>DNI</MenuItem>
+                  <MenuItem value={"Libreta de enrolamiento LE"}>
+                    Libreta de enrolamiento LE
+                  </MenuItem>
+                  <MenuItem value={"Libreta cívica LC"}>
+                    Libreta cívica LC
+                  </MenuItem>
+                </Select>
+              </FormControl>
 
               <TextField
-                id="outlined-basic"
+                id="numDocid"
                 type="text"
                 //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
                 label="Numero documento"
@@ -135,7 +158,7 @@ export default function FormularioDeUsuario() {
                     message: "Necesitas este campo",
                   },
                   pattern: {
-                    value: "^[1-9]{1}[0-9]{6,7}$",
+                    value: /^[1-9][0-9]{6,8}$/i,
                     message: "El formato no es correcto",
                   },
                 })}
@@ -143,7 +166,7 @@ export default function FormularioDeUsuario() {
                 helperText={errors.numerodocumento?.message}
               />
             </div>
-            <Stack className="Prueba">
+            <Stack textAlign="center">
               Roles:
               <FormGroup className="Prueba">
                 <div>
