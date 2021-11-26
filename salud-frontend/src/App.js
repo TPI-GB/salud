@@ -1,33 +1,33 @@
-import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import './App.css';
+import Navbar from './components/Header/Navbar';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 
 //Pages
-import Login from "./pages/login";
-import Home from "./pages/home/home";
-import MostrarUsuarios from "./components/MostrarUsuarios";
-import NuevoPaciente from "./components/NuevoPaciente/NuevoPaciente";
-import BuscarPaciente from "./components/BuscarPaciente/BuscarPaciente";
-import Dashboard from "./components/Dashboard/Dashboard";
-import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
-import GuardedRoute from "./components/GuardedRoute";
+import Login from './pages/login/Login';
+import Home from './pages/home/home';
+import MostrarUsuarios from './components/MostrarUsuarios/MostrarUsuarios';
+import NuevaHC from './pages/nuevaHC/NuevaHC';
+import BuscarHC from './pages/BuscarHC/BuscarHC';
+import FormularioUsuario from './components/FormularioUsuario/FormularioUsuario';
+import Dashboard from './pages/dashboard/Dashboard';
 
 function App() {
   return (
     <Router>
-      <Switch>
-        <GuardedRoute exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <GuardedRoute
-          exact
-          path="/MostrarUsuarios"
-          component={MostrarUsuarios}
-        />
-        <GuardedRoute exact path="/NuevoPaciente" component={NuevoPaciente} />
-        <GuardedRoute exact path="/BuscarPaciente" component={BuscarPaciente} />
-        <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
-        <GuardedRoute exact path="/MostrarUsuarios" component={MostrarUsuarios} />
-        <GuardedRoute exact path="/Formulario" component={FormularioDeUsuario} />
-      </Switch>
+      <Navbar />
+        <Switch>
+          <Route exact path="/pages/login" component={Login} />
+          <Route exact path="/pages/home" component={Home} />
+          <Route exact path="/components/MostrarUsuarios" component={MostrarUsuarios} />
+          <Route exact path="/pages/nuevaHC" component={NuevaHC} />
+          <Route exact path="/pages/buscarHC" component={BuscarHC} />
+          <Route exact path="/components/FormularioUsuario" component={FormularioUsuario} />
+          <Route exact path="/components/Dashboard/" component={Dashboard} /> 
+        </Switch> 
     </Router>
   );
 }
