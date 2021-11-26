@@ -7,8 +7,6 @@ const Schema = mongoose.Schema;
 const MedicalHistorySchema = Schema(
   {
     numeroHistoriaClinica: { type: String, required: true },
-    tipoDocumento: { type: String, required: true },
-    numeroDocumento: { type: String, required: true },
     nombres: { type: String },
     apellidos: { type: String },
     nacionalidad: { type: String },
@@ -27,11 +25,6 @@ const MedicalHistorySchema = Schema(
   {
     timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
   }
-);
-
-MedicalHistorySchema.index(
-  { tipoDocumento: 1, numeroDocumento: -1 },
-  { unique: true }
 );
 
 module.exports = mongoose.model("MedicalHistory", MedicalHistorySchema);

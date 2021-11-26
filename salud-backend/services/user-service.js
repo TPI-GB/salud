@@ -73,11 +73,7 @@ class UserService {
     // Validar si el usuario existe en la base de datos
     const user = await this.userRepository.findByEmail(email);
 
-    if (
-      user &&
-      user.activo &&
-      (await bcrypt.compare(password, user.contrasenia))
-    ) {
+    if (user && (await bcrypt.compare(password, user.contrasenia))) {
       // Crear Token
       const token = jwt.sign(
         { user_id: user._id, email },

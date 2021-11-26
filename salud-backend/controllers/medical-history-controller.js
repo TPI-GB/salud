@@ -11,9 +11,6 @@ class MedicalHistoryController {
     this.router.get("/:id", (req, res) => {
       this.getMedicalHistoryById(req, res);
     });
-    this.router.get("/:docType/:docNumber", (req, res) => {
-      this.getMedicalHistoryByDocument(req, res);
-    });
     this.router.post("/create", (req, res) => {
       this.createMedicalHistory(req, res);
     });
@@ -62,31 +59,9 @@ class MedicalHistoryController {
       });
   }
 
-  getMedicalHistoryByDocument(req, res) {
-    const docType = req.params.docType;
-    const docNumber = req.params.docNumber;
-
-    let medicalHistoryPromise =
-      this.medicalHistoryService.getMedicalHistoryByDocument(
-        docType,
-        docNumber
-      );
-
-    medicalHistoryPromise
-      .then((medicalHistory) => {
-        res.status(200).json(medicalHistory);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        res.status(400).json({ error: err.message });
-      });
-  }
-
   createMedicalHistory(req, res) {
     const {
       numeroHistoriaClinica,
-      tipoDocumento,
-      numeroDocumento,
       nombres,
       apellidos,
       nacionalidad,
@@ -100,8 +75,6 @@ class MedicalHistoryController {
 
     const medicalHistoryData = {
       numeroHistoriaClinica,
-      tipoDocumento,
-      numeroDocumento,
       nombres,
       apellidos,
       nacionalidad,
