@@ -14,7 +14,7 @@ export default function MedicalHistory() {
       setMedicalHistory(response.data);
     };
     getData();
-  }, [id]);
+  }, []);
 
   return (
     <Box>

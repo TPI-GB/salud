@@ -31,8 +31,8 @@ function RenderMedicalHistory(props) {
   return (
     <>
       <ListItemText
-        primary={mh.nombres + " " + mh.apellidos}
-        secondary={mh.numeroHistoriaClinica}
+        primary={"Paciente: " + mh.nombres + " " + mh.apellidos}
+        secondary={"Número de historia " + mh.numeroHistoriaClinica}
       />
       <Fab color="secondary" size="small" sx={{ mr: 1 }}>
         <EditIcon />

@@ -6,12 +6,12 @@ const Schema = mongoose.Schema;
 
 const MedicalHistorySchema = Schema(
   {
-    numeroHistoriaClinica: { type: String, required: true },
+    numeroHistoriaClinica: { type: String, required: true, unique: true },
     tipoDocumento: { type: String, required: true },
     numeroDocumento: { type: String, required: true },
-    nombres: { type: String },
-    apellidos: { type: String },
-    nacionalidad: { type: String },
+    nombres: { type: String, required: true },
+    apellidos: { type: String, required: true },
+    nacionalidad: { type: String, required: true },
     sexo: { type: String },
     edad: { type: Number },
     ocupacionActual: { type: String },
