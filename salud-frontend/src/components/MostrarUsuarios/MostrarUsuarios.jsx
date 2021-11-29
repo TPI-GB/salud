@@ -58,6 +58,7 @@ export default function PinnedSubheaderList() {
     roles: [],
     tipodocumento: "",
     numerodocumento: "",
+    activo: "true",
   });
   const checkedAux = (rol, roles) => {
     return roles.includes(rol);
@@ -94,6 +95,7 @@ export default function PinnedSubheaderList() {
             usuario.roles = usuarioSeleccionado.roles;
             usuario.tipodocumento = usuarioSeleccionado.tipodocumento;
             usuario.numerodocumento = usuarioSeleccionado.numerodocumento;
+            usuario.activo = usuarioSeleccionado.activo;
           }
         });
         setData(dataNueva);
@@ -159,6 +161,15 @@ export default function PinnedSubheaderList() {
         label="Email"
         onChange={handleChange}
         value={usuarioSeleccionado && usuarioSeleccionado.email}
+      />
+      <br />
+      <br />
+      <TextField
+        name="activo"
+        className={styles.inputMaterial}
+        label="Estado"
+        onChange={handleChange}
+        value={usuarioSeleccionado && usuarioSeleccionado.activo}
       />
       <br />
 
@@ -234,18 +245,6 @@ export default function PinnedSubheaderList() {
     </div>
   );
 
-  // useEffect(() => {
-  //   obtenerDatos();
-  // }, []);
-
-  // const obtenerDatos = async () => {
-  //   const response = await fetch(`http://localhost:8080/users`);
-  //   const respuesta = await response.json();
-  //   setUsuariosList(respuesta);
-  // };
-
-  // console.log(usuariosList);
-
   return (
     <div className="App">
       <h1>Usuarios actuales</h1>
@@ -257,6 +256,7 @@ export default function PinnedSubheaderList() {
               <TableCell>Apellido</TableCell>
               <TableCell>Tipo documento</TableCell>
               <TableCell>Numero documento</TableCell>
+              <TableCell>Estado</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
@@ -267,6 +267,7 @@ export default function PinnedSubheaderList() {
                 <TableCell>{usuario.apellido}</TableCell>
                 <TableCell>{usuario.tipodocumento}</TableCell>
                 <TableCell>{usuario.numerodocumento}</TableCell>
+                <TableCell>{usuario.activo}</TableCell>
                 <TableCell>
                   <ModeEditOutlineTwoToneIcon
                     className={styles.iconos}

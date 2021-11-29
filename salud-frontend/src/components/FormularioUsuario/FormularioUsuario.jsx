@@ -40,54 +40,6 @@ export default function FormularioDeUsuario() {
 
             <div>
               <TextField
-                id="nombreid"
-                type="text"
-                label="Nombre"
-                {...register("nombre", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                })}
-                error={Boolean(errors.nombre)}
-                helperText={errors.nombre?.message}
-              />
-
-              <TextField
-                id="apellidoid"
-                type="text"
-                label="Apellido"
-                {...register("apellido", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                })}
-                error={Boolean(errors.apellido)}
-                helperText={errors.apellido?.message}
-              />
-            </div>
-            <div>
-              <TextField
-                id="contraseniaid"
-                type="password"
-                //pattern=".{6}"
-                label="Contraseña"
-                {...register("password", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                  minLength: {
-                    value: 6,
-                    message: "La contraseña debe tener al menos 6 caracteres",
-                  },
-                })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
-              />
-
-              <TextField
                 id="emailid"
                 type="email"
                 label="Mail"
@@ -105,23 +57,6 @@ export default function FormularioDeUsuario() {
                 error={Boolean(errors.email)}
                 helperText={errors.email?.message}
               />
-            </div>
-
-            <div>
-              {/* <TextField
-                id="tipodocid"
-                type="text"
-                label="Tipo documento"
-                {...register("tipodocumento", {
-                  required: {
-                    value: true,
-                    message: "Necesitas este campo",
-                  },
-                })}
-                error={Boolean(errors.tipodocumento)}
-                helperText={errors.tipodocumento?.message}
-              /> */}
-
               <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
                 <Select
                   className="col-2"
@@ -146,7 +81,26 @@ export default function FormularioDeUsuario() {
                   </MenuItem>
                 </Select>
               </FormControl>
-
+            </div>
+            <div>
+              <TextField
+                id="contraseniaid"
+                type="password"
+                //pattern=".{6}"
+                label="Contraseña"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "La contraseña debe tener al menos 6 caracteres",
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
+              />
               <TextField
                 id="numDocid"
                 type="text"
@@ -166,6 +120,36 @@ export default function FormularioDeUsuario() {
                 helperText={errors.numerodocumento?.message}
               />
             </div>
+
+            <div>
+              <TextField
+                id="apellidoid"
+                type="text"
+                label="Apellido"
+                {...register("apellido", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.apellido)}
+                helperText={errors.apellido?.message}
+              />
+
+              <TextField
+                id="nombreid"
+                type="text"
+                label="Nombre"
+                {...register("nombre", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.nombre)}
+                helperText={errors.nombre?.message}
+              />
+            </div>
             <Stack textAlign="center">
               Roles:
               <FormGroup className="Prueba">
@@ -178,7 +162,7 @@ export default function FormularioDeUsuario() {
                   />
                   <FormControlLabel
                     control={<Checkbox />}
-                    label="Recepcion"
+                    label="Recepción"
                     value="Recepcion"
                     {...register("roles")}
                   />
@@ -201,6 +185,12 @@ export default function FormularioDeUsuario() {
                     control={<Checkbox />}
                     label="Admin"
                     value="Admin"
+                    {...register("roles")}
+                  />
+                  <FormControlLabel
+                    control={<Checkbox />}
+                    label="Médico"
+                    value="Medico"
                     {...register("roles")}
                   />
                 </div>
