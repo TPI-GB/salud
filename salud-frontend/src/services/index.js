@@ -47,6 +47,4 @@ export async function createUser(data) {
   ); 
 }
 
-// export async function updateUser(data) {
 
-// }

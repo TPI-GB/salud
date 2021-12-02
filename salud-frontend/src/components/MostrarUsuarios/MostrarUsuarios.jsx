@@ -13,6 +13,8 @@ import {
   FormControlLabel,
   Modal,
   Button,
+  Alert,
+  Collapse,
 } from "@mui/material";
 import axios from "axios";
 import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
@@ -21,6 +23,7 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
+import Tooltip from "@mui/material/Tooltip";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -51,6 +54,7 @@ export default function PinnedSubheaderList() {
   const [data, setData] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
   const [modalInhabilitar, setModalInhabilitar] = useState(false);
+  const [mostrarErrorAlEditar, setMostrarErrorAlEditar] = useState(true);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
     _id: "",
     nombre: "",
@@ -63,11 +67,11 @@ export default function PinnedSubheaderList() {
   });
 
   //prueba
-  const [usuarioSeleccionadoInhabilitar, setUsuarioSeleccionadoInhabilitar] =
-    useState({
-      _id: "",
-      activo: "",
-    });
+  // const [usuarioSeleccionadoInhabilitar, setUsuarioSeleccionadoInhabilitar] =
+  //   useState({
+  //     _id: "",
+  //     activo: "",
+  //   });
   const checkedAux = (rol, roles) => {
     return roles.includes(rol);
   };
@@ -88,14 +92,7 @@ export default function PinnedSubheaderList() {
     console.log(usuarioSeleccionado);
   };
 
-  const peticionGet = async () => {
-    await axios.get(baseUrl).then((response) => {
-      setData(response.data);
-    });
-  };
-
   const peticionPut = async (usuarioActualizado) => {
-    //updateUser(usuario._id)
     await axios
       .put(baseUrl + usuarioActualizado._id, usuarioActualizado)
       .then((response) => {
@@ -113,7 +110,7 @@ export default function PinnedSubheaderList() {
           }
         });
         setData(dataNueva);
-        abrirCerrarModalEditar();
+        setMostrarErrorAlEditar(true);
       });
   };
 
@@ -123,8 +120,8 @@ export default function PinnedSubheaderList() {
     setData(response.data);
   }
 
-  const cambiarHabilitacion = (usuario) => {
-    updateUser(usuario._id, { activo: !usuario.activo });
+  const cambiarHabilitacion = async (usuario) => {
+    await updateUser(usuario._id, { activo: !usuario.activo });
     getData();
   };
   //prueba inhabilitar
@@ -144,27 +141,9 @@ export default function PinnedSubheaderList() {
   useEffect(() => {
     //await peticionGet();
     getData();
-  }, [data]);
+  }, []);
 
   useEffect(() => {}, [usuarioSeleccionado.roles]);
-
-  function rolesAux(elRol, e) {
-    if (e.target.checked) {
-      setLaboratorio(true);
-      if (!usuarioSeleccionado.roles.includes(elRol)) {
-        usuarioSeleccionado.roles.push(elRol);
-      }
-      console.log(usuarioSeleccionado.roles);
-      setUsuarioSeleccionado(usuarioSeleccionado);
-    } else {
-      setLaboratorio(false);
-      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != elRol
-      );
-      setUsuarioSeleccionado(usuarioSeleccionado);
-      console.log(usuarioSeleccionado.roles);
-    }
-  }
 
   function handleAdminChange(event) {
     setAdmin(event.target.checked);
@@ -177,7 +156,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "admin"
+        (rol) => rol !== "admin"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -195,7 +174,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "laboratorio"
+        (rol) => rol !== "laboratorio"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -212,7 +191,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "secretaria"
+        (rol) => rol !== "secretaria"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -229,7 +208,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "medico"
+        (rol) => rol !== "medico"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -246,7 +225,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "recepcion"
+        (rol) => rol !== "recepcion"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -263,7 +242,7 @@ export default function PinnedSubheaderList() {
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != "director"
+        (rol) => rol !== "director"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
@@ -402,13 +381,27 @@ export default function PinnedSubheaderList() {
       <br />
       <br />
       <div align="right">
+        <Collapse
+          in={mostrarErrorAlEditar}
+          sx={{ mt: "0px", width: "300px", left: "50px" }}
+        >
+          <Alert
+            variant="filled"
+            severity="success"
+            onClose={() => {
+              setMostrarErrorAlEditar(false);
+            }}
+          >
+            Se edito correctamente.
+          </Alert>
+        </Collapse>
         <Button
           color="primary"
           onClick={() => peticionPut(usuarioSeleccionado)}
         >
           Editar
         </Button>
-        <Button onClick={() => abrirCerrarModalEditar()}>Cancelar</Button>
+        <Button onClick={() => abrirCerrarModalEditar()}>Cerrar</Button>
       </div>
     </div>
   );
@@ -437,21 +430,27 @@ export default function PinnedSubheaderList() {
                 <TableCell>{usuario.numerodocumento}</TableCell>
                 <TableCell>{usuario.activo ? "Activo" : "Inactivo"}</TableCell>
                 <TableCell>
-                  <ModeEditOutlineTwoToneIcon
-                    className={styles.iconos}
-                    onClick={() => seleccionarUsuario(usuario, "Editar")}
-                  />
+                  <Tooltip title="Editar">
+                    <ModeEditOutlineTwoToneIcon
+                      className={styles.iconos}
+                      onClick={() => seleccionarUsuario(usuario, "Editar")}
+                    />
+                  </Tooltip>
                   &nbsp;&nbsp;&nbsp;
                   {usuario.activo ? (
-                    <NotInterestedIcon
-                      className={styles.iconos}
-                      onClick={() => cambiarHabilitacion(usuario)}
-                    />
+                    <Tooltip title="Deshabilitar">
+                      <NotInterestedIcon
+                        className={styles.iconos}
+                        onClick={() => cambiarHabilitacion(usuario)}
+                      />
+                    </Tooltip>
                   ) : (
-                    <CheckOutlinedIcon
-                      className={styles.iconos}
-                      onClick={() => cambiarHabilitacion(usuario)}
-                    />
+                    <Tooltip title="Habilitar">
+                      <CheckOutlinedIcon
+                        className={styles.iconos}
+                        onClick={() => cambiarHabilitacion(usuario)}
+                      />
+                    </Tooltip>
                   )}
                 </TableCell>
               </TableRow>
