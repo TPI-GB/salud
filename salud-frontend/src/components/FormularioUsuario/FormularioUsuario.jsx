@@ -157,19 +157,19 @@ export default function FormularioDeUsuario() {
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Laboratorio"
-                    value="Laboratorio"
+                    value="laboratorio"
                     {...register("roles")}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Recepción"
-                    value="Recepcion"
+                    value="recepcion"
                     {...register("roles")}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Secretaria"
-                    value="Secretaria"
+                    value="secretaria"
                     {...register("roles")}
                   />
                 </div>
@@ -177,20 +177,20 @@ export default function FormularioDeUsuario() {
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Director"
-                    value="Director"
+                    value="director"
                     {...register("roles")}
                   />
 
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Admin"
-                    value="Admin"
+                    value="admin"
                     {...register("roles")}
                   />
                   <FormControlLabel
                     control={<Checkbox />}
                     label="Médico"
-                    value="Medico"
+                    value="medico"
                     {...register("roles")}
                   />
                 </div>

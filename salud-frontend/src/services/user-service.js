@@ -20,3 +20,20 @@ export async function loginUser(credentials) {
 
   return response;
 }
+
+export async function updateUser(id, data) {
+  const response = await axios.put(
+    `http://localhost:8080/users/${id}`,
+    data,
+  );
+
+  return response;
+}
+
+export async function getUsers() {
+  const response = await axios.get(
+    `http://localhost:8080/users`
+  );
+
+  return response;
+}
