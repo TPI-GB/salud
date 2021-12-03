@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 800,
     color: "black",
     border: "2px solid #000",
     boxShadow: 24,
@@ -54,7 +54,8 @@ export default function PinnedSubheaderList() {
   const [data, setData] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
   const [modalInhabilitar, setModalInhabilitar] = useState(false);
-  const [mostrarErrorAlEditar, setMostrarErrorAlEditar] = useState(true);
+  const [mostrarConfirmacionAlEditar, setMostrarConfirmacionAlEditar] =
+    useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
     _id: "",
     nombre: "",
@@ -66,12 +67,6 @@ export default function PinnedSubheaderList() {
     activo: "",
   });
 
-  //prueba
-  // const [usuarioSeleccionadoInhabilitar, setUsuarioSeleccionadoInhabilitar] =
-  //   useState({
-  //     _id: "",
-  //     activo: "",
-  //   });
   const checkedAux = (rol, roles) => {
     return roles.includes(rol);
   };
@@ -110,7 +105,7 @@ export default function PinnedSubheaderList() {
           }
         });
         setData(dataNueva);
-        setMostrarErrorAlEditar(true);
+        setMostrarConfirmacionAlEditar(true);
       });
   };
 
@@ -123,10 +118,6 @@ export default function PinnedSubheaderList() {
   const cambiarHabilitacion = async (usuario) => {
     await updateUser(usuario._id, { activo: !usuario.activo });
     getData();
-  };
-  //prueba inhabilitar
-  const abrirCerrarModalInhabilitar = () => {
-    setModalInhabilitar(!modalInhabilitar);
   };
 
   const abrirCerrarModalEditar = () => {
@@ -251,7 +242,7 @@ export default function PinnedSubheaderList() {
 
   const bodyEditar = (
     <div className={styles.modal}>
-      <h3>Editar Usuario</h3>
+      <h3 align="center">Editar Usuario</h3>
       <TextField
         name="nombre"
         className={styles.inputMaterial}
@@ -259,6 +250,7 @@ export default function PinnedSubheaderList() {
         onChange={handleChange}
         value={usuarioSeleccionado && usuarioSeleccionado.nombre}
       />
+      <br />
       <br />
       <TextField
         name="apellido"
@@ -380,21 +372,23 @@ export default function PinnedSubheaderList() {
       />
       <br />
       <br />
-      <div align="right">
+      <div align="left">
         <Collapse
-          in={mostrarErrorAlEditar}
-          sx={{ mt: "0px", width: "300px", left: "50px" }}
+          in={mostrarConfirmacionAlEditar}
+          sx={{ mt: "0px", width: "797px" }}
         >
           <Alert
             variant="filled"
             severity="success"
             onClose={() => {
-              setMostrarErrorAlEditar(false);
+              setMostrarConfirmacionAlEditar(false);
             }}
           >
             Se edito correctamente.
           </Alert>
         </Collapse>
+      </div>
+      <div align="center">
         <Button
           color="primary"
           onClick={() => peticionPut(usuarioSeleccionado)}
