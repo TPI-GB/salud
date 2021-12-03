@@ -1,14 +1,21 @@
 import axios from "axios";
 
+const config = {
+  baseURL: process.env.REACT_APP_API_URL,
+  port: process.env.REACT_APP_API_PORT,
+};
+
 export async function getAllMedicalHistories() {
-  const response = await axios.get("http://localhost:8080/medical-histories/");
+  const response = await axios.get(
+    `${config.baseURL}:${config.port}/medical-histories/`
+  );
 
   return response;
 }
 
 export async function getMedicalHistoryById(id) {
   const response = await axios.get(
-    `http://localhost:8080/medical-histories/${id}`
+    `${config.baseURL}:${config.port}/medical-histories/${id}`
   );
 
   return response;
@@ -16,7 +23,25 @@ export async function getMedicalHistoryById(id) {
 
 export async function getMedicalHistoryByDocument(docType, docNumber) {
   const response = await axios.get(
-    `http://localhost:8080/medical-histories/${docType}/${docNumber}`
+    `${config.baseURL}:${config.port}/medical-histories/${docType}/${docNumber}`
+  );
+
+  return response;
+}
+
+export async function createMedicalHistory(medicalHistoryData) {
+  const response = await axios.post(
+    `${config.baseURL}:${config.port}/medical-histories/create`,
+    medicalHistoryData
+  );
+
+  return response;
+}
+
+export async function editMedicalHistory(id, medicalHistoryData) {
+  const response = await axios.put(
+    `${config.baseURL}:${config.port}/medical-histories/${id}`,
+    medicalHistoryData
   );
 
   return response;

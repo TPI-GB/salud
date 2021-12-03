@@ -75,7 +75,7 @@ export default function FormularioDeUsuario() {
                 type="password"
                 //pattern=".{6}"
                 label="Password"
-                {...register("password", {
+                {...register("contrasenia", {
                   required: {
                     value: true,
                     message: "El campo es requerido",

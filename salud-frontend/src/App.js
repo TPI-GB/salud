@@ -10,7 +10,7 @@ import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
-import MedicalHistoryForm from "./components/MedicalHistoryForm";
+import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
 
 function App() {
@@ -45,7 +45,12 @@ function App() {
         <GuardedRoute
           exact
           path="/crear-historia-clinica"
-          component={MedicalHistoryForm}
+          component={CreateMH}
+        />
+        <GuardedRoute
+          exact
+          path="/editar-historia-clinica/:id"
+          component={CreateMH}
         />
       </Switch>
     </Router>

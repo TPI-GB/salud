@@ -34,6 +34,8 @@ export async function createUser(data) {
     numerodocumento,
   } = data;
 
+  console.log(contrasenia);
+
   const token = Buffer.from(email + ":" + contrasenia).toString("base64");
   const method = "Basic ";
   const encriptado = method + token;

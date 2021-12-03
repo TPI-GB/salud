@@ -10,9 +10,15 @@ class MedicalHistoryRepository {
   }
 
   async findByDocument(docType, docNumber) {
-    return await MedicalHistory.find({
+    return await MedicalHistory.findOne({
       tipoDocumento: docType,
       numeroDocumento: docNumber,
+    });
+  }
+
+  async findByNumber(medicalHistoryNumber) {
+    return await MedicalHistory.findOne({
+      numeroHistoriaClinica: medicalHistoryNumber,
     });
   }
 

@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { getMedicalHistoryById } from "../../services/medical-history-service";
 import { useParams } from "react-router";
-import { Box, TextField, Grid, Select, MenuItem } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  Radio,
+  RadioGroup,
+  Grid,
+  FormControl,
+  FormLabel,
+  FormControlLabel,
+} from "@mui/material";
+import {
+  createMedicalHistory,
+  editMedicalHistory,
+} from "../../services/medical-history-service";
+import CountrySelector from "./CountrySelector";
 import "./MedicalHistoryForm.scss";
 
-export default function MedicalHistory() {
+export default function MedicalHistoryForm() {
   const [info, setInfo] = useState({
     numeroHistoriaClinica: "",
-    tipoDocumento: "",
+    tipoDocumento: "DNI",
     numeroDocumento: "",
-    nombres: "",
-    apellidos: "",
-    nacionalidad: "",
-    sexo: "",
+    nombre: "",
+    apellido: "",
+    nacionalidad: "Argentina",
+    sexo: "femenino",
     edad: "",
     ocupacionActual: "",
     estadoCivil: "",
@@ -32,47 +49,178 @@ export default function MedicalHistory() {
     }
   }, []);
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setInfo({ ...info, [name]: value });
+    console.log(info);
+  };
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    editMedicalHistory(id, info)
+      .then(() => {
+        console.log("success!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    createMedicalHistory(info)
+      .then(() => {
+        console.log("success!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <Box component="form" className="medicalHistoryForm">
-      <Box>
-        <TextField label="Numero de Historia" name="numeroHistoriaClinica" />
-      </Box>
-      <Box>
-        <Select defaultValue="DNI" name="tipoDocumento">
-          <MenuItem value={"DNI"}>DNI</MenuItem>
-          <MenuItem value={"LE"}>LE</MenuItem>
-          <MenuItem value={"LC"}>LC</MenuItem>
-          <MenuItem value={"CI"}>CI</MenuItem>
-        </Select>
-        <TextField label="Numero de documento" name="numeroDocumento" />
-      </Box>
-      <Box>
-        <TextField label="Nombre" name="nombres" />
-      </Box>
-      <Box>
-        <TextField label="Apellido" name="apellidos" />
-      </Box>
-      <Box>
-        <TextField label="Nacionalidad" name="nacionalidad" />
-      </Box>
-      <Box>
-        <TextField label="Sexo" name="numeroDocumento" />
-      </Box>
-      <Box>
-        <TextField label="Edad" name="edad" />
-      </Box>
-      <Box>
-        <TextField label="Ocupación actual" name="ocupacionActual" />
-      </Box>
-      <Box>
-        <TextField label="Estado civil" name="estadoCivil" />
-      </Box>
-      <Box>
-        <TextField label="Domicilio actual" name="domicilioActual" />
-      </Box>
-      <Box>
-        <TextField label="Raza" name="raza" />
-      </Box>
+    <Box component="form">
+      <Grid container>
+        <Grid item xs={6}>
+          <Box className="fieldsContainer">
+            <TextField
+              label="Numero de Historia"
+              name="numeroHistoriaClinica"
+              onChange={handleChange}
+              value={info.numeroHistoriaClinica}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+            <Select
+              defaultValue="DNI"
+              value={info.tipoDocumento}
+              name="tipoDocumento"
+              onChange={handleChange}
+              sx={{
+                mt: "8px",
+                mb: "4px",
+                marginRight: "5px",
+                minWidth: "80px",
+                maxWidth: "80px",
+              }}
+            >
+              <MenuItem value={"DNI"}>DNI</MenuItem>
+              <MenuItem value={"LE"}>LE</MenuItem>
+              <MenuItem value={"LC"}>LC</MenuItem>
+              <MenuItem value={"CI"}>CI</MenuItem>
+            </Select>
+            <TextField
+              label="Numero de documento"
+              name="numeroDocumento"
+              onChange={handleChange}
+              value={info.numeroDocumento}
+              sx={{ mt: "8px", mb: "4px", maxWidth: "400px" }}
+            />
+            <TextField
+              label="Nombre"
+              name="nombre"
+              onChange={handleChange}
+              value={info.nombre}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <TextField
+              label="Apellido"
+              name="apellido"
+              onChange={handleChange}
+              value={info.apellido}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+            <FormLabel sx={{ mt: "8px", mb: "4px", width: "100%" }}>
+              País de origen
+            </FormLabel>
+            <CountrySelector
+              defaultValue="Argentina"
+              name="nacionalidad"
+              onChange={handleChange}
+              value={info.nacionalidad}
+              fullWidth
+            />
+
+            <GenderCheckboxes
+              onChange={handleChange}
+              defaultValue={info.sexo}
+              sx={{ mt: "8px", width: "100%" }}
+            />
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box className="fieldsContainer">
+            <TextField
+              label="Edad"
+              name="edad"
+              onChange={handleChange}
+              value={info.edad}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <TextField
+              label="Ocupación actual"
+              name="ocupacionActual"
+              onChange={handleChange}
+              value={info.ocupacionActual}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <TextField
+              label="Estado civil"
+              name="estadoCivil"
+              onChange={handleChange}
+              value={info.estadoCivil}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <TextField
+              label="Domicilio actual"
+              name="domicilioActual"
+              onChange={handleChange}
+              value={info.domicilioActual}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <TextField
+              label="Raza"
+              name="raza"
+              onChange={handleChange}
+              value={info.raza}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            />
+
+            <Button
+              type="button"
+              variant="contained"
+              onClick={id ? handleEdit : handleSubmit}
+              sx={{ mt: "8px", mb: "4px", width: "100%" }}
+            >
+              Crear
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
     </Box>
+  );
+}
+
+function GenderCheckboxes({ onChange: handleChange, defaultValue, ...rest }) {
+  console.log(defaultValue);
+  return (
+    <FormControl component="fieldset">
+      <FormLabel {...rest}>Género</FormLabel>
+      <RadioGroup value={defaultValue} name="sexo" row onChange={handleChange}>
+        <FormControlLabel
+          control={<Radio />}
+          value="femenino"
+          label="Femenino"
+        />
+        <FormControlLabel
+          control={<Radio />}
+          value="masculino"
+          label="Masculino"
+        />
+      </RadioGroup>
+    </FormControl>
   );
 }
