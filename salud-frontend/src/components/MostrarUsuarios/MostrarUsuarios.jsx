@@ -15,6 +15,9 @@ import {
   Button,
   Alert,
   Collapse,
+  Select,
+  MenuItem,
+  FormControl,
 } from "@mui/material";
 import axios from "axios";
 import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
@@ -33,12 +36,13 @@ const useStyles = makeStyles({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 800,
+    width: 880,
     color: "black",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
     backgroundColor: "white",
+    padding: "4em",
   },
   iconos: {
     cursor: "pointer",
@@ -240,6 +244,11 @@ export default function PinnedSubheaderList() {
     }
   }
 
+  function manejarCerrar() {
+    setModalEditar(!modalEditar);
+    setMostrarConfirmacionAlEditar(false);
+  }
+
   const bodyEditar = (
     <div className={styles.modal}>
       <h3 align="center">Editar Usuario</h3>
@@ -282,7 +291,7 @@ export default function PinnedSubheaderList() {
         }
       />
       <br />
-
+      <p4>Roles: &nbsp;&nbsp;</p4>
       <FormControlLabel
         control={
           <Checkbox
@@ -353,14 +362,31 @@ export default function PinnedSubheaderList() {
         {...register("roles")}
       />
       <br />
-      <br />
-      <TextField
+      {/* <TextField
         name="tipodocumento"
         className={styles.inputMaterial}
         label="Tipo documento"
         onChange={handleChange}
         value={usuarioSeleccionado && usuarioSeleccionado.tipodocumento}
-      />
+      /> */}
+      <FormControl sx={{ width: "100%" }}>
+        <Select
+          className="col-2"
+          name="tipodocumento"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          defaultValue="DNI"
+          onChange={handleChange}
+          value={usuarioSeleccionado && usuarioSeleccionado.tipodocumento}
+          //{...register("tipodocumento", {})}
+        >
+          <MenuItem value={"DNI"}>DNI</MenuItem>
+          <MenuItem value={"Libreta de enrolamiento LE"}>
+            Libreta de enrolamiento LE
+          </MenuItem>
+          <MenuItem value={"Libreta cívica LC"}>Libreta cívica LC</MenuItem>
+        </Select>
+      </FormControl>
       <br />
       <br />
       <TextField
@@ -375,11 +401,11 @@ export default function PinnedSubheaderList() {
       <div align="left">
         <Collapse
           in={mostrarConfirmacionAlEditar}
-          sx={{ mt: "0px", width: "797px" }}
+          sx={{ mt: "0px", width: "710px" }}
         >
           <Alert
             variant="filled"
-            severity="success"
+            severity="info"
             onClose={() => {
               setMostrarConfirmacionAlEditar(false);
             }}
@@ -390,12 +416,21 @@ export default function PinnedSubheaderList() {
       </div>
       <div align="center">
         <Button
-          color="primary"
+          className="Boton"
+          variant="contained"
+          color="success"
           onClick={() => peticionPut(usuarioSeleccionado)}
         >
           Editar
         </Button>
-        <Button onClick={() => abrirCerrarModalEditar()}>Cerrar</Button>
+        <Button
+          className="Boton"
+          variant="contained"
+          color="error"
+          onClick={() => manejarCerrar()}
+        >
+          Cerrar
+        </Button>
       </div>
     </div>
   );
@@ -452,11 +487,7 @@ export default function PinnedSubheaderList() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-        className={styles.modal}
-        open={modalEditar}
-        onClose={abrirCerrarModalEditar}
-      >
+      <Modal open={modalEditar} onClose={abrirCerrarModalEditar}>
         {bodyEditar}
       </Modal>
     </div>
