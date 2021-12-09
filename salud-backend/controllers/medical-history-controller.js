@@ -59,11 +59,33 @@ class MedicalHistoryController {
       });
   }
 
-  createMedicalHistory(req, res) {
+  getMedicalHistoryByDocument(req, res) {
+    const docType = req.params.docType;
+    const docNumber = req.params.docNumber;
+
+    let medicalHistoryPromise =
+      this.medicalHistoryService.getMedicalHistoryByDocument(
+        docType,
+        docNumber
+      );
+
+    medicalHistoryPromise
+      .then((medicalHistory) => {
+        res.status(200).json(medicalHistory);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  async createMedicalHistory(req, res) {
     const {
       numeroHistoriaClinica,
-      nombres,
-      apellidos,
+      tipoDocumento,
+      numeroDocumento,
+      nombre,
+      apellido,
       nacionalidad,
       sexo,
       edad,
@@ -73,30 +95,74 @@ class MedicalHistoryController {
       raza,
     } = req.body;
 
-    const medicalHistoryData = {
-      numeroHistoriaClinica,
-      nombres,
-      apellidos,
-      nacionalidad,
-      sexo,
-      edad,
-      ocupacionActual,
-      estadoCivil,
-      domicilioActual,
-      raza,
-    };
+    // Validar los inputs del usuario
+    if (
+      !(
+        numeroHistoriaClinica &&
+        tipoDocumento &&
+        numeroDocumento &&
+        nombre &&
+        apellido &&
+        nacionalidad &&
+        sexo &&
+        edad &&
+        raza
+      )
+    ) {
+      return res.status(400).json("Faltan campos requeridos!");
+    }
 
-    const medicalHistoryStoredPromise =
-      this.medicalHistoryService.createMedicalHistory(medicalHistoryData);
+    try {
+      //Validar si el numero de historia clinica esta en uso
+      const duplicatedNumber =
+        await this.medicalHistoryService.getMedicalHistoryByNumber(
+          numeroHistoriaClinica
+        );
 
-    medicalHistoryStoredPromise
-      .then((medicalHistoryStored) => {
-        res.status(201).json(medicalHistoryStored);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        res.status(400).json({ error: err.message });
-      });
+      if (duplicatedNumber) {
+        return res
+          .status(409)
+          .json("Ya existe una historia clínica con el numero asignado");
+      }
+
+      const duplicatedDocument =
+        await this.medicalHistoryService.getMedicalHistoryByDocument(
+          tipoDocumento,
+          numeroDocumento
+        );
+
+      if (duplicatedDocument) {
+        return res
+          .status(409)
+          .json(
+            "Ya existe una historia clínica con el tipo y numero de documento asignado"
+          );
+      }
+
+      const medicalHistoryData = {
+        numeroHistoriaClinica,
+        tipoDocumento,
+        numeroDocumento,
+        nombre,
+        apellido,
+        nacionalidad,
+        sexo,
+        edad,
+        ocupacionActual,
+        estadoCivil,
+        domicilioActual,
+        raza,
+      };
+
+      const medicalHistoryStored =
+        await this.medicalHistoryService.createMedicalHistory(
+          medicalHistoryData
+        );
+      // devolver la historia clínica guardada
+      return res.status(201).json(medicalHistoryStored);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   updateMedicalHistory(req, res) {

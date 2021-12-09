@@ -17,6 +17,14 @@ class MedicalHistoryService {
     return medicalHistory;
   }
 
+  async getMedicalHistoryByNumber(medicalHistoryNumber) {
+    let medicalHistory = await this.medicalHistoryRepository.findByNumber(
+      medicalHistoryNumber
+    );
+
+    return medicalHistory;
+  }
+
   async createMedicalHistory(medicalHistoryData) {
     let medicalHistory = await this.medicalHistoryRepository.create(
       medicalHistoryData
