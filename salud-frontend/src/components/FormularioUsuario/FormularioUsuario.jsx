@@ -4,7 +4,7 @@ import { FormControlLabel } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { createUser } from "../../services";
-import * as React from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
@@ -21,7 +21,22 @@ export default function FormularioDeUsuario() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => createUser(data);
+  const onSubmit = (data) => verificarContrasenias(data);
+  const [probar, setProbar] = useState({ show: false, message: "" });
+
+  function verificarContrasenias(data) {
+    var p1 = document.getElementById("contraseniaid1").value;
+    var p2 = document.getElementById("confirmContrasenia").value;
+    console.log(p1);
+    console.log(p2);
+
+    if (p1 != p2) {
+      setProbar({ show: true, message: "Contraseñas no concuerdan" });
+    } else {
+      setProbar({ show: false, message: "" });
+      createUser(data);
+    }
+  }
 
   return (
     <div>
@@ -38,57 +53,81 @@ export default function FormularioDeUsuario() {
           >
             <h1>Alta de usuario</h1>
 
-            <div>
-              <TextField
-                id="emailid"
-                type="email"
-                label="Mail"
-                placeholder="ejemplo@gmail.com"
-                {...register("email", {
-                  required: {
-                    value: true,
-                    message: "Necesitas este campo",
-                  },
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "El formato no es correcto",
-                  },
-                })}
-                error={Boolean(errors.email)}
-                helperText={errors.email?.message}
-              />
-              <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
-                <Select
-                  className="col-2"
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  defaultValue="DNI"
-                  {...register("tipodocumento", {
+            <div className="Contenedor">
+              <div className="row">
+                <TextField
+                  id="emailid"
+                  type="email"
+                  label="Mail"
+                  placeholder="ejemplo@gmail.com"
+                  {...register("email", {
                     required: {
                       value: true,
                       message: "Necesitas este campo",
                     },
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: "El formato no es correcto",
+                    },
                   })}
-                  error={Boolean(errors.tipodocumento)}
-                  helperText={errors.tipodocumento?.message}
-                >
-                  <MenuItem value={"DNI"}>DNI</MenuItem>
-                  <MenuItem value={"Libreta de enrolamiento LE"}>
-                    Libreta de enrolamiento LE
-                  </MenuItem>
-                  <MenuItem value={"Libreta cívica LC"}>
-                    Libreta cívica LC
-                  </MenuItem>
-                </Select>
-              </FormControl>
+                  error={Boolean(errors.email)}
+                  helperText={errors.email?.message}
+                />
+
+                <FormControl sx={{ width: 80, mt: 1, ml: 1, mr: 0 }}>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    defaultValue="DNI"
+                    {...register("tipodocumento", {
+                      required: {
+                        value: true,
+                        message: "Necesitas este campo",
+                      },
+                    })}
+                    error={Boolean(errors.tipodocumento)}
+                    helperText={errors.tipodocumento?.message}
+                  >
+                    <MenuItem value={"DNI"}>DNI</MenuItem>
+                    <MenuItem value={"Libreta de enrolamiento LE"}>
+                      LE Libreta de enrolamiento
+                    </MenuItem>
+                    <MenuItem value={"Libreta cívica LC"}>
+                      LC Libreta cívica
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+
+                <TextField
+                  className="Box"
+                  id="numDocid"
+                  type="text"
+                  style={{ width: 143 }}
+                  //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
+                  label="Numero documento"
+                  {...register("numerodocumento", {
+                    required: {
+                      value: true,
+                      message: "Necesitas este campo",
+                    },
+                    pattern: {
+                      value: /^[1-9][0-9]{6,8}$/i,
+                      message: "El formato no es correcto",
+                    },
+                  })}
+                  error={Boolean(errors.numerodocumento)}
+                  helperText={errors.numerodocumento?.message}
+                />
+              </div>
             </div>
             <div>
               <TextField
-                id="contraseniaid"
+                id="contraseniaid1"
+                onChange="contraseniaid1"
                 type="password"
                 //pattern=".{6}"
                 label="Contraseña"
-                {...register("password", {
+                {...register("contrasenia", {
                   required: {
                     value: true,
                     message: "El campo es requerido",
@@ -98,30 +137,10 @@ export default function FormularioDeUsuario() {
                     message: "La contraseña debe tener al menos 6 caracteres",
                   },
                 })}
-                error={Boolean(errors.password)}
-                helperText={errors.password?.message}
+                error={Boolean(errors.contrasenia)}
+                helperText={errors.contrasenia?.message}
               />
-              <TextField
-                id="numDocid"
-                type="text"
-                //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
-                label="Numero documento"
-                {...register("numerodocumento", {
-                  required: {
-                    value: true,
-                    message: "Necesitas este campo",
-                  },
-                  pattern: {
-                    value: /^[1-9][0-9]{6,8}$/i,
-                    message: "El formato no es correcto",
-                  },
-                })}
-                error={Boolean(errors.numerodocumento)}
-                helperText={errors.numerodocumento?.message}
-              />
-            </div>
 
-            <div>
               <TextField
                 id="apellidoid"
                 type="text"
@@ -134,6 +153,16 @@ export default function FormularioDeUsuario() {
                 })}
                 error={Boolean(errors.apellido)}
                 helperText={errors.apellido?.message}
+              />
+            </div>
+
+            <div>
+              <TextField
+                id="confirmContrasenia"
+                type="password"
+                label="Confirmar contraseña"
+                error={probar.show}
+                helperText={probar.message}
               />
 
               <TextField
