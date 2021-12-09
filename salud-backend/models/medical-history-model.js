@@ -29,9 +29,4 @@ const MedicalHistorySchema = Schema(
   }
 );
 
-MedicalHistorySchema.index(
-  { tipoDocumento: 1, numeroDocumento: -1 },
-  { unique: true }
-);
-
 module.exports = mongoose.model("MedicalHistory", MedicalHistorySchema);
