@@ -11,6 +11,9 @@ import {
   RadioGroup,
   Grid,
   FormControl,
+  Alert,
+  Collapse,
+  FormHelperText,
   FormLabel,
   FormControlLabel,
 } from "@mui/material";
@@ -21,7 +24,8 @@ import {
 import CountrySelector from "./CountrySelector";
 import "./MedicalHistoryForm.scss";
 
-export default function MedicalHistoryForm() {
+export default function MedicalHistoryForm(props) {
+  const { buttonText } = props;
   const [info, setInfo] = useState({
     numeroHistoriaClinica: "",
     tipoDocumento: "DNI",
@@ -36,6 +40,19 @@ export default function MedicalHistoryForm() {
     domicilioActual: "",
     raza: "",
   });
+  const [errors, setErrors] = useState({
+    numeroHistoriaClinica: { message: "", error: false },
+    numeroDocumento: { message: "", error: false },
+    nombre: { message: "", error: false },
+    apellido: { message: "", error: false },
+    edad: { message: "", error: false },
+    raza: { message: "", error: false },
+  });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: "",
+    severity: "success",
+  });
 
   const { id } = useParams();
 
@@ -47,34 +64,87 @@ export default function MedicalHistoryForm() {
     if (id) {
       getData();
     }
-  }, []);
+  }, [id]);
+
+  function validate() {
+    const requiredFields = [
+      "numeroHistoriaClinica",
+      "numeroDocumento",
+      "nombre",
+      "apellido",
+      "edad",
+      "raza",
+    ];
+    const temp = { ...errors };
+    requiredFields.forEach((field) => {
+      if (!info[field] || !/^(?!\s*$).+/.test(info[field])) {
+        temp[field] = { message: "Requerido.", error: true };
+      } else {
+        temp[field] = { message: "", error: false };
+      }
+    });
+    setErrors(temp);
+  }
+
+  function noErrors() {
+    const boolErrors = [];
+    for (const field in errors) {
+      boolErrors.push(field.error);
+    }
+    return !boolErrors.every(Boolean);
+  }
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInfo({ ...info, [name]: value });
-    console.log(info);
   };
 
   const handleEdit = (event) => {
     event.preventDefault();
-    editMedicalHistory(id, info)
-      .then(() => {
-        console.log("success!");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    validate();
+    if (noErrors()) {
+      editMedicalHistory(id, info)
+        .then(() => {
+          console.log("success!");
+          setAlert({
+            show: true,
+            message: "La edición fue exitosa!.",
+            severity: "success",
+          });
+        })
+        .catch((err) => {
+          setAlert({
+            show: true,
+            message: "Algo salio mal!",
+            severity: "error",
+          });
+          console.log(err);
+        });
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    createMedicalHistory(info)
-      .then(() => {
-        console.log("success!");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    validate();
+    if (noErrors()) {
+      createMedicalHistory(info)
+        .then(() => {
+          console.log("success!");
+          setAlert({
+            show: true,
+            message: "La creación fue exitosa!.",
+            severity: "success",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          setAlert({
+            show: true,
+            message: "Algo salio mal!",
+            severity: "error",
+          });
+        });
+    }
   };
 
   return (
@@ -87,38 +157,54 @@ export default function MedicalHistoryForm() {
               name="numeroHistoriaClinica"
               onChange={handleChange}
               value={info.numeroHistoriaClinica}
+              error={errors.numeroHistoriaClinica.error}
+              helperText={errors.numeroHistoriaClinica.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
-            <Select
-              defaultValue="DNI"
-              value={info.tipoDocumento}
-              name="tipoDocumento"
-              onChange={handleChange}
-              sx={{
-                mt: "8px",
-                mb: "4px",
-                marginRight: "5px",
-                minWidth: "80px",
-                maxWidth: "80px",
-              }}
+            <FormControl
+              sx={{ width: "100%" }}
+              error={errors.numeroDocumento.error}
             >
-              <MenuItem value={"DNI"}>DNI</MenuItem>
-              <MenuItem value={"LE"}>LE</MenuItem>
-              <MenuItem value={"LC"}>LC</MenuItem>
-              <MenuItem value={"CI"}>CI</MenuItem>
-            </Select>
-            <TextField
-              label="Numero de documento"
-              name="numeroDocumento"
-              onChange={handleChange}
-              value={info.numeroDocumento}
-              sx={{ mt: "8px", mb: "4px", maxWidth: "400px" }}
-            />
+              <Box sx={{ display: "flex" }}>
+                <Select
+                  defaultValue="DNI"
+                  value={info.tipoDocumento}
+                  name="tipoDocumento"
+                  onChange={handleChange}
+                  sx={{
+                    mt: "8px",
+                    mb: "4px",
+                    marginRight: "5px",
+                    minWidth: "80px",
+                    maxWidth: "80px",
+                  }}
+                >
+                  <MenuItem value={"DNI"}>DNI</MenuItem>
+                  <MenuItem value={"LE"}>LE</MenuItem>
+                  <MenuItem value={"LC"}>LC</MenuItem>
+                  <MenuItem value={"CI"}>CI</MenuItem>
+                </Select>
+                <TextField
+                  label="Numero de documento"
+                  name="numeroDocumento"
+                  onChange={handleChange}
+                  value={info.numeroDocumento}
+                  error={errors.numeroDocumento.error}
+                  sx={{ mt: "8px", mb: "4px", width: "100%" }}
+                />
+              </Box>
+              {errors.numeroDocumento.error && (
+                <FormHelperText>Requerido.</FormHelperText>
+              )}
+            </FormControl>
+
             <TextField
               label="Nombre"
               name="nombre"
               onChange={handleChange}
               value={info.nombre}
+              error={errors.nombre.error}
+              helperText={errors.nombre.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
 
@@ -127,6 +213,8 @@ export default function MedicalHistoryForm() {
               name="apellido"
               onChange={handleChange}
               value={info.apellido}
+              error={errors.apellido.error}
+              helperText={errors.apellido.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
             <FormLabel sx={{ mt: "8px", mb: "4px", width: "100%" }}>
@@ -154,6 +242,8 @@ export default function MedicalHistoryForm() {
               name="edad"
               onChange={handleChange}
               value={info.edad}
+              error={errors.edad.error}
+              helperText={errors.edad.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
 
@@ -186,6 +276,8 @@ export default function MedicalHistoryForm() {
               name="raza"
               onChange={handleChange}
               value={info.raza}
+              error={errors.raza.error}
+              helperText={errors.raza.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
 
@@ -195,8 +287,18 @@ export default function MedicalHistoryForm() {
               onClick={id ? handleEdit : handleSubmit}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             >
-              Crear
+              {buttonText}
             </Button>
+            <Collapse in={alert.show} sx={{ mt: "8px" }}>
+              <Alert
+                severity={alert.severity}
+                onClose={() => {
+                  setAlert({ ...alert, show: false });
+                }}
+              >
+                {alert.message}
+              </Alert>
+            </Collapse>
           </Box>
         </Grid>
       </Grid>
@@ -205,7 +307,6 @@ export default function MedicalHistoryForm() {
 }
 
 function GenderCheckboxes({ onChange: handleChange, defaultValue, ...rest }) {
-  console.log(defaultValue);
   return (
     <FormControl component="fieldset">
       <FormLabel {...rest}>Género</FormLabel>
