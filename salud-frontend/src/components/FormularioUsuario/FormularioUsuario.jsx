@@ -14,7 +14,7 @@ import "./FormularioUsuario.scss";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
-
+import Grid from "@mui/material/Grid";
 export default function FormularioDeUsuario() {
   const {
     register,
@@ -52,9 +52,8 @@ export default function FormularioDeUsuario() {
             autoComplete="off"
           >
             <h1>Alta de usuario</h1>
-
-            <div className="Contenedor">
-              <div className="row">
+            <div>
+              <Box component="form">
                 <TextField
                   id="emailid"
                   type="email"
@@ -99,11 +98,10 @@ export default function FormularioDeUsuario() {
                 </FormControl>
 
                 <TextField
-                  className="Box"
+                  //className="Box"
                   id="numDocid"
                   type="text"
                   style={{ width: 143 }}
-                  //inputProps={{ pattern: "^[1-9]{1}[0-9]{6,7}$" }}
                   label="Numero documento"
                   {...register("numerodocumento", {
                     required: {
@@ -118,7 +116,7 @@ export default function FormularioDeUsuario() {
                   error={Boolean(errors.numerodocumento)}
                   helperText={errors.numerodocumento?.message}
                 />
-              </div>
+              </Box>
             </div>
             <div>
               <TextField
@@ -142,6 +140,15 @@ export default function FormularioDeUsuario() {
               />
 
               <TextField
+                id="confirmContrasenia"
+                type="password"
+                label="Confirmar contraseña"
+                error={probar.show}
+                helperText={probar.message}
+              />
+            </div>
+            <div>
+              <TextField
                 id="apellidoid"
                 type="text"
                 label="Apellido"
@@ -154,17 +161,6 @@ export default function FormularioDeUsuario() {
                 error={Boolean(errors.apellido)}
                 helperText={errors.apellido?.message}
               />
-            </div>
-
-            <div>
-              <TextField
-                id="confirmContrasenia"
-                type="password"
-                label="Confirmar contraseña"
-                error={probar.show}
-                helperText={probar.message}
-              />
-
               <TextField
                 id="nombreid"
                 type="text"
@@ -225,6 +221,7 @@ export default function FormularioDeUsuario() {
                 </div>
               </FormGroup>
             </Stack>
+
             <Button
               className="Boton"
               onClick={handleSubmit(onSubmit)}
