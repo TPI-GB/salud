@@ -26,8 +26,6 @@ export default function MedicalHistoriesList(props) {
 function RenderMedicalHistory(props) {
   const { mh } = props;
 
-  console.log(mh);
-
   return (
     <>
       <ListItemText
