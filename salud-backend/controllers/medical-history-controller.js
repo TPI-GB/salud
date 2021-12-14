@@ -11,6 +11,9 @@ class MedicalHistoryController {
     this.router.get("/:id", (req, res) => {
       this.getMedicalHistoryById(req, res);
     });
+    this.router.get("/:docType/:docNumber", (req, res) => {
+      this.getMedicalHistoryByDocument(req, res);
+    });
     this.router.post("/create", (req, res) => {
       this.createMedicalHistory(req, res);
     });
