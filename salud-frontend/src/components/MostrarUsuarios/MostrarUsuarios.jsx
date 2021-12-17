@@ -1,25 +1,32 @@
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
+import { updateUser, getUsers } from "../../services/user-service";
 import React, { useState, useEffect } from "react";
 import "./MostrarUsuarios.scss";
-import Table from "@mui/material/Table";
-import TableContainer from "@mui/material/TableContainer";
-import Paper from "@mui/material/Paper";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
+import {
+  Table,
+  TableContainer,
+  Paper,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Checkbox,
+  FormControlLabel,
+  Modal,
+  Button,
+  Alert,
+  Collapse,
+  Select,
+  MenuItem,
+  FormControl,
+} from "@mui/material";
 import axios from "axios";
 import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
-import { makeStyles, propsToClassKey } from "@mui/styles";
-//import { makeStyles } from "@material-ui/core/styles";
-import { Checkbox, FormControlLabel, Modal, Switch } from "@mui/material";
+import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
+import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormularioUsuario from "../FormularioUsuario/FormularioUsuario";
 import { useForm } from "react-hook-form";
+import Tooltip from "@mui/material/Tooltip";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -29,12 +36,13 @@ const useStyles = makeStyles({
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 880,
     color: "black",
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
     backgroundColor: "white",
+    padding: "4em",
   },
   iconos: {
     cursor: "pointer",
@@ -46,10 +54,12 @@ const useStyles = makeStyles({
 
 export default function PinnedSubheaderList() {
   const { register } = useForm();
-  //const [usuariosList, setUsuariosList] = useState([]);
   const styles = useStyles();
   const [data, setData] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
+  const [modalInhabilitar, setModalInhabilitar] = useState(false);
+  const [mostrarConfirmacionAlEditar, setMostrarConfirmacionAlEditar] =
+    useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
     _id: "",
     nombre: "",
@@ -58,13 +68,19 @@ export default function PinnedSubheaderList() {
     roles: [],
     tipodocumento: "",
     numerodocumento: "",
+    activo: "",
   });
+
   const checkedAux = (rol, roles) => {
     return roles.includes(rol);
   };
-  const [laboratorio, setLaboratorio] = useState(
-    checkedAux("Laboratorio", usuarioSeleccionado.roles)
-  );
+
+  const [laboratorio, setLaboratorio] = useState(false);
+  const [recepcion, setRecepcion] = useState(false);
+  const [secretaria, setSecretaria] = useState(false);
+  const [director, setDirector] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  const [medico, setMedico] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -75,30 +91,37 @@ export default function PinnedSubheaderList() {
     console.log(usuarioSeleccionado);
   };
 
-  const peticionGet = async () => {
-    await axios.get(baseUrl).then((response) => {
-      setData(response.data);
-    });
-  };
-
-  const peticionPut = async () => {
+  const peticionPut = async (usuarioActualizado) => {
     await axios
-      .put(baseUrl + usuarioSeleccionado._id, usuarioSeleccionado)
+      .put(baseUrl + usuarioActualizado._id, usuarioActualizado)
       .then((response) => {
         var dataNueva = data;
         dataNueva.map((usuario) => {
-          if (usuarioSeleccionado._id === usuario._id) {
-            usuario.nombre = usuarioSeleccionado.nombre;
-            usuario.apellido = usuarioSeleccionado.apellido;
-            usuario.email = usuarioSeleccionado.email;
-            usuario.roles = usuarioSeleccionado.roles;
-            usuario.tipodocumento = usuarioSeleccionado.tipodocumento;
-            usuario.numerodocumento = usuarioSeleccionado.numerodocumento;
+          if (usuarioActualizado._id === usuario._id) {
+            usuario.nombre = usuarioActualizado.nombre;
+            usuario.apellido = usuarioActualizado.apellido;
+            usuario.email = usuarioActualizado.email;
+            console.log(usuarioActualizado.roles);
+            usuario.roles = usuarioActualizado.roles;
+            usuario.tipodocumento = usuarioActualizado.tipodocumento;
+            usuario.numerodocumento = usuarioActualizado.numerodocumento; //hacer if por aca
+            usuario.activo = usuarioActualizado.activo.toString();
           }
         });
         setData(dataNueva);
-        abrirCerrarModalEditar();
+        setMostrarConfirmacionAlEditar(true);
       });
+  };
+
+  //prueba de inhabilitar un usuario
+  async function getData() {
+    const response = await getUsers();
+    setData(response.data);
+  }
+
+  const cambiarHabilitacion = async (usuario) => {
+    await updateUser(usuario._id, { activo: !usuario.activo });
+    getData();
   };
 
   const abrirCerrarModalEditar = () => {
@@ -110,32 +133,125 @@ export default function PinnedSubheaderList() {
     caso === "Editar" && setModalEditar(true);
   };
 
-  useEffect(async () => {
-    await peticionGet();
+  useEffect(() => {
+    //await peticionGet();
+    getData();
   }, []);
 
   useEffect(() => {}, [usuarioSeleccionado.roles]);
 
-  function rolesAux(elRol, e) {
-    if (e.target.checked) {
-      setLaboratorio(true);
-      if (!usuarioSeleccionado.roles.includes(elRol)) {
-        usuarioSeleccionado.roles.push(elRol);
+  function handleAdminChange(event) {
+    setAdmin(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("admin")) {
+        usuarioSeleccionado.roles.push("admin");
       }
       console.log(usuarioSeleccionado.roles);
       setUsuarioSeleccionado(usuarioSeleccionado);
     } else {
-      setLaboratorio(false);
       usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
-        (rol) => rol != elRol
+        (rol) => rol !== "admin"
       );
       setUsuarioSeleccionado(usuarioSeleccionado);
       console.log(usuarioSeleccionado.roles);
     }
   }
+
+  function handleLaboratorioChange(event) {
+    setLaboratorio(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("laboratorio")) {
+        usuarioSeleccionado.roles.push("laboratorio");
+      }
+      console.log(usuarioSeleccionado.roles);
+      setUsuarioSeleccionado(usuarioSeleccionado);
+    } else {
+      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
+        (rol) => rol !== "laboratorio"
+      );
+      setUsuarioSeleccionado(usuarioSeleccionado);
+      console.log(usuarioSeleccionado.roles);
+    }
+  }
+  function handleSecretariaChange(event) {
+    setSecretaria(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("secretaria")) {
+        usuarioSeleccionado.roles.push("secretaria");
+      }
+      console.log(usuarioSeleccionado.roles);
+      setUsuarioSeleccionado(usuarioSeleccionado);
+    } else {
+      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
+        (rol) => rol !== "secretaria"
+      );
+      setUsuarioSeleccionado(usuarioSeleccionado);
+      console.log(usuarioSeleccionado.roles);
+    }
+  }
+  function handleMedicoChange(event) {
+    setMedico(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("medico")) {
+        usuarioSeleccionado.roles.push("medico");
+      }
+      console.log(usuarioSeleccionado.roles);
+      setUsuarioSeleccionado(usuarioSeleccionado);
+    } else {
+      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
+        (rol) => rol !== "medico"
+      );
+      setUsuarioSeleccionado(usuarioSeleccionado);
+      console.log(usuarioSeleccionado.roles);
+    }
+  }
+  function handleRecepcionChange(event) {
+    setRecepcion(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("recepcion")) {
+        usuarioSeleccionado.roles.push("recepcion");
+      }
+      console.log(usuarioSeleccionado.roles);
+      setUsuarioSeleccionado(usuarioSeleccionado);
+    } else {
+      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
+        (rol) => rol !== "recepcion"
+      );
+      setUsuarioSeleccionado(usuarioSeleccionado);
+      console.log(usuarioSeleccionado.roles);
+    }
+  }
+  function handleDirectorChange(event) {
+    setDirector(event.target.checked);
+
+    if (event.target.checked) {
+      if (!usuarioSeleccionado.roles.includes("director")) {
+        usuarioSeleccionado.roles.push("director");
+      }
+      console.log(usuarioSeleccionado.roles);
+      setUsuarioSeleccionado(usuarioSeleccionado);
+    } else {
+      usuarioSeleccionado.roles = usuarioSeleccionado.roles.filter(
+        (rol) => rol !== "director"
+      );
+      setUsuarioSeleccionado(usuarioSeleccionado);
+      console.log(usuarioSeleccionado.roles);
+    }
+  }
+
+  function manejarCerrar() {
+    setModalEditar(!modalEditar);
+    setMostrarConfirmacionAlEditar(false);
+  }
+
   const bodyEditar = (
     <div className={styles.modal}>
-      <h3>Editar Usuario</h3>
+      <h3 align="center">Editar Usuario</h3>
       <TextField
         name="nombre"
         className={styles.inputMaterial}
@@ -143,6 +259,7 @@ export default function PinnedSubheaderList() {
         onChange={handleChange}
         value={usuarioSeleccionado && usuarioSeleccionado.nombre}
       />
+      <br />
       <br />
       <TextField
         name="apellido"
@@ -161,60 +278,116 @@ export default function PinnedSubheaderList() {
         value={usuarioSeleccionado && usuarioSeleccionado.email}
       />
       <br />
-
-      <FormControlLabel
-        control={<Checkbox />}
-        defaultChecked={checkedAux("Laboratorio", usuarioSeleccionado.roles)}
-        label="Laboratorio"
-        value="Laboratorio"
-        {...register("roles")}
-        onChange={(e) => rolesAux("Laboratorio", e)}
-        checked={checkedAux("Laboratorio", usuarioSeleccionado.roles)}
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        label="Recepcion"
-        value="Recepcion"
-        defaultChecked={checkedAux("Recepcion", usuarioSeleccionado.roles)}
-        {...register("roles")}
-        onChange={(e) => rolesAux("Recepcion", e)}
-        checked={checkedAux("Recepcion", usuarioSeleccionado.roles)}
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        label="Secretaria"
-        value="Secretaria"
-        defaultChecked={checkedAux("Secretaria", usuarioSeleccionado.roles)}
-        {...register("roles")}
-        onChange={(e) => rolesAux("Secretaria", e)}
-        checked={checkedAux("Secretaria", usuarioSeleccionado.roles)}
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        label="Director"
-        value="Director"
-        defaultChecked={checkedAux("Director", usuarioSeleccionado.roles)}
-        {...register("roles")}
-        onChange={(e) => rolesAux("Director", e)}
-        checked={checkedAux("Director", usuarioSeleccionado.roles)}
-      />
-      <FormControlLabel
-        control={<Checkbox />}
-        label="Admin"
-        value="Admin"
-        defaultChecked={checkedAux("Admin", usuarioSeleccionado.roles)}
-        {...register("roles")}
-        onChange={(e) => rolesAux("Admin", e)}
-        checked={checkedAux("Admin", usuarioSeleccionado.roles)}
-      />
       <br />
       <TextField
+        name="activo"
+        className={styles.inputMaterial}
+        label="Estado"
+        onChange={handleChange}
+        value={
+          usuarioSeleccionado && usuarioSeleccionado.activo
+            ? "Activo"
+            : "Inactivo"
+        }
+      />
+      <br />
+      <p4>Roles: &nbsp;&nbsp;</p4>
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux(
+              "laboratorio",
+              usuarioSeleccionado.roles
+            )}
+            onChange={handleLaboratorioChange}
+          />
+        }
+        label="Laboratorio"
+        value="laboratorio"
+        {...register("roles")}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux("recepcion", usuarioSeleccionado.roles)}
+            onChange={handleRecepcionChange}
+          />
+        }
+        label="Recepcion"
+        value="recepcion"
+        {...register("roles")}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux("secretaria", usuarioSeleccionado.roles)}
+            onChange={handleSecretariaChange}
+          />
+        }
+        label="Secretaria"
+        value="secretaria"
+        {...register("roles")}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux("director", usuarioSeleccionado.roles)}
+            onChange={handleDirectorChange}
+          />
+        }
+        label="Director"
+        value="director"
+        {...register("roles")}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux("admin", usuarioSeleccionado.roles)}
+            onChange={handleAdminChange}
+          />
+        }
+        label="Admin"
+        value="admin"
+        {...register("roles")}
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            defaultChecked={checkedAux("medico", usuarioSeleccionado.roles)}
+            onChange={handleMedicoChange}
+          />
+        }
+        label="Médico"
+        value="medico"
+        {...register("roles")}
+      />
+      <br />
+      {/* <TextField
         name="tipodocumento"
         className={styles.inputMaterial}
         label="Tipo documento"
         onChange={handleChange}
         value={usuarioSeleccionado && usuarioSeleccionado.tipodocumento}
-      />
+      /> */}
+      <FormControl sx={{ width: "100%" }}>
+        <Select
+          className="col-2"
+          name="tipodocumento"
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          defaultValue="DNI"
+          onChange={handleChange}
+          value={usuarioSeleccionado && usuarioSeleccionado.tipodocumento}
+          //{...register("tipodocumento", {})}
+        >
+          <MenuItem value={"DNI"}>DNI</MenuItem>
+          <MenuItem value={"Libreta de enrolamiento LE"}>
+            Libreta de enrolamiento LE
+          </MenuItem>
+          <MenuItem value={"Libreta cívica LC"}>Libreta cívica LC</MenuItem>
+        </Select>
+      </FormControl>
+      <br />
       <br />
       <TextField
         name="numerodocumento"
@@ -225,26 +398,42 @@ export default function PinnedSubheaderList() {
       />
       <br />
       <br />
-      <div align="right">
-        <Button color="primary" onClick={() => peticionPut()}>
+      <div align="left">
+        <Collapse
+          in={mostrarConfirmacionAlEditar}
+          sx={{ mt: "0px", width: "710px" }}
+        >
+          <Alert
+            variant="filled"
+            severity="info"
+            onClose={() => {
+              setMostrarConfirmacionAlEditar(false);
+            }}
+          >
+            Se edito correctamente.
+          </Alert>
+        </Collapse>
+      </div>
+      <div align="center">
+        <Button
+          className="Boton"
+          variant="contained"
+          color="success"
+          onClick={() => peticionPut(usuarioSeleccionado)}
+        >
           Editar
         </Button>
-        <Button onClick={() => abrirCerrarModalEditar()}>Cancelar</Button>
+        <Button
+          className="Boton"
+          variant="contained"
+          color="error"
+          onClick={() => manejarCerrar()}
+        >
+          Cerrar
+        </Button>
       </div>
     </div>
   );
-
-  // useEffect(() => {
-  //   obtenerDatos();
-  // }, []);
-
-  // const obtenerDatos = async () => {
-  //   const response = await fetch(`http://localhost:8080/users`);
-  //   const respuesta = await response.json();
-  //   setUsuariosList(respuesta);
-  // };
-
-  // console.log(usuariosList);
 
   return (
     <div className="App">
@@ -257,34 +446,48 @@ export default function PinnedSubheaderList() {
               <TableCell>Apellido</TableCell>
               <TableCell>Tipo documento</TableCell>
               <TableCell>Numero documento</TableCell>
+              <TableCell>Estado</TableCell>
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((usuario) => (
-              <TableRow key={usuario.id}>
+              <TableRow key={usuario._id}>
                 <TableCell>{usuario.nombre}</TableCell>
                 <TableCell>{usuario.apellido}</TableCell>
                 <TableCell>{usuario.tipodocumento}</TableCell>
                 <TableCell>{usuario.numerodocumento}</TableCell>
+                <TableCell>{usuario.activo ? "Activo" : "Inactivo"}</TableCell>
                 <TableCell>
-                  <ModeEditOutlineTwoToneIcon
-                    className={styles.iconos}
-                    onClick={() => seleccionarUsuario(usuario, "Editar")}
-                  />
+                  <Tooltip title="Editar">
+                    <ModeEditOutlineTwoToneIcon
+                      className={styles.iconos}
+                      onClick={() => seleccionarUsuario(usuario, "Editar")}
+                    />
+                  </Tooltip>
                   &nbsp;&nbsp;&nbsp;
-                  <NotInterestedIcon />
+                  {usuario.activo ? (
+                    <Tooltip title="Deshabilitar">
+                      <NotInterestedIcon
+                        className={styles.iconos}
+                        onClick={() => cambiarHabilitacion(usuario)}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Habilitar">
+                      <CheckOutlinedIcon
+                        className={styles.iconos}
+                        onClick={() => cambiarHabilitacion(usuario)}
+                      />
+                    </Tooltip>
+                  )}
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-        classname={styles.modal}
-        open={modalEditar}
-        onClose={abrirCerrarModalEditar}
-      >
+      <Modal open={modalEditar} onClose={abrirCerrarModalEditar}>
         {bodyEditar}
       </Modal>
     </div>
