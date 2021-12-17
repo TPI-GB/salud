@@ -127,6 +127,7 @@ class UserController {
   updateUser(req, res) {
     const id = req.params.id;
     const data = req.body;
+
     const updatedUserPromise = this.userService.updateUser(id, data);
 
     updatedUserPromise
@@ -138,7 +139,6 @@ class UserController {
         res.status(400).json({ error: err.message });
       });
   }
-
 
   loginUser(req, res) {
     // La logica del login empieza aca
