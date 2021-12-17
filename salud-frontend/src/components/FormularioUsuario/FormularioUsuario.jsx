@@ -122,6 +122,36 @@ export default function FormularioDeUsuario() {
               </Grid>
               <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                 <TextField
+                  id="apellidoid"
+                  type="text"
+                  label="Apellido"
+                  {...register("apellido", {
+                    required: {
+                      value: true,
+                      message: "El campo es requerido",
+                    },
+                  })}
+                  error={Boolean(errors.apellido)}
+                  helperText={errors.apellido?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
+                  id="nombreid"
+                  type="text"
+                  label="Nombre"
+                  {...register("nombre", {
+                    required: {
+                      value: true,
+                      message: "El campo es requerido",
+                    },
+                  })}
+                  error={Boolean(errors.nombre)}
+                  helperText={errors.nombre?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
                   id="contraseniaid1"
                   onChange="contraseniaid1"
                   type="password"
@@ -151,36 +181,6 @@ export default function FormularioDeUsuario() {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                <TextField
-                  id="apellidoid"
-                  type="text"
-                  label="Apellido"
-                  {...register("apellido", {
-                    required: {
-                      value: true,
-                      message: "El campo es requerido",
-                    },
-                  })}
-                  error={Boolean(errors.apellido)}
-                  helperText={errors.apellido?.message}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                <TextField
-                  id="nombreid"
-                  type="text"
-                  label="Nombre"
-                  {...register("nombre", {
-                    required: {
-                      value: true,
-                      message: "El campo es requerido",
-                    },
-                  })}
-                  error={Boolean(errors.nombre)}
-                  helperText={errors.nombre?.message}
-                />
-              </Grid>
               <div>
                 Roles:
                 <Grid container spacing={2}>
