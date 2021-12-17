@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import Stack from "@mui/material/Stack";
-import { FormControlLabel } from "@mui/material";
+import { FormControlLabel, styled } from "@mui/material";
 import FormGroup from "@mui/material/FormGroup";
 import Checkbox from "@mui/material/Checkbox";
 import { createUser } from "../../services";
@@ -15,6 +15,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+
 export default function FormularioDeUsuario() {
   const {
     register,
@@ -46,14 +48,15 @@ export default function FormularioDeUsuario() {
             textAlign="center"
             component="form"
             sx={{
+              flexGrow: 1,
               "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
             noValidate
             autoComplete="off"
           >
             <h1>Alta de usuario</h1>
-            <div>
-              <Box component="form">
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                 <TextField
                   id="emailid"
                   type="email"
@@ -72,7 +75,8 @@ export default function FormularioDeUsuario() {
                   error={Boolean(errors.email)}
                   helperText={errors.email?.message}
                 />
-
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                 <FormControl sx={{ width: 80, mt: 1, ml: 1, mr: 0 }}>
                   <Select
                     labelId="demo-simple-select-label"
@@ -96,7 +100,6 @@ export default function FormularioDeUsuario() {
                     </MenuItem>
                   </Select>
                 </FormControl>
-
                 <TextField
                   //className="Box"
                   id="numDocid"
@@ -116,120 +119,131 @@ export default function FormularioDeUsuario() {
                   error={Boolean(errors.numerodocumento)}
                   helperText={errors.numerodocumento?.message}
                 />
-              </Box>
-            </div>
-            <div>
-              <TextField
-                id="contraseniaid1"
-                onChange="contraseniaid1"
-                type="password"
-                //pattern=".{6}"
-                label="Contraseña"
-                {...register("contrasenia", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                  minLength: {
-                    value: 6,
-                    message: "La contraseña debe tener al menos 6 caracteres",
-                  },
-                })}
-                error={Boolean(errors.contrasenia)}
-                helperText={errors.contrasenia?.message}
-              />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
+                  id="contraseniaid1"
+                  onChange="contraseniaid1"
+                  type="password"
+                  //pattern=".{6}"
+                  label="Contraseña"
+                  {...register("contrasenia", {
+                    required: {
+                      value: true,
+                      message: "El campo es requerido",
+                    },
+                    minLength: {
+                      value: 6,
+                      message: "La contraseña debe tener al menos 6 caracteres",
+                    },
+                  })}
+                  error={Boolean(errors.contrasenia)}
+                  helperText={errors.contrasenia?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
+                  id="confirmContrasenia"
+                  type="password"
+                  label="Confirmar contraseña"
+                  error={probar.show}
+                  helperText={probar.message}
+                />
+              </Grid>
 
-              <TextField
-                id="confirmContrasenia"
-                type="password"
-                label="Confirmar contraseña"
-                error={probar.show}
-                helperText={probar.message}
-              />
-            </div>
-            <div>
-              <TextField
-                id="apellidoid"
-                type="text"
-                label="Apellido"
-                {...register("apellido", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                })}
-                error={Boolean(errors.apellido)}
-                helperText={errors.apellido?.message}
-              />
-              <TextField
-                id="nombreid"
-                type="text"
-                label="Nombre"
-                {...register("nombre", {
-                  required: {
-                    value: true,
-                    message: "El campo es requerido",
-                  },
-                })}
-                error={Boolean(errors.nombre)}
-                helperText={errors.nombre?.message}
-              />
-            </div>
-            <Stack textAlign="center">
-              Roles:
-              <FormGroup className="Prueba">
-                <div>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Laboratorio"
-                    value="laboratorio"
-                    {...register("roles")}
-                  />
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Recepción"
-                    value="recepcion"
-                    {...register("roles")}
-                  />
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Secretaria"
-                    value="secretaria"
-                    {...register("roles")}
-                  />
-                </div>
-                <div>
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Director"
-                    value="director"
-                    {...register("roles")}
-                  />
-
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Admin"
-                    value="admin"
-                    {...register("roles")}
-                  />
-                  <FormControlLabel
-                    control={<Checkbox />}
-                    label="Médico"
-                    value="medico"
-                    {...register("roles")}
-                  />
-                </div>
-              </FormGroup>
-            </Stack>
-
-            <Button
-              className="Boton"
-              onClick={handleSubmit(onSubmit)}
-              variant="contained"
-              color="success"
-            >
-              Enviar
-            </Button>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
+                  id="apellidoid"
+                  type="text"
+                  label="Apellido"
+                  {...register("apellido", {
+                    required: {
+                      value: true,
+                      message: "El campo es requerido",
+                    },
+                  })}
+                  error={Boolean(errors.apellido)}
+                  helperText={errors.apellido?.message}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
+                <TextField
+                  id="nombreid"
+                  type="text"
+                  label="Nombre"
+                  {...register("nombre", {
+                    required: {
+                      value: true,
+                      message: "El campo es requerido",
+                    },
+                  })}
+                  error={Boolean(errors.nombre)}
+                  helperText={errors.nombre?.message}
+                />
+              </Grid>
+              <div>
+                Roles:
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Laboratorio"
+                      value="laboratorio"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Recepción"
+                      value="recepcion"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Secretaria"
+                      value="secretaria"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Director"
+                      value="director"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Admin"
+                      value="admin"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={4} md={4} lg={4} xl={4}>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label="Médico"
+                      value="medico"
+                      {...register("roles")}
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+              <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                <Button
+                  onClick={handleSubmit(onSubmit)}
+                  variant="contained"
+                  color="success"
+                >
+                  Enviar
+                </Button>
+              </Grid>
+            </Grid>
           </Box>
         </FormControl>
       </Card>
