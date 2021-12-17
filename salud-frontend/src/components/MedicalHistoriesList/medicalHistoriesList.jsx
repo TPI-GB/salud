@@ -26,13 +26,11 @@ export default function MedicalHistoriesList(props) {
 function RenderMedicalHistory(props) {
   const { mh } = props;
 
-  console.log(mh);
-
   return (
     <>
       <ListItemText
-        primary={mh.nombres + " " + mh.apellidos}
-        secondary={mh.numeroHistoriaClinica}
+        primary={"Paciente: " + mh.nombre + " " + mh.apellido}
+        secondary={"Número de historia " + mh.numeroHistoriaClinica}
       />
       <Fab color="secondary" size="small" sx={{ mr: 1 }}>
         <EditIcon />

@@ -9,6 +9,19 @@ class MedicalHistoryRepository {
     return await MedicalHistory.findById(id);
   }
 
+  async findByDocument(docType, docNumber) {
+    return await MedicalHistory.findOne({
+      tipoDocumento: docType,
+      numeroDocumento: docNumber,
+    });
+  }
+
+  async findByNumber(medicalHistoryNumber) {
+    return await MedicalHistory.findOne({
+      numeroHistoriaClinica: medicalHistoryNumber,
+    });
+  }
+
   async create(medicalHistoryData) {
     let newMedicalHistory = MedicalHistory(medicalHistoryData);
 

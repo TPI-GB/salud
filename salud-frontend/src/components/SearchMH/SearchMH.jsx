@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MedicalHistoriesList from "../MedicalHistoriesList";
+import FormHeader from "../FormHeader";
+import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 import {
   getAllMedicalHistories,
   getMedicalHistoryByDocument,
@@ -71,7 +73,7 @@ export default function SearchMH() {
       setMedicalHistories(response.data);
     } else {
       const response = await getMedicalHistoryByDocument(docType, searchValue);
-      setMedicalHistories(response.data);
+      setMedicalHistories(response.data ? [response.data] : []);
     }
     setError({ show: false });
     setIsLoading(false);
@@ -79,94 +81,96 @@ export default function SearchMH() {
   };
 
   return (
-    <>
-      <Box className="title">
-        <Typography variant="h2" component="h2">
-          Historias clínicas
-        </Typography>
-      </Box>
-      <Paper
-        component="form"
-        sx={{
-          p: "2px 4px",
-          display: "flex",
-          alignItems: "center",
-          minWidth: 300,
-          maxWidth: 350,
-          mt: 2,
-          ml: "auto",
-          mr: "auto",
-        }}
-      >
-        <Select value={filter} onChange={handleFilterChange} size="small">
-          <MenuItem value={"DOC"}>DOC</MenuItem>
-          <MenuItem value={"TODAS"}>TODAS</MenuItem>
-        </Select>
-        {filter === "DOC" && (
-          <Select
-            value={docType}
-            onChange={handleDocChange}
-            size="small"
-            sx={{ ml: 0.5 }}
-          >
-            <MenuItem value={"DNI"}>DNI</MenuItem>
-            <MenuItem value={"LE"}>LE</MenuItem>
-            <MenuItem value={"LC"}>LC</MenuItem>
-            <MenuItem value={"CI"}>CI</MenuItem>
-          </Select>
-        )}
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Buscar..."
-          onChange={handleSearchChange}
-          disabled={filter === "TODAS"}
-          value={searchValue}
-        />
-        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton
-          type="button"
-          sx={{ p: "10px" }}
-          aria-label="search"
-          onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
+    <Box sx={{ minHeight: "100vh", backgroundColor: "#DFDFDF" }}>
+      <FormHeader
+        title="Historias clínicas"
+        subTitle={"Búsqueda"}
+        icon={<ScreenSearchDesktopIcon fontSize="large" />}
+      />
+      <Box className="listContainer">
+        <Paper
+          component="form"
+          sx={{
+            p: "2px 4px",
+            display: "flex",
+            alignItems: "center",
+            minWidth: 300,
+            maxWidth: 350,
+            mt: 2,
+            ml: "auto",
+            mr: "auto",
+          }}
         >
-          <SearchIcon />
-        </IconButton>
-      </Paper>
-      <Box
-        sx={{
-          ml: "auto",
-          mr: "auto",
-          mt: "5px",
-          minWidth: 300,
-          maxWidth: 500,
-        }}
-      >
-        <Collapse in={error.show}>
-          <Alert
-            severity="error"
-            sx={{ borderRadius: "25px", mt: 1 }}
-            onClose={() => {
-              setError({ message: "", show: false });
-            }}
+          <Select value={filter} onChange={handleFilterChange} size="small">
+            <MenuItem value={"DOC"}>DOC</MenuItem>
+            <MenuItem value={"TODAS"}>TODAS</MenuItem>
+          </Select>
+          {filter === "DOC" && (
+            <Select
+              value={docType}
+              onChange={handleDocChange}
+              size="small"
+              sx={{ ml: 0.5 }}
+            >
+              <MenuItem value={"DNI"}>DNI</MenuItem>
+              <MenuItem value={"LE"}>LE</MenuItem>
+              <MenuItem value={"LC"}>LC</MenuItem>
+              <MenuItem value={"CI"}>CI</MenuItem>
+            </Select>
+          )}
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Buscar..."
+            onChange={handleSearchChange}
+            disabled={filter === "TODAS"}
+            value={searchValue}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton
+            type="button"
+            sx={{ p: "10px" }}
+            aria-label="search"
+            onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
           >
-            {error.message}
-          </Alert>
-        </Collapse>
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+        <Box
+          sx={{
+            ml: "auto",
+            mr: "auto",
+            mt: "5px",
+            minWidth: 300,
+            maxWidth: 500,
+          }}
+        >
+          <Collapse in={error.show}>
+            <Alert
+              severity="error"
+              sx={{ borderRadius: "25px", mt: 1 }}
+              onClose={() => {
+                setError({ message: "", show: false });
+              }}
+            >
+              {error.message}
+            </Alert>
+          </Collapse>
+        </Box>
+        <MedicalHistoriesList mhList={medicalHistories} />
+        {isLoading && (
+          <Box className="centered">
+            <CircularProgress size={150} />
+          </Box>
+        )}
+        {!isLoading && medicalHistories.length === 0 && !firstTime && (
+          <Box className="centered">
+            <Typography variant="h4" component="div">
+              No hay resultados.
+            </Typography>
+          </Box>
+        )}
       </Box>
-      <MedicalHistoriesList mhList={medicalHistories} />
-      {isLoading && (
-        <Box className="centered">
-          <CircularProgress size={150} />
-        </Box>
-      )}
-      {!isLoading && medicalHistories.length === 0 && !firstTime && (
-        <Box className="centered">
-          <Typography variant="h4" component="div">
-            No hay resultados.
-          </Typography>
-        </Box>
-      )}
-    </>
+    </Box>
   );
 }

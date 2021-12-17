@@ -55,6 +55,7 @@ export default function FormularioDeUsuario() {
             autoComplete="off"
           >
             <h1>Alta de usuario</h1>
+
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
                 <TextField
@@ -63,6 +64,100 @@ export default function FormularioDeUsuario() {
                   label="Mail"
                   placeholder="ejemplo@gmail.com"
                   {...register("email", {
+
+
+            <div>
+              <TextField
+                id="nombreid"
+                type="text"
+                label="Nombre"
+                {...register("nombre", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.nombre)}
+                helperText={errors.nombre?.message}
+              />
+
+              <TextField
+                id="apellidoid"
+                type="text"
+                label="Apellido"
+                {...register("apellido", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+                error={Boolean(errors.apellido)}
+                helperText={errors.apellido?.message}
+              />
+            </div>
+            <div>
+              <TextField
+                id="contraseniaid"
+                type="password"
+                //pattern=".{6}"
+                label="Password"
+                {...register("contrasenia", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                  minLength: {
+                    value: 6,
+                    message: "La contraseña debe tener al menos 6 caracteres",
+                  },
+                })}
+                error={Boolean(errors.password)}
+                helperText={errors.password?.message}
+              />
+
+              <TextField
+                id="emailid"
+                type="email"
+                label="Mail"
+                placeholder="ejemplo@gmail.com"
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "Necesitas este campo",
+                  },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    message: "El formato no es correcto",
+                  },
+                })}
+                error={Boolean(errors.email)}
+                helperText={errors.email?.message}
+              />
+            </div>
+
+            <div>
+              {/* <TextField
+                id="tipodocid"
+                type="text"
+                label="Tipo documento"
+                {...register("tipodocumento", {
+                  required: {
+                    value: true,
+                    message: "Necesitas este campo",
+                  },
+                })}
+                error={Boolean(errors.tipodocumento)}
+                helperText={errors.tipodocumento?.message}
+              /> */}
+
+              <FormControl sx={{ width: 216, mt: 1, ml: 1, mr: 1 }}>
+                <Select
+                  className="col-2"
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  defaultValue="DNI"
+                  {...register("tipodocumento", {
+
                     required: {
                       value: true,
                       message: "Necesitas este campo",
