@@ -1,6 +1,6 @@
 import "./App.css";
-import Navbar from "./components/Header/Navbar";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Navbar from "./components/Header/Navbar";
 
 //Pages
 import Login from "./pages/login";
@@ -18,8 +18,8 @@ function App() {
     <Router>
       <Navbar />
       <Switch>
-        <GuardedRoute exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <GuardedRoute exact path="/" component={Home} />
         <GuardedRoute
           exact
           path="/MostrarUsuarios"
@@ -31,15 +31,11 @@ function App() {
           path="/HistoriaClinica/:id"
           component={MedicalHistory}
         />
+
         <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
         <GuardedRoute
           exact
-          path="/MostrarUsuarios"
-          component={MostrarUsuarios}
-        />
-        <GuardedRoute
-          exact
-          path="/Formulario"
+          path="/FormularioDeUsuario"
           component={FormularioDeUsuario}
         />
         <GuardedRoute exact path="/NuevaHistoriaClinica" component={CreateMH} />
