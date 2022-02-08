@@ -1,6 +1,5 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./components/Header/Navbar";
 
 //Pages
 import Login from "./pages/login";
@@ -12,37 +11,49 @@ import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
+import LayoutTemplate from "./pages/layoutTemplate";
 
 function App() {
   return (
     <Router>
-      <Navbar />
       <Switch>
         <Route exact path="/login" component={Login} />
-        <GuardedRoute exact path="/" component={Home} />
+        <GuardedRoute exact path="/" component={LayoutTemplate(Home)} />
         <GuardedRoute
           exact
           path="/MostrarUsuarios"
-          component={MostrarUsuarios}
+          component={LayoutTemplate(MostrarUsuarios)}
         />
-        <GuardedRoute exact path="/BuscarPaciente" component={SearchMH} />
+        <GuardedRoute
+          exact
+          path="/BuscarPaciente"
+          component={LayoutTemplate(SearchMH)}
+        />
         <GuardedRoute
           exact
           path="/HistoriaClinica/:id"
-          component={MedicalHistory}
+          component={LayoutTemplate(MedicalHistory)}
         />
 
-        <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
+        <GuardedRoute
+          exact
+          path="/Estadisticas"
+          component={LayoutTemplate(Dashboard)}
+        />
         <GuardedRoute
           exact
           path="/FormularioDeUsuario"
-          component={FormularioDeUsuario}
+          component={LayoutTemplate(FormularioDeUsuario)}
         />
-        <GuardedRoute exact path="/NuevaHistoriaClinica" component={CreateMH} />
+        <GuardedRoute
+          exact
+          path="/NuevaHistoriaClinica"
+          component={LayoutTemplate(CreateMH)}
+        />
         <GuardedRoute
           exact
           path="/EditarHistoriaClinica/:id"
-          component={CreateMH}
+          component={LayoutTemplate(CreateMH)}
         />
       </Switch>
     </Router>
