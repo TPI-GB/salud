@@ -10,15 +10,6 @@ class StatisticsController {
     });
     this.router.get("/historyCount", (req, res) => {
       this.getHistoryCount(req, res);
-      //});
-      //   this.router.post("/register", (req, res) => {
-      //     this.registerUser(req, res);
-      //   });
-      //   this.router.post("/login", (req, res) => {
-      //     this.loginUser(req, res);
-      //   });
-      //   this.router.put("/:id", (req, res) => {
-      //     this.updateUser(req, res);
     });
   }
 
