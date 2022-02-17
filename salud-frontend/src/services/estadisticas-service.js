@@ -1,8 +1,13 @@
 import axios from "axios";
 
+const config = {
+  baseURL: process.env.REACT_APP_API_URL,
+  port: process.env.REACT_APP_API_PORT,
+};
+
 export async function getUserCount(startDate, endDate) {
   const response = await axios.get(
-    "REACT_APP_API_URL:REACT_APP_API_PORT/stats/userCount",
+    `${config.baseURL}:${config.port}/stats/userCount`,
     {
       params: {
         _startDate: startDate,
@@ -16,7 +21,7 @@ export async function getUserCount(startDate, endDate) {
 
 export async function getHistoryCount(startDate, endDate) {
   const response = await axios.get(
-    "REACT_APP_API_URL:REACT_APP_API_PORT/stats/historyCount",
+    `${config.baseURL}:${config.port}/stats/historyCount`,
     {
       params: {
         _startDate: startDate,
