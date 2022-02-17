@@ -34,7 +34,7 @@ export default function CreateMH() {
         icon={<LocalHospitalIcon fontSize="large" />}
       />
       <Paper className={classes.pageContent}>
-        <MedicalHistoryForm buttonText={state.buttonText} />
+        <MedicalHistoryForm buttonText={state.buttonText} id={id} />
       </Paper>
     </Box>
   );

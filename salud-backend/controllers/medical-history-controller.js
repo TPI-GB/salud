@@ -89,13 +89,12 @@ class MedicalHistoryController {
       numeroDocumento,
       nombre,
       apellido,
-      nacionalidad,
+      paisDeNacimiento,
       sexo,
       edad,
       ocupacionActual,
       estadoCivil,
       domicilioActual,
-      raza,
     } = req.body;
 
     // Validar los inputs del usuario
@@ -106,10 +105,9 @@ class MedicalHistoryController {
         numeroDocumento &&
         nombre &&
         apellido &&
-        nacionalidad &&
+        paisDeNacimiento &&
         sexo &&
-        edad &&
-        raza
+        edad
       )
     ) {
       return res.status(400).json("Faltan campos requeridos!");
@@ -148,13 +146,12 @@ class MedicalHistoryController {
         numeroDocumento,
         nombre,
         apellido,
-        nacionalidad,
+        paisDeNacimiento,
         sexo,
         edad,
         ocupacionActual,
         estadoCivil,
         domicilioActual,
-        raza,
       };
 
       const medicalHistoryStored =

@@ -8,7 +8,7 @@ const UserSchema = Schema(
     apellido: { type: String, required: true },
     roles: { type: Array, required: true },
     contrasenia: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     activo: { type: Boolean, default: true },
     tipodocumento: { type: String, required: true },
     numerodocumento: { type: String, required: true },
@@ -24,4 +24,5 @@ const UserSchema = Schema(
 );
 
 UserSchema.index({ tipodocumento: 1, numerodocumento: -1 }, { unique: true });
+UserSchema.index({ email: 1 }, { unique: true });
 module.exports = mongoose.model("User", UserSchema);
