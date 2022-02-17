@@ -76,6 +76,7 @@ class UserController {
         nombre &&
         apellido &&
         roles &&
+        roles.length > 0 &&
         tipodocumento &&
         numerodocumento
       )
@@ -121,6 +122,7 @@ class UserController {
       return res.status(201).json(userStored);
     } catch (exception) {
       console.log(exception);
+      return res.status(500).json(exception.message);
     }
   }
 
@@ -138,7 +140,6 @@ class UserController {
         res.status(400).json({ error: err.message });
       });
   }
-
 
   loginUser(req, res) {
     // La logica del login empieza aca

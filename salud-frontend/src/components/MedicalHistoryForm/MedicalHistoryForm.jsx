@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getMedicalHistoryById } from "../../services/medical-history-service";
-import { useParams } from "react-router";
+import { Link, useHistory } from "react-router-dom";
 import {
   Box,
   TextField,
@@ -25,20 +25,19 @@ import CountrySelector from "./CountrySelector";
 import "./MedicalHistoryForm.scss";
 
 export default function MedicalHistoryForm(props) {
-  const { buttonText } = props;
+  const { buttonText, id } = props;
   const [info, setInfo] = useState({
     numeroHistoriaClinica: "",
     tipoDocumento: "DNI",
     numeroDocumento: "",
     nombre: "",
     apellido: "",
-    nacionalidad: "Argentina",
+    paisDeNacimiento: "Argentina",
     sexo: "femenino",
     edad: "",
     ocupacionActual: "",
     estadoCivil: "",
     domicilioActual: "",
-    raza: "",
   });
   const [errors, setErrors] = useState({
     numeroHistoriaClinica: { message: "", error: false },
@@ -46,7 +45,6 @@ export default function MedicalHistoryForm(props) {
     nombre: { message: "", error: false },
     apellido: { message: "", error: false },
     edad: { message: "", error: false },
-    raza: { message: "", error: false },
   });
   const [alert, setAlert] = useState({
     show: false,
@@ -54,7 +52,7 @@ export default function MedicalHistoryForm(props) {
     severity: "success",
   });
 
-  const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const getData = async () => {
@@ -73,7 +71,6 @@ export default function MedicalHistoryForm(props) {
       "nombre",
       "apellido",
       "edad",
-      "raza",
     ];
     const temp = { ...errors };
     requiredFields.forEach((field) => {
@@ -94,6 +91,12 @@ export default function MedicalHistoryForm(props) {
     return !boolErrors.every(Boolean);
   }
 
+  function returnToSearchMH(time) {
+    setTimeout(function () {
+      history.push("/HistoriasClinicas");
+    }, time);
+  }
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInfo({ ...info, [name]: value });
@@ -111,6 +114,7 @@ export default function MedicalHistoryForm(props) {
             message: "La edición fue exitosa!.",
             severity: "success",
           });
+          returnToSearchMH(2000);
         })
         .catch((err) => {
           setAlert({
@@ -135,6 +139,7 @@ export default function MedicalHistoryForm(props) {
             message: "La creación fue exitosa!.",
             severity: "success",
           });
+          returnToSearchMH(2000);
         })
         .catch((err) => {
           console.log(err);
@@ -218,13 +223,13 @@ export default function MedicalHistoryForm(props) {
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
             <FormLabel sx={{ mt: "8px", mb: "4px", width: "100%" }}>
-              País de origen
+              País de nacimiento
             </FormLabel>
             <CountrySelector
               defaultValue="Argentina"
-              name="nacionalidad"
+              name="paisDeNacimiento"
               onChange={handleChange}
-              value={info.nacionalidad}
+              value={info.paisDeNacimiento}
               fullWidth
             />
 
@@ -271,15 +276,16 @@ export default function MedicalHistoryForm(props) {
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
 
-            <TextField
-              label="Raza"
-              name="raza"
-              onChange={handleChange}
-              value={info.raza}
-              error={errors.raza.error}
-              helperText={errors.raza.message}
+            <Button
+              type="button"
+              variant="contained"
+              color="error"
+              component={Link}
+              to="/HistoriasClinicas"
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
-            />
+            >
+              Cancelar
+            </Button>
 
             <Button
               type="button"

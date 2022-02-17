@@ -25,7 +25,7 @@ function App() {
           path="/MostrarUsuarios"
           component={MostrarUsuarios}
         />
-        <GuardedRoute exact path="/BuscarPaciente" component={SearchMH} />
+        <GuardedRoute exact path="/HistoriasClinicas" component={SearchMH} />
         <GuardedRoute
           exact
           path="/HistoriaClinica/:id"

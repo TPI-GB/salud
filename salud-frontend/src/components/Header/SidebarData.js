@@ -5,8 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 
 export const SidebarData = [
   {
@@ -22,15 +21,9 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Buscar HC",
-    path: "/BuscarPaciente",
-    icon: <SearchIcon />,
-    cName: "nav-text",
-  },
-  {
-    title: "Nueva HC",
-    path: "/NuevaHistoriaClinica",
-    icon: <AddCircleIcon />,
+    title: "Historias Clínicas",
+    path: "/HistoriasClinicas",
+    icon: <LocalHospitalIcon />,
     cName: "nav-text",
   },
   {
