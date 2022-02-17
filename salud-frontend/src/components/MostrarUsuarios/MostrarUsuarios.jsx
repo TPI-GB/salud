@@ -57,7 +57,6 @@ export default function PinnedSubheaderList() {
   const styles = useStyles();
   const [data, setData] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
-  const [modalInhabilitar, setModalInhabilitar] = useState(false);
   const [mostrarConfirmacionAlEditar, setMostrarConfirmacionAlEditar] =
     useState(false);
   const [usuarioSeleccionado, setUsuarioSeleccionado] = useState({
@@ -75,13 +74,6 @@ export default function PinnedSubheaderList() {
     return roles.includes(rol);
   };
 
-  const [laboratorio, setLaboratorio] = useState(false);
-  const [recepcion, setRecepcion] = useState(false);
-  const [secretaria, setSecretaria] = useState(false);
-  const [director, setDirector] = useState(false);
-  const [admin, setAdmin] = useState(false);
-  const [medico, setMedico] = useState(false);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUsuarioSeleccionado((prevState) => ({
@@ -96,7 +88,7 @@ export default function PinnedSubheaderList() {
       .put(baseUrl + usuarioActualizado._id, usuarioActualizado)
       .then((response) => {
         var dataNueva = data;
-        dataNueva.map((usuario) => {
+        dataNueva.forEach((usuario) => {
           if (usuarioActualizado._id === usuario._id) {
             usuario.nombre = usuarioActualizado.nombre;
             usuario.apellido = usuarioActualizado.apellido;
@@ -141,8 +133,6 @@ export default function PinnedSubheaderList() {
   useEffect(() => {}, [usuarioSeleccionado.roles]);
 
   function handleAdminChange(event) {
-    setAdmin(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("admin")) {
         usuarioSeleccionado.roles.push("admin");
@@ -159,8 +149,6 @@ export default function PinnedSubheaderList() {
   }
 
   function handleLaboratorioChange(event) {
-    setLaboratorio(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("laboratorio")) {
         usuarioSeleccionado.roles.push("laboratorio");
@@ -176,8 +164,6 @@ export default function PinnedSubheaderList() {
     }
   }
   function handleSecretariaChange(event) {
-    setSecretaria(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("secretaria")) {
         usuarioSeleccionado.roles.push("secretaria");
@@ -193,8 +179,6 @@ export default function PinnedSubheaderList() {
     }
   }
   function handleMedicoChange(event) {
-    setMedico(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("medico")) {
         usuarioSeleccionado.roles.push("medico");
@@ -210,8 +194,6 @@ export default function PinnedSubheaderList() {
     }
   }
   function handleRecepcionChange(event) {
-    setRecepcion(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("recepcion")) {
         usuarioSeleccionado.roles.push("recepcion");
@@ -227,8 +209,6 @@ export default function PinnedSubheaderList() {
     }
   }
   function handleDirectorChange(event) {
-    setDirector(event.target.checked);
-
     if (event.target.checked) {
       if (!usuarioSeleccionado.roles.includes("director")) {
         usuarioSeleccionado.roles.push("director");
@@ -291,7 +271,7 @@ export default function PinnedSubheaderList() {
         }
       />
       <br />
-      <p4>Roles: &nbsp;&nbsp;</p4>
+      <p>Roles: &nbsp;&nbsp;</p>
       <FormControlLabel
         control={
           <Checkbox

@@ -1,9 +1,7 @@
 import { useForm } from "react-hook-form";
-import Stack from "@mui/material/Stack";
-import { FormControlLabel, styled } from "@mui/material";
-import FormGroup from "@mui/material/FormGroup";
+import { FormControlLabel } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
-import { createUser } from "../../services";
+import { createUser } from "../../services/user-service";
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -11,11 +9,9 @@ import FormControl from "@mui/material/FormControl";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import "./FormularioUsuario.scss";
-import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
-import Paper from "@mui/material/Paper";
 export default function FormularioDeUsuario() {
   const {
     register,
@@ -29,7 +25,7 @@ export default function FormularioDeUsuario() {
     var p2 = document.getElementById("confirmContrasenia").value;
     console.log(p1);
     console.log(p2);
-    if (p1 != p2) {
+    if (p1 !== p2) {
       setProbar({ show: true, message: "Contraseñas no concuerdan" });
     } else {
       setProbar({ show: false, message: "" });

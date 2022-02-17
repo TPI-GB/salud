@@ -1,5 +1,5 @@
 import React from "react";
-import { List, ListItem, ListItemText, Fab } from "@mui/material";
+import { List, ListItem, ListItemText, Fab, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import ForwardIcon from "@mui/icons-material/Forward";
@@ -32,17 +32,27 @@ function RenderMedicalHistory(props) {
         primary={"Paciente: " + mh.nombre + " " + mh.apellido}
         secondary={"Número de historia " + mh.numeroHistoriaClinica}
       />
-      <Fab color="secondary" size="small" sx={{ mr: 1 }}>
-        <EditIcon />
-      </Fab>
-      <Fab
-        color="secondary"
-        size="small"
-        component={Link}
-        to={`/HistoriaClinica/${mh._id}`}
-      >
-        <ForwardIcon />
-      </Fab>
+      <Tooltip title="Editar">
+        <Fab
+          color="secondary"
+          size="small"
+          sx={{ mr: 1 }}
+          component={Link}
+          to={`/EditarHistoriaClinica/${mh._id}`}
+        >
+          <EditIcon />
+        </Fab>
+      </Tooltip>
+      <Tooltip title="Ver">
+        <Fab
+          color="secondary"
+          size="small"
+          component={Link}
+          to={`/HistoriaClinica/${mh._id}`}
+        >
+          <ForwardIcon />
+        </Fab>
+      </Tooltip>
     </>
   );
 }

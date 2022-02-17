@@ -26,7 +26,7 @@ function App() {
         />
         <GuardedRoute
           exact
-          path="/BuscarPaciente"
+          path="/HistoriasClinicas"
           component={LayoutTemplate(SearchMH)}
         />
         <GuardedRoute
@@ -34,7 +34,6 @@ function App() {
           path="/HistoriaClinica/:id"
           component={LayoutTemplate(MedicalHistory)}
         />
-
         <GuardedRoute
           exact
           path="/Estadisticas"

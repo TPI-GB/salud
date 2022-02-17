@@ -11,8 +11,12 @@ import {
   Divider,
   MenuItem,
   Select,
+  Fab,
+  Tooltip,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 import MedicalHistoriesList from "../MedicalHistoriesList";
 import FormHeader from "../FormHeader";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
@@ -88,54 +92,66 @@ export default function SearchMH() {
         icon={<ScreenSearchDesktopIcon fontSize="large" />}
       />
       <Box className="listContainer">
-        <Paper
-          component="form"
-          sx={{
-            p: "2px 4px",
-            display: "flex",
-            alignItems: "center",
-            minWidth: 300,
-            maxWidth: 350,
-            mt: 2,
-            ml: "auto",
-            mr: "auto",
-          }}
-        >
-          <Select value={filter} onChange={handleFilterChange} size="small">
-            <MenuItem value={"DOC"}>DOC</MenuItem>
-            <MenuItem value={"TODAS"}>TODAS</MenuItem>
-          </Select>
-          {filter === "DOC" && (
-            <Select
-              value={docType}
-              onChange={handleDocChange}
-              size="small"
-              sx={{ ml: 0.5 }}
-            >
-              <MenuItem value={"DNI"}>DNI</MenuItem>
-              <MenuItem value={"LE"}>LE</MenuItem>
-              <MenuItem value={"LC"}>LC</MenuItem>
-              <MenuItem value={"CI"}>CI</MenuItem>
-            </Select>
-          )}
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Buscar..."
-            onChange={handleSearchChange}
-            disabled={filter === "TODAS"}
-            value={searchValue}
-          />
-          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <IconButton
-            type="button"
-            sx={{ p: "10px" }}
-            aria-label="search"
-            onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
+        <Box sx={{ display: "flex" }}>
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              minWidth: 300,
+              maxWidth: 350,
+              mt: 2,
+              ml: "auto",
+              mr: "auto",
+            }}
           >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
+            <Select value={filter} onChange={handleFilterChange} size="small">
+              <MenuItem value={"DOC"}>DOC</MenuItem>
+              <MenuItem value={"TODAS"}>TODAS</MenuItem>
+            </Select>
+            {filter === "DOC" && (
+              <Select
+                value={docType}
+                onChange={handleDocChange}
+                size="small"
+                sx={{ ml: 0.5 }}
+              >
+                <MenuItem value={"DNI"}>DNI</MenuItem>
+                <MenuItem value={"LE"}>LE</MenuItem>
+                <MenuItem value={"LC"}>LC</MenuItem>
+                <MenuItem value={"CI"}>CI</MenuItem>
+              </Select>
+            )}
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Buscar..."
+              onChange={handleSearchChange}
+              disabled={filter === "TODAS"}
+              value={searchValue}
+            />
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              type="button"
+              sx={{ p: "10px" }}
+              aria-label="search"
+              onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
+            >
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          <Tooltip title="Crear nueva historia">
+            <Fab
+              size="large"
+              sx={{ mr: 1, mt: 2 }}
+              component={Link}
+              to={"/NuevaHistoriaClinica"}
+            >
+              <AddIcon />
+            </Fab>
+          </Tooltip>
+        </Box>
         <Box
           sx={{
             ml: "auto",
