@@ -6,6 +6,8 @@ const config = {
 };
 
 export async function getUserCount(startDate, endDate) {
+  console.log(startDate);
+  console.log(endDate);
   const response = await axios.get(
     `${config.baseURL}:${config.port}/stats/userCount`,
     {
