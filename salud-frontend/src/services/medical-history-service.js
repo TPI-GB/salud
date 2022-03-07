@@ -21,6 +21,14 @@ export async function getMedicalHistoryById(id) {
   return response;
 }
 
+export async function getMedicalHistoryDetailsById(id) {
+  const response = await axios.get(
+    `${config.baseURL}:${config.port}/medical-histories/details/${id}`
+  );
+
+  return response;
+}
+
 export async function getMedicalHistoryByDocument(docType, docNumber) {
   const response = await axios.get(
     `${config.baseURL}:${config.port}/medical-histories/${docType}/${docNumber}`

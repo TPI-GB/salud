@@ -11,6 +11,9 @@ class MedicalHistoryController {
     this.router.get("/:id", (req, res) => {
       this.getMedicalHistoryById(req, res);
     });
+    this.router.get("/details/:id", (req, res) => {
+      this.getMedicalHistoryDetailsById(req, res);
+    });
     this.router.get("/:docType/:docNumber", (req, res) => {
       this.getMedicalHistoryByDocument(req, res);
     });
@@ -51,6 +54,20 @@ class MedicalHistoryController {
   getMedicalHistoryById(req, res) {
     let medicalHistoryPromise =
       this.medicalHistoryService.getMedicalHistoryById(req.params.id);
+
+    medicalHistoryPromise
+      .then((medicalHistory) => {
+        res.status(200).json(medicalHistory);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalHistoryDetailsById(req, res) {
+    let medicalHistoryPromise =
+      this.medicalHistoryService.getMedicalHistoryDetailsById(req.params.id);
 
     medicalHistoryPromise
       .then((medicalHistory) => {
@@ -116,7 +133,7 @@ class MedicalHistoryController {
     try {
       //Validar si el numero de historia clinica esta en uso
       const duplicatedNumber =
-        await this.medicalHistoryService.getMedicalHistoryByNumber(
+        await this.medicalHistoryService.existsMedicalHistoryByNumber(
           numeroHistoriaClinica
         );
 
@@ -127,7 +144,7 @@ class MedicalHistoryController {
       }
 
       const duplicatedDocument =
-        await this.medicalHistoryService.getMedicalHistoryByDocument(
+        await this.medicalHistoryService.existsMedicalHistoryByDocument(
           tipoDocumento,
           numeroDocumento
         );

@@ -22,8 +22,6 @@ const MedicalHistorySchema = Schema(
   },
   {
     collection: "medicalHistories",
-  },
-  {
     timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
   }
 );

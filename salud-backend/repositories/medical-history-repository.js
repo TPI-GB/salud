@@ -2,22 +2,39 @@ const MedicalHistory = require("../models/medical-history-model");
 
 class MedicalHistoryRepository {
   async findAll() {
-    return await MedicalHistory.find();
+    return await MedicalHistory.find(
+      {},
+      "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
+    );
   }
 
   async findById(id) {
+    return await MedicalHistory.findById(id, "-consultas -estudios");
+  }
+
+  async findDetailsById(id) {
     return await MedicalHistory.findById(id);
   }
 
   async findByDocument(docType, docNumber) {
-    return await MedicalHistory.findOne({
+    return await MedicalHistory.findOne(
+      {
+        tipoDocumento: docType,
+        numeroDocumento: docNumber,
+      },
+      "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
+    );
+  }
+
+  async existsByDocument(docType, docNumber) {
+    return await MedicalHistory.exists({
       tipoDocumento: docType,
       numeroDocumento: docNumber,
     });
   }
 
-  async findByNumber(medicalHistoryNumber) {
-    return await MedicalHistory.findOne({
+  async existsByNumber(medicalHistoryNumber) {
+    return await MedicalHistory.exists({
       numeroHistoriaClinica: medicalHistoryNumber,
     });
   }
@@ -31,6 +48,7 @@ class MedicalHistoryRepository {
   async update(id, data) {
     return await MedicalHistory.findByIdAndUpdate({ _id: id }, data, {
       new: true,
+      select: "-estudios -consultas -creacion -ultimaModificacion",
     });
   }
 

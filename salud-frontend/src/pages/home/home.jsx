@@ -1,13 +1,15 @@
 import React from "react";
+import "./home.scss";
+import { Box, Typography } from "@mui/material";
 
 function Home() {
   return (
-    <div className='home'>
-        <h3>
-          Esto es el Home
-        </h3>
-    </div>
-  )
+    <Box className="home">
+      <Typography variant="h3" component="div">
+        ¡Bienvenido a SaludGB!
+      </Typography>
+    </Box>
+  );
 }
 
 export default Home;
