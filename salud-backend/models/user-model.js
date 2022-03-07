@@ -17,9 +17,7 @@ const UserSchema = Schema(
   },
   {
     collection: "users",
-  },
-  {
-    timestamps: true,
+    timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
   }
 );
 

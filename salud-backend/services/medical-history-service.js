@@ -17,6 +17,14 @@ class MedicalHistoryService {
     return medicalHistory;
   }
 
+  async getMedicalHistoryDetailsById(id) {
+    let medicalHistory = await this.medicalHistoryRepository.findDetailsById(
+      id
+    );
+
+    return medicalHistory;
+  }
+
   async getMedicalHistoryByDocument(docType, docNumber) {
     let medicalHistory = await this.medicalHistoryRepository.findByDocument(
       docType,
@@ -26,12 +34,17 @@ class MedicalHistoryService {
     return medicalHistory;
   }
 
-  async getMedicalHistoryByNumber(medicalHistoryNumber) {
-    let medicalHistory = await this.medicalHistoryRepository.findByNumber(
+  async existsMedicalHistoryByDocument(docType, docNumber) {
+    return await this.medicalHistoryRepository.existsByDocument(
+      docType,
+      docNumber
+    );
+  }
+
+  async existsMedicalHistoryByNumber(medicalHistoryNumber) {
+    return await this.medicalHistoryRepository.existsByNumber(
       medicalHistoryNumber
     );
-
-    return medicalHistory;
   }
 
   async createMedicalHistory(medicalHistoryData) {

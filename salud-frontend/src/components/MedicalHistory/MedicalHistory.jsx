@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Box, Typography } from "@mui/material";
-import { getMedicalHistoryById } from "../../services/medical-history-service";
+import { getMedicalHistoryDetailsById } from "../../services/medical-history-service";
 
 export default function MedicalHistory() {
   const [medicalHistory, setMedicalHistory] = useState({});
@@ -10,7 +10,7 @@ export default function MedicalHistory() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await getMedicalHistoryById(id);
+      const response = await getMedicalHistoryDetailsById(id);
       setMedicalHistory(response.data);
     };
     getData();

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import "fontsource-roboto";
-import "../Dashboard/Dashboard.scss";
+// import "../Dashboard/Dashboard.scss";
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
 import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
