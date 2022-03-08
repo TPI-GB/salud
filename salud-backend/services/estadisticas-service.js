@@ -16,6 +16,8 @@ class StatisticsService {
   }
 
   async getUsersStats(startDate, endDate) {
+    console.log(startDate);
+    console.log(endDate);
     return this.statisticsRepository.findAllUsers(startDate, endDate);
   }
 
