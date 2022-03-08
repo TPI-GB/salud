@@ -27,7 +27,6 @@ function Navbar() {
         {!isMatch && (
           <Tabs
             value={value}
-            className="tabs"
             TabIndicatorProps={{
               style: { background: "#00b64f" },
             }}
