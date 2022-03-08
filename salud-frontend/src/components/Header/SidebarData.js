@@ -2,9 +2,8 @@ import React from "react";
 
 //Iconos
 import HomeIcon from "@mui/icons-material/Home";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import PeopleIcon from "@mui/icons-material/People";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import AddIcon from "@mui/icons-material/Add";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 
 export const SidebarData = [
@@ -15,9 +14,9 @@ export const SidebarData = [
     cName: "nav-text",
   },
   {
-    title: "Mostrar Usuarios",
-    path: "/MostrarUsuarios",
-    icon: <VisibilityIcon />,
+    title: "Usuarios",
+    path: "/Usuarios",
+    icon: <PeopleIcon />,
     cName: "nav-text",
   },
   {
@@ -30,12 +29,6 @@ export const SidebarData = [
     title: "Dashboard",
     path: "/Estadisticas",
     icon: <DashboardIcon />,
-    cName: "nav-text",
-  },
-  {
-    title: "Nuevo Usuario",
-    path: "/FormularioDeUsuario",
-    icon: <AddIcon />,
     cName: "nav-text",
   },
 ];

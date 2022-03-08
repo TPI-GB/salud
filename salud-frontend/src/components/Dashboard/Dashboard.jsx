@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import { Grid, Button } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import "fontsource-roboto";
 // import "../Dashboard/Dashboard.scss";
 import StackedBarChartIcon from "@mui/icons-material/StackedBarChart";
@@ -107,16 +107,7 @@ export default function Dashboard(props) {
           />
         </Grid>
 
-        <Grid
-          container
-          spacing={1}
-          className={classes.container}
-          xs={12}
-          sm={6}
-          md={6}
-          lg={6}
-          xl={6}
-        >
+        <Grid container spacing={1} className={classes.container}>
           <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
             <CardHeader
               icono={<DonutSmallIcon className={classes.iconos} />}
@@ -162,7 +153,6 @@ export default function Dashboard(props) {
             </Button>
           </Grid>
         </Grid>
-        <Grid item xs={0} sm={0} md={1} lg={1} xl={1}></Grid>
         <Grid
           item
           xs={12}
@@ -170,7 +160,7 @@ export default function Dashboard(props) {
           md={5}
           lg={5}
           xl={5}
-          classname={classes.container}
+          className={classes.container}
         >
           <Graphics
             labels={["Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"]}
@@ -184,7 +174,7 @@ export default function Dashboard(props) {
           md={5}
           lg={5}
           xl={5}
-          classname={classes.container}
+          className={classes.container}
         >
           <HorizontalBarChart />
         </Grid>

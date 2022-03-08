@@ -1,6 +1,6 @@
 .navbar {
   background-color: #22884f;
-  height: 65px;
+  height: auto;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -68,6 +68,6 @@
   align-items: center;
 }
 
-span {
+/*span {
   margin-left: 16px;
-}
+}*/
