@@ -1,6 +1,6 @@
 import React from "react";
-import { Card, Typography, CardContent } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { Card, Typography, CardContent } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 
 export default function CardHeader(props) {
   const useStyles = makeStyles(() => ({
