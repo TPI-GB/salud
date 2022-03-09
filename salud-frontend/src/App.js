@@ -5,7 +5,7 @@ import Login from "./pages/login";
 import Home from "./pages/home/home";
 import MostrarUsuarios from "./components/MostrarUsuarios";
 import SearchMH from "./components/SearchMH";
-import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
+import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import CreateMH from "./pages/createMH";
