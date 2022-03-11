@@ -8,6 +8,7 @@ import {
   ListItemButton,
   Tooltip,
   Fab,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -40,7 +41,9 @@ export default function MedicalConsultationList(props) {
       </Box>
       <Grid container>
         {consultas.map((consulta) => {
-          return <ConsultationItemList consultaInfo={consulta} />;
+          return (
+            <ConsultationItemList consultaInfo={consulta} key={consulta._id} />
+          );
         })}
       </Grid>
     </Box>
@@ -83,6 +86,9 @@ function ConsultationItemList(props) {
         <Box>
           <MasksIcon fontSize="large" />
           <Typography>{consultaInfo.creacion}</Typography>
+          <Button variant="contained" size="small" fullWidth>
+            Editar
+          </Button>
         </Box>
       </Grid>
       <Grid item xs={12} sm={12} md={8} lg={8} xl={8}>

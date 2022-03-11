@@ -38,7 +38,7 @@ function RenderMedicalHistory(props) {
           size="small"
           sx={{ mr: 1 }}
           component={Link}
-          to={`/EditarHistoriaClinica/${mh._id}`}
+          to={`/HistoriasClinicas/Editar/${mh._id}`}
         >
           <EditIcon />
         </Fab>
@@ -48,7 +48,7 @@ function RenderMedicalHistory(props) {
           color="secondary"
           size="small"
           component={Link}
-          to={`/HistoriaClinica/${mh._id}`}
+          to={`/HistoriasClinicas/Detalles/${mh._id}`}
         >
           <ForwardIcon />
         </Fab>

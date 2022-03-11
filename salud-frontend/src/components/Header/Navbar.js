@@ -13,24 +13,37 @@ function Navbar() {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
   const location = useLocation();
-  const [value, setValue] = useState(location.pathname);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const indexToTabName = [
+    ["/Home", 0],
+    ["/Usuarios", 1],
+    ["/HistoriasClinicas", 2],
+    ["/Estadisticas", 3],
+  ];
+
+  function initialSelectedTab() {
+    const initialTab = indexToTabName.find((tuple) =>
+      location.pathname.includes(tuple[0])
+    );
+    if (!initialTab) {
+      return 0;
+    }
+    return initialTab[1];
+  }
+
+  const selectedTab = initialSelectedTab();
 
   return (
     <>
       <div className="navbar">
         {!isMatch && (
           <Tabs
-            value={value}
+            value={selectedTab}
             TabIndicatorProps={{
               style: { background: "#00b64f" },
             }}
-            onChange={handleChange}
           >
             {SidebarData.map((item, index) => {
               return (
@@ -38,7 +51,7 @@ function Navbar() {
                   icon={item.icon}
                   label={item.title}
                   key={index}
-                  value={item.path}
+                  value={index}
                   to={item.path}
                   component={Link}
                 />
