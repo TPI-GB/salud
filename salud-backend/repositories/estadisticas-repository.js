@@ -10,11 +10,11 @@ class StatisticsRepository {
   //   return await History.count();
   // }
   async findAllUsers(startDate, endDate) {
-    const minuendo = await User.count({
-      createdAt: { $and: [{ $lte: endDate }, { $gte: startDate }] },
+    const result = await User.count({
+      createdAt: { $gte: startDate, $lte: endDate },
     });
-
-    return minuendo;
+    console.log(result);
+    return result;
   }
 
   async findAllHistories(startDate, endDate) {
