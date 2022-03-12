@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
+import loginImg from "../../assets/img/loginLogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 
@@ -51,12 +51,15 @@ export default function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
+  
   return (
     <div className="loginBackground">
       <Box component="form" className="loginForm">
         <div className="loginForm-logo">
-          <LoginLogo />
+          <img src={loginImg} />
+        </div>
+        <div className='titulo'>
+          SALUD BELGRANO
         </div>
         <TextField
           fullWidth
@@ -98,13 +101,14 @@ export default function Login() {
               setMostrarErrorAlIngresar(false);
             }}
           >
-            Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
+            Usuario o contraseña incorrectos. Por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
           variant="outlined"
+          color='success'
           onClick={handleSubmit}
         >
           Ingresar

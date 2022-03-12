@@ -47,7 +47,7 @@ class UserService {
 
     // Encriptar la contraseña del usuario
     let encryptedPassword = await bcrypt.hash(contrasenia, 10);
-
+    
     const user = {
       nombre,
       apellido,
@@ -63,17 +63,15 @@ class UserService {
     return newUser;
   }
 
-  async updateUser(id, data) {
-    const updatedUser = await this.userRepository.update(id, data);
-
-    return updatedUser;
-  }
-
   async loginUser(email, password) {
     // Validar si el usuario existe en la base de datos
     const user = await this.userRepository.findByEmail(email);
 
-    if (user && (await bcrypt.compare(password, user.contrasenia))) {
+    if (
+      user &&
+      user.activo &&
+      (await bcrypt.compare(password, user.contrasenia))
+    ) {
       // Crear Token
       const token = jwt.sign(
         { user_id: user._id, email },
@@ -90,6 +88,10 @@ class UserService {
       throw "Credenciales inválidas";
     }
   }
+
+  /* async logoutUser(email, password) {
+    const user = await this.userRepository.findByEmail(email);
+  } */
 }
 
 module.exports = UserService;

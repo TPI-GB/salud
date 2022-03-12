@@ -5,6 +5,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import GuardedRoute from './components/GuardedRoute/GuardedRoute';
 
 //Pages
 import Login from './pages/login/Login';
@@ -13,22 +14,26 @@ import MostrarUsuarios from './components/MostrarUsuarios/MostrarUsuarios';
 import NuevaHC from './pages/nuevaHC/NuevaHC';
 import BuscarHC from './pages/BuscarHC/BuscarHC';
 import FormularioUsuario from './components/FormularioUsuario/FormularioUsuario';
-//import Dashboard from './pages/dashboard/Dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
+
 
 function App() {
   return (
-    <Router>
-      <Navbar />
+    
+      <Router>
         <Switch>
-          <Route exact path="/pages/login" component={Login} />
-          <Route exact path="/pages/home" component={Home} />
-          <Route exact path="/components/MostrarUsuarios" component={MostrarUsuarios} />
-          <Route exact path="/pages/nuevaHC" component={NuevaHC} />
-          <Route exact path="/pages/buscarHC" component={BuscarHC} />
-          <Route exact path="/components/FormularioUsuario" component={FormularioUsuario} />
-          {/* <Route exact path="pages/dashboard/" component={Dashboard} /> */}
+          <Route exact path="/login" component={Login} />
+          <div>
+            <Navbar />
+            <GuardedRoute exact path="/" component={Home} />
+            <GuardedRoute exact path="/mostrarUsuarios" component={MostrarUsuarios} />
+            <GuardedRoute exact path="/nuevaHC" component={NuevaHC} />
+            <GuardedRoute exact path="/buscarHC"  component={BuscarHC} />
+            <GuardedRoute exact path="/formularioUsuario" component={FormularioUsuario} />
+            <GuardedRoute exact path="/dashboard" component={Dashboard} />
+          </div>
         </Switch> 
-    </Router>
+      </Router>
   );
 }
 

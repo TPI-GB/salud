@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Navbar from "../Navbar/Navbar";
+//import Navbar from "../Navbar/Navbar";
 import 'fontsource-roboto';
 //import '../Dashboard/Dashboard.scss'
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
@@ -35,7 +35,7 @@ export default function Dashboard(props) {
     <div className={classes.root}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Navbar />
+         {/*  <Navbar /> */}
         </Grid>
         
         <Grid container spacing={3} className={classes.container}>

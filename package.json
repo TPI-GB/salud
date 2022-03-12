@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-material-ui-theme": "^1.0.9",
+    "typescript": "^4.5.5"
+  }
+}

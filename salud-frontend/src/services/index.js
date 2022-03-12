@@ -27,6 +27,7 @@ export async function createUser(data) {
 
   const { nombre, apellido, roles, contrasenia, email, tipodocumento, numerodocumento } = data
 
+
   const token = Buffer.from(email + ":" + contrasenia).toString("base64");
   const method = "Basic ";
   const encriptado = method + token;

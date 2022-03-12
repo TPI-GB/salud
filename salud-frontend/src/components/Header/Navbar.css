@@ -2,7 +2,7 @@
     background-color: #22884F;
     height: 80px;
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -11,6 +11,11 @@
     font-size: 2rem;
     background: none;
     color: white;
+}
+
+.logout {
+    margin-right: 2rem;
+    
 }
 
 .nav-menu {

@@ -4,7 +4,7 @@ function Home() {
   return (
     <div className='home'>
         <h3>
-          Esto es el Home
+          Bienvenido a Salud Belgrano
         </h3>
     </div>
   )

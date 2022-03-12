@@ -1,23 +1,26 @@
 .loginBackground {
   height: 100vh;
-  background-color: cadetblue;
+  background-color: #22884F;
   display: flex;
   justify-content: center;
   align-items: center;
   .loginForm {
     max-width: 330px;
-    border: 2px solid rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(0, 128, 32, 0.4);
     padding: 20px;
     text-align: center;
     background-color: rgb(255, 255, 255);
     .loginForm-logo {
-      width: 100px;
-      height: 100px;
+      width: 100;
+      height: 100;
       margin-left: auto;
       margin-right: auto;
     }
     .loginForm-error {
       color: #ff0000;
+    }
+    .titulo {
+      color: #22884F;
     }
   }
 }

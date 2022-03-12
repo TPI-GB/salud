@@ -11,38 +11,38 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 export const SidebarData = [
     {
         title: 'Home',
-        path: '/pages/home',
+        path: '/',
         icon: <HomeIcon/>,
         cName: 'nav-text'
     },
     {
-        title: 'Mostrar Usuarios',
-        path: '/components/MostrarUsuarios',
-        icon: <VisibilityIcon/>,
-        cName: 'nav-text'
-    },
-    {
-        title: 'Buscar HC',
-        path: '/pages/buscarHC',
-        icon: <SearchIcon/>,
-        cName: 'nav-text'
-    },
-    {
         title: 'Nueva HC',
-        path: '/pages/nuevaHC',
+        path: 'nuevaHC',
         icon: <AddCircleIcon/>,
         cName: 'nav-text'
     },
     {
-        title: 'Dashboard',
-        path: '/pages/dashboard',
-        icon: <DashboardIcon/>,
+        title: 'Buscar HC',
+        path: '/buscarHC',
+        icon: <SearchIcon/>,
         cName: 'nav-text'
     },
     {
         title: 'Nuevo Usuario',
-        path: '/components/FormularioUsuario',
+        path: '/formularioUsuario',
         icon: <AddIcon/>,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Mostrar Usuarios',
+        path: '/mostrarUsuarios',
+        icon: <VisibilityIcon/>,
+        cName: 'nav-text'
+    },
+    {
+        title: 'Dashboard',
+        path: 'dashboard',
+        icon: <DashboardIcon/>,
         cName: 'nav-text'
     },
 ]
