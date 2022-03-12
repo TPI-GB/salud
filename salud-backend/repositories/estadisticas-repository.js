@@ -18,7 +18,11 @@ class StatisticsRepository {
   }
 
   async findAllHistories(startDate, endDate) {
-    return await History.count(startDate, endDate);
+    return await History.count({
+      creacion: { $gte: startDate, $lte: endDate },
+    });
+    console.log(result);
+    return result;
   }
 }
 
