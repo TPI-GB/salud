@@ -14,8 +14,10 @@ class StatisticsService {
   async getHistoriesStats() {
     return this.statisticsRepository.findAllHistories();
   }
-  //preciso hacer esto? O van en el req del controller?
+
   async getUsersStats(startDate, endDate) {
+    console.log(startDate);
+    console.log(endDate);
     return this.statisticsRepository.findAllUsers(startDate, endDate);
   }
 

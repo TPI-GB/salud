@@ -67,7 +67,7 @@ export default function Dashboard(props) {
           setStat2Data({ historyData: res[1].data });
         })
         .catch((e) => console.log(e));
-    }, 3000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [startDate, endDate]);
 
@@ -141,16 +141,6 @@ export default function Dashboard(props) {
               selectsRange
               inline
             />
-            <Button
-              variant="contained"
-              endIcon={<SearchIcon />}
-              onClick={() => {
-                setStartDate(DatePicker.startDate);
-                setEndDate(DatePicker.endDate);
-              }}
-            >
-              BUSCAR
-            </Button>
           </Grid>
         </Grid>
         <Grid

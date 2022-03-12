@@ -14,7 +14,10 @@ class StatisticsController {
   }
 
   getCreatedUsers(req, res) {
-    let statsPromise = this.StatisticsService.getUsersStats();
+    let statsPromise = this.StatisticsService.getUsersStats(
+      req.query._startDate,
+      req.query._endDate
+    );
 
     statsPromise
       .then((users) => {
@@ -27,7 +30,10 @@ class StatisticsController {
   }
 
   getHistoryCount(req, res) {
-    let statsPromise = this.StatisticsService.getHistoriesStats();
+    let statsPromise = this.StatisticsService.getHistoriesStats(
+      req.query._startDate,
+      req.query._endDate
+    );
 
     statsPromise
       .then((histories) => {
