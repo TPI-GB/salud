@@ -11,7 +11,7 @@ class StatisticsRepository {
   // }
   async findAllUsers(startDate, endDate) {
     const result = await User.count({
-      createdAt: { $gte: startDate, $lte: endDate },
+      creacion: { $gte: startDate, $lte: endDate },
     });
     console.log(result);
     return result;
