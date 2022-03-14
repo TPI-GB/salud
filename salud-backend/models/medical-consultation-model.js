@@ -6,6 +6,7 @@ const MedicalConsultationSchema = Schema(
   {
     motivo: { type: String, required: true },
     doctor: { type: String, required: true },
+    archivos: { type: Array },
     textoLibre: { type: String },
   },
   {

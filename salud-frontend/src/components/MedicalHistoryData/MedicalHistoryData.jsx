@@ -1,11 +1,13 @@
 import React from "react";
 import { Box, Grid, Typography, Paper } from "@mui/material";
+import { localTZDate } from "../../services/medical-history-service";
 
 export default function MedicalHistoryData(props) {
   const { data } = props;
+  const dateFormat = "DD/MM/YYYY hh:mm";
 
   return (
-    <Box sx={{ marginBottom: "15px" }}>
+    <Box>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <DataView
@@ -41,12 +43,15 @@ export default function MedicalHistoryData(props) {
           <DataView field="Domicilio" info={data.domicilioActual} />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-          <DataView field="Creación" info={data.creacion} />
+          <DataView
+            field="Creación"
+            info={localTZDate(data.ultimaModificacion, dateFormat)}
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
           <DataView
             field="Ultima modificación"
-            info={data.ultimaModificacion}
+            info={localTZDate(data.ultimaModificacion, dateFormat)}
           />
         </Grid>
       </Grid>

@@ -8,6 +8,7 @@ import FormHeader from "../../components/FormHeader";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import MedicalHistoryData from "../../components/MedicalHistoryData";
 import MedicalConsultationList from "../../components/MedicalConsultationsList";
+import MedicalTestsList from "../../components/MedicalTestsList";
 import Loading from "../../components/Loading";
 
 export default function MedicalHistory() {
@@ -37,8 +38,15 @@ export default function MedicalHistory() {
         icon={<AssignmentIcon fontSize="large" />}
       />
       <Paper sx={{ margin: "16px 32px", padding: "24px" }}>
-        <MedicalHistoryData data={medicalHistory} />
-        <MedicalConsultationList consultas={medicalHistory.consultas} />
+        <Box sx={{ marginBottom: "8px" }}>
+          <MedicalHistoryData data={medicalHistory} />
+        </Box>
+        <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
+          <MedicalConsultationList consultas={medicalHistory.consultas} />
+        </Box>
+        <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
+          <MedicalTestsList estudios={medicalHistory.estudios} />
+        </Box>
       </Paper>
     </Box>
   );
