@@ -247,6 +247,7 @@ export default function MedicalHistoryForm(props) {
               name="edad"
               onChange={handleChange}
               value={info.edad}
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
               error={errors.edad.error}
               helperText={errors.edad.message}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}

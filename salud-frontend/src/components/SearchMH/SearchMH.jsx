@@ -146,7 +146,7 @@ export default function SearchMH() {
               size="large"
               sx={{ mr: 1, mt: 2 }}
               component={Link}
-              to={"/NuevaHistoriaClinica"}
+              to={"/HistoriasClinicas/Crear"}
             >
               <AddIcon />
             </Fab>

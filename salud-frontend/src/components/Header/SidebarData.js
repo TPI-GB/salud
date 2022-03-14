@@ -9,7 +9,7 @@ import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 export const SidebarData = [
   {
     title: "Home",
-    path: "/",
+    path: "/Home",
     icon: <HomeIcon />,
     cName: "nav-text",
   },
