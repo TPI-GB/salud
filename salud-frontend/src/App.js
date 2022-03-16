@@ -14,6 +14,7 @@ import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import CreateMH from "./pages/createMH";
+import CreateMT from "./pages/createMT";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 
@@ -42,6 +43,16 @@ function App() {
             exact
             path="/HistoriasClinicas/Detalles/:id"
             component={MedicalHistory}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas/:idHistoria/estudios"
+            component={CreateMT}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas/:idHistoria/estudios/:idEstudio"
+            component={CreateMT}
           />
           <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
           <GuardedRoute

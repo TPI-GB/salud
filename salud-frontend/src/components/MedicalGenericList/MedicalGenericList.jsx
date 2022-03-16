@@ -12,7 +12,7 @@ import {
   Pagination,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import { Link as ScrollLink } from "react-scroll";
 
 import { localTZDate } from "../../services/medical-history-service";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -143,7 +143,7 @@ function DataItemList(props) {
             size="small"
             fullWidth
             component={Link}
-            to={editLink}
+            to={editLink + info._id}
           >
             Editar
           </Button>

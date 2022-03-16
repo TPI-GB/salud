@@ -14,6 +14,12 @@ class MedicalHistoryController {
     this.router.get("/details/:id", (req, res) => {
       this.getMedicalHistoryDetailsById(req, res);
     });
+    this.router.get("/:idHistory/test/:idTest", (req, res) => {
+      this.getMedicalTestByIds(req, res);
+    });
+    this.router.get("/:idHistory/consultation/:idConsultation", (req, res) => {
+      this.getMedicalConsultationByIds(req, res);
+    });
     this.router.get("/:docType/:docNumber", (req, res) => {
       this.getMedicalHistoryByDocument(req, res);
     });
@@ -72,6 +78,45 @@ class MedicalHistoryController {
     medicalHistoryPromise
       .then((medicalHistory) => {
         res.status(200).json(medicalHistory);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalTestByIds(req, res) {
+    const idHistory = req.params.idHistory;
+    const idTest = req.params.idTest;
+
+    let medicalTestPromise = this.medicalHistoryService.getMedicalTestByIds(
+      idHistory,
+      idTest
+    );
+
+    medicalTestPromise
+      .then((test) => {
+        res.status(200).json(test);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalConsultationByIds(req, res) {
+    const idHistory = req.params.idHistory;
+    const idConsultation = req.params.idConsultation;
+
+    let medicalConsultationPromise =
+      this.medicalHistoryService.getMedicalConsultationByIds(
+        idHistory,
+        idConsultation
+      );
+
+    medicalConsultationPromise
+      .then((consultation) => {
+        res.status(200).json(consultation);
       })
       .catch((err) => {
         console.log(err.message);

@@ -74,21 +74,23 @@ export default function MedicalHistoryForm(props) {
     ];
     const temp = { ...errors };
     requiredFields.forEach((field) => {
-      if (!info[field] || !/^(?!\s*$).+/.test(info[field])) {
+      if (!info[field].trim()) {
         temp[field] = { message: "Requerido.", error: true };
       } else {
         temp[field] = { message: "", error: false };
       }
     });
     setErrors(temp);
+
+    return temp;
   }
 
-  function noErrors() {
+  function noErrors(errorsList) {
     const boolErrors = [];
-    for (const field in errors) {
-      boolErrors.push(field.error);
+    for (const field in errorsList) {
+      boolErrors.push(errorsList[field].error);
     }
-    return !boolErrors.every(Boolean);
+    return !boolErrors.some(Boolean);
   }
 
   function returnToSearchMH(time) {
@@ -104,8 +106,7 @@ export default function MedicalHistoryForm(props) {
 
   const handleEdit = (event) => {
     event.preventDefault();
-    validate();
-    if (noErrors()) {
+    if (noErrors(validate())) {
       editMedicalHistory(id, info)
         .then(() => {
           console.log("success!");
@@ -129,8 +130,7 @@ export default function MedicalHistoryForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    validate();
-    if (noErrors()) {
+    if (noErrors(validate())) {
       createMedicalHistory(info)
         .then(() => {
           console.log("success!");
