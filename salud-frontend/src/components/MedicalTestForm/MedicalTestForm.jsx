@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Box, TextField, Alert, Collapse, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Alert,
+  Collapse,
+  Button,
+  Typography,
+} from "@mui/material";
+import MultipleFileUploadField from "./DropzoneUploader/MultipleFileUploadField";
+import Loading from "../Loading";
 import {
   getMedicalTestByIds,
   createMedicalTest,
@@ -9,6 +18,7 @@ import {
 
 export default function MedicalTestForm(props) {
   const { buttonText, idHistoria, idEstudio } = props;
+  const [loading, setLoading] = useState(true);
   const [info, setInfo] = useState({
     nombre: "",
     textoLibre: "",
@@ -29,12 +39,19 @@ export default function MedicalTestForm(props) {
   useEffect(() => {
     const getData = async () => {
       const response = await getMedicalTestByIds(idHistoria, idEstudio);
-      setInfo(response.data.estudios[0]);
+      setInfo(response.data[0].estudios[0]);
+      setLoading(false);
     };
     if ((idHistoria, idEstudio)) {
       getData();
+    } else {
+      setLoading(false);
     }
   }, [idHistoria, idEstudio]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   function validate() {
     const temp = { ...errors };
@@ -76,7 +93,12 @@ export default function MedicalTestForm(props) {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInfo({ ...info, [name]: value });
+    console.log(info);
   };
+
+  function handleChangeStatus(loadedFiles) {
+    setInfo({ ...info, archivos: loadedFiles });
+  }
 
   function handleEdit(event) {
     event.preventDefault();
@@ -145,6 +167,14 @@ export default function MedicalTestForm(props) {
         multiline
         rows={4}
         sx={{ mt: "4px", mb: "4px", width: "100%" }}
+      />
+      {errors.archivos.error && (
+        <Typography>{errors.archivos.message}</Typography>
+      )}
+      <MultipleFileUploadField
+        onChange={handleChangeStatus}
+        initialFiles={info.archivos}
+        filesLimit={100}
       />
       <Box display={"flex"} justifyContent={"space-between"}>
         <Button
