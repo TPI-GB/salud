@@ -14,6 +14,7 @@ import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import CreateMH from "./pages/createMH";
+import CreateConsultation from "./pages/createConsultation";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 
@@ -48,6 +49,11 @@ function App() {
             exact
             path="/FormularioDeUsuario"
             component={FormularioDeUsuario}
+          />
+          <GuardedRoute
+            exact
+            path="/NuevaConsulta"
+            component={CreateConsultation}
           />
         </>
       </Switch>
