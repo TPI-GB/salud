@@ -68,3 +68,11 @@ export async function getUsers() {
   const response = await axios.get(`http://localhost:8080/users`);
   return response;
 }
+
+// export async function getUserById(id) {
+//   const response = await axios.get(
+//     `${config.baseURL}:${config.port}/user-/:id/${id}`
+//   );
+
+//   return response;
+// }

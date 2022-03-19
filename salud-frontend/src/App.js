@@ -9,6 +9,7 @@ import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
+import UserForm from "./components/UserForm/UserForm";
 import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
 import LayoutTemplate from "./pages/layoutTemplate";
@@ -43,6 +44,11 @@ function App() {
           exact
           path="/FormularioDeUsuario"
           component={LayoutTemplate(FormularioDeUsuario)}
+        />
+        <GuardedRoute
+          exact
+          path="/UserForm"
+          component={LayoutTemplate(UserForm)}
         />
         <GuardedRoute
           exact

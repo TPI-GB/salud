@@ -6,6 +6,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AddIcon from "@mui/icons-material/Add";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 export const SidebarData = [
   {
@@ -36,6 +37,12 @@ export const SidebarData = [
     title: "Nuevo Usuario",
     path: "/FormularioDeUsuario",
     icon: <AddIcon />,
+    cName: "nav-text",
+  },
+  {
+    title: "Usuarios",
+    path: "/UserForm",
+    icon: <AccountBoxIcon />,
     cName: "nav-text",
   },
 ];
