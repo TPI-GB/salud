@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-//import { getUserById } from "../../services/user-service";
-import { Link } from "react-router-dom";
+import { getUserById } from "../../services/user-service";
+import { Link, useHistory } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
@@ -12,88 +12,45 @@ import {
   Button,
   Grid,
   FormControl,
-  Alert,
-  Collapse,
-  FormHelperText,
-  FormLabel,
   FormControlLabel,
 } from "@mui/material";
 import { createUser, updateUser } from "../../services/user-service";
 import "./UserForm.scss";
+
 export default function UserForm(props) {
+  const history = useHistory();
   const { buttonText, id } = props;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => verificarContrasenias(data);
+  const onSubmit = async (data) => {
+    console.log("onSubmit");
+    await verificarContrasenias(data);
+  };
   const [probar, setProbar] = useState({ show: false, message: "" });
-  function verificarContrasenias(data) {
+  async function verificarContrasenias(data) {
     var p1 = document.getElementById("contraseniaid1").value;
     var p2 = document.getElementById("confirmContrasenia").value;
-    console.log(p1);
-    console.log(p2);
     if (p1 !== p2) {
       setProbar({ show: true, message: "Contraseñas no concuerdan" });
     } else {
       setProbar({ show: false, message: "" });
-      createUser(data);
+      let response = await createUser(data);
+      if (response === 0) {
+        mostrarAlertaConfirmacion();
+        history.push("/MostrarUsuarios");
+      } else mostrarAlertaError();
     }
   }
 
-  // const [info, setInfo] = useState({
-  //   email: "",
-  //   tipodocumento: "DNI",
-  //   numerodocumento: "",
-  //   nombre: "",
-  //   apellido: "",
-  //   contrasenia: "",
-  // });
-  // const [alert, setAlert] = useState({
-  //   show: false,
-  //   message: "",
-  //   severity: "success",
-  // });
+  const [alert, setAlert] = useState({
+    show: false,
+    message: "",
+    severity: "success",
+  });
 
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const response = await getUserById(id);
-  //     setInfo(response.data);
-  //   };
-  //   if (id) {
-  //     getData();
-  //   }
-  // }, [id]);
-
-  // function validate() {
-  //   const requiredFields = [
-  //     "email",
-  //     "nombre",
-  //     "apellido",
-  //     "roles",
-  //     "contrasenia",
-  //     "tipodocumento",
-  //     "numerodocumento",
-  //   ];
-  //   const temp = { ...errors };
-  //   requiredFields.forEach((field) => {
-  //     if (!info[field] || !/^(?!\s*$).+/.test(info[field])) {
-  //       temp[field] = { message: "Requerido.", error: true };
-  //     } else {
-  //       temp[field] = { message: "", error: false };
-  //     }
-  //   });
-  //   setErrors(temp);
-  // }
-
-  // function noErrors() {
-  //   const boolErrors = [];
-  //   for (const field in errors) {
-  //     boolErrors.push(field.error);
-  //   }
-  //   return !boolErrors.every(Boolean);
-  // }
   const mostrarAlertaConfirmacion = () => {
     swal({
       title: "Creación exitosa",
@@ -101,6 +58,15 @@ export default function UserForm(props) {
       button: "Aceptar",
     });
   };
+
+  const mostrarAlertaError = () => {
+    swal({
+      title: "Fallo la llamada al servidor. Intente mas tarde.",
+      icon: "error",
+      button: "Aceptar",
+    });
+  };
+
   return (
     <FormControl onSubmit={handleSubmit(onSubmit)}>
       <Box component="form">
