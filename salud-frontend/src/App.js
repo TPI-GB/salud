@@ -4,12 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 //Pages
 import Login from "./pages/login";
 import Home from "./pages/home/home";
-import MostrarUsuarios from "./components/MostrarUsuarios";
+import PinnedSubheaderList from "./components/MostrarUsuarios/MostrarUsuariosSinModal";
 import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./components/MedicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
-import UserForm from "./components/UserForm/UserForm";
+import CreateUser from "./pages/createUser/CreateUser";
 import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
 import LayoutTemplate from "./pages/layoutTemplate";
@@ -23,7 +23,7 @@ function App() {
         <GuardedRoute
           exact
           path="/MostrarUsuarios"
-          component={LayoutTemplate(MostrarUsuarios)}
+          component={LayoutTemplate(PinnedSubheaderList)}
         />
         <GuardedRoute
           exact
@@ -47,8 +47,13 @@ function App() {
         />
         <GuardedRoute
           exact
-          path="/UserForm"
-          component={LayoutTemplate(UserForm)}
+          path="/NuevoUsuario"
+          component={LayoutTemplate(CreateUser)}
+        />
+        <GuardedRoute
+          exact
+          path="/EditarUsuario/:id"
+          component={LayoutTemplate(CreateUser)}
         />
         <GuardedRoute
           exact

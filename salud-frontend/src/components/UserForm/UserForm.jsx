@@ -44,12 +44,8 @@ export default function UserForm(props) {
       } else mostrarAlertaError();
     }
   }
-
-  const [alert, setAlert] = useState({
-    show: false,
-    message: "",
-    severity: "success",
-  });
+  const [email, setEmail] = useState("");
+  //falta todos los atributos
 
   const mostrarAlertaConfirmacion = () => {
     swal({
@@ -67,6 +63,16 @@ export default function UserForm(props) {
     });
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      const response = await getUserById(id);
+      setEmail(response.data.email);
+    };
+    if (id) {
+      getData();
+    }
+  }, [id]);
+
   return (
     <FormControl onSubmit={handleSubmit(onSubmit)}>
       <Box component="form">
@@ -77,6 +83,7 @@ export default function UserForm(props) {
                 id="emailid"
                 type="email"
                 label="Mail"
+                value={email}
                 placeholder="ejemplo@gmail.com"
                 {...register("email", {
                   required: {
@@ -86,6 +93,10 @@ export default function UserForm(props) {
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                     message: "El formato no es correcto",
+                  },
+                  onChange: (event) => {
+                    setEmail(event.target.value);
+                    console.log(email);
                   },
                 })}
                 error={Boolean(errors.email)}
@@ -247,7 +258,7 @@ export default function UserForm(props) {
                 color="success"
                 sx={{ mt: "8px", mb: "4px", width: "100%" }}
               >
-                Crear
+                {buttonText}
               </Button>
 
               <Button

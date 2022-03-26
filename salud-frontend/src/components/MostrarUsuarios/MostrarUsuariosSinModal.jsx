@@ -1,4 +1,4 @@
-import { updateUser, getUsers } from "../../services/user-service";
+import { updateUser, getUsers, getUserById } from "../../services/user-service";
 import React, { useState, useEffect } from "react";
 import "./MostrarUsuarios.scss";
 import {
@@ -27,6 +27,9 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import { useForm } from "react-hook-form";
 import Tooltip from "@mui/material/Tooltip";
+import UserForm from "../UserForm/UserForm";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -53,6 +56,8 @@ const useStyles = makeStyles({
 });
 
 export default function PinnedSubheaderList() {
+  const history = useHistory();
+
   const { register } = useForm();
   const styles = useStyles();
   const [data, setData] = useState([]);
@@ -442,7 +447,9 @@ export default function PinnedSubheaderList() {
                   <Tooltip title="Editar">
                     <ModeEditOutlineTwoToneIcon
                       className={styles.iconos}
-                      onClick={() => seleccionarUsuario(usuario, "Editar")}
+                      onClick={() =>
+                        history.push(`/EditarUsuario/${usuario._id}`)
+                      }
                     />
                   </Tooltip>
                   &nbsp;&nbsp;&nbsp;

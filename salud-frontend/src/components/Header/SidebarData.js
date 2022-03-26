@@ -41,7 +41,7 @@ export const SidebarData = [
   },
   {
     title: "Usuarios",
-    path: "/UserForm",
+    path: "/NuevoUsuario",
     icon: <AccountBoxIcon />,
     cName: "nav-text",
   },
