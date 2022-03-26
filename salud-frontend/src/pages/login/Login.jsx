@@ -10,7 +10,8 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
-import { ReactComponent as LoginLogo } from "../../assets/img/login-logo.svg";
+/* import { ReactComponent as LoginLogo } from "../../assets/img/loginlogo.svg"; */
+import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 
@@ -56,7 +57,8 @@ export default function Login() {
     <div className="loginBackground">
       <Box component="form" className="loginForm">
         <div className="loginForm-logo">
-          <LoginLogo />
+          {/* <LoginLogo /> */}
+          <img src={loginImg} />
         </div>
         <TextField
           fullWidth
@@ -104,7 +106,8 @@ export default function Login() {
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
-          variant="outlined"
+          variant="contained"
+          color="success"
           onClick={handleSubmit}
         >
           Ingresar

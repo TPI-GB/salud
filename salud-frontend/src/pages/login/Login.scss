@@ -1,15 +1,15 @@
 .loginBackground {
   height: 100vh;
-  background-color: cadetblue;
+  background-color: #22884f;
   display: flex;
   justify-content: center;
   align-items: center;
   .loginForm {
     max-width: 330px;
-    border: 2px solid rgba(0, 0, 0, 0.4);
+    border: 2px solid #106d39;
     padding: 20px;
     text-align: center;
-    background-color: rgb(255, 255, 255);
+    background-color: white;
     .loginForm-logo {
       width: 100px;
       height: 100px;
