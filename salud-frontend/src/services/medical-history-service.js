@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 
 const config = {
   baseURL: process.env.REACT_APP_API_URL,
@@ -53,4 +54,10 @@ export async function editMedicalHistory(id, medicalHistoryData) {
   );
 
   return response;
+}
+
+export function localTZDate(utcDate, format) {
+  const localTZ = new Date(utcDate);
+
+  return moment(localTZ).format(format);
 }

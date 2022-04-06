@@ -9,16 +9,30 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 function Navbar() {
   const location = useLocation();
-  const [value, setValue] = useState(location.pathname);
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [nickName, setNickName] = React.useState(null);
   const history = useHistory();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const indexToTabName = [
+    ["/Home", 0],
+    ["/Usuarios", 1],
+    ["/HistoriasClinicas", 2],
+    ["/Estadisticas", 3],
+  ];
+
+  function initialSelectedTab() {
+    const initialTab = indexToTabName.find((tuple) =>
+      location.pathname.includes(tuple[0])
+    );
+    if (!initialTab) {
+      return 0;
+    }
+    return initialTab[1];
+  }
+
+  const selectedTab = initialSelectedTab();
 
 useEffect(() => {
         let user = JSON.parse(sessionStorage.getItem('user'))
@@ -43,11 +57,10 @@ function logOut() {
       <div className="navbar">
         {!isMatch && (
           <Tabs
-            value={value}
+            value={selectedTab}
             TabIndicatorProps={{
               style: { background: "#00b64f" },
             }}
-            onChange={handleChange}
           >
             {SidebarData.map((item, index) => {
               return (
@@ -55,7 +68,7 @@ function logOut() {
                   icon={item.icon}
                   label={item.title}
                   key={index}
-                  value={item.path}
+                  value={index}
                   to={item.path}
                   component={Link}
                 />

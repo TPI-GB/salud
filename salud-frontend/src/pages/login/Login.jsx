@@ -37,7 +37,7 @@ export default function Login() {
         sessionStorage.setItem("user", JSON.stringify(usuario));
         // Para que el hook useHistory funcione, este componente debe estar envuelto
         // en un componente Router, de lo contrario history quedara indefinido
-        history.push("/");
+        history.push("/Home");
       })
       .catch((err) => {
         setMostrarErrorAlIngresar(true);
