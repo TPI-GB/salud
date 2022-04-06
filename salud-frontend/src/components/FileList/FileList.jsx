@@ -26,7 +26,9 @@ function FileCard({ file, ...props }) {
         <Typography>{fileName}</Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Descargar</Button>
+        <a href={file} download target="_blank" rel="noreferrer">
+          <Button size="small">Descargar</Button>
+        </a>
       </CardActions>
     </Card>
   );

@@ -39,9 +39,15 @@ export async function getMedicalTestByIds(idHistory, idTest) {
 }
 
 export async function createMedicalTest(idHistory, medicalTestData) {
+  const formData = new FormData();
+
+  formData.append("nombre", medicalTestData.nombre);
+  formData.append("textoLibre", medicalTestData.textoLibre);
+  formData.append("archivos", medicalTestData.archivos);
+
   const response = await axios.post(
     `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test`,
-    medicalTestData
+    formData
   );
 
   return response;

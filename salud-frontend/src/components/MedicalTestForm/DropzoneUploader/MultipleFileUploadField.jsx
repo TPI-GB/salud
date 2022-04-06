@@ -16,6 +16,7 @@ export default function MultipleFileUploadField({ ...props }) {
       useChipsForPreview
       getFileAddedMessage={getFileAddedMessage}
       getFileRemovedMessage={getFileRemovedMessage}
+      inputProps={{ name: "archivos" }}
       {...props}
     />
   );
