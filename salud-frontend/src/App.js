@@ -26,33 +26,106 @@ function App() {
         <Redirect exact from="/" to={"/Home"} />
         <>
           <Navbar />
-          <GuardedRoute exact path="/Home" component={Home} />
-          <GuardedRoute exact path="/Usuarios" component={MostrarUsuarios} />
-          <GuardedRoute exact path="/HistoriasClinicas" component={SearchMH} />
+          <GuardedRoute
+            exact
+            path="/Home"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={Home}
+          />
+          <GuardedRoute
+            exact
+            path="/Usuarios"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={MostrarUsuarios}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas"
+            roles={["Laboratorio", "Recepcion", "Medico", "Secretaria"]}
+            component={SearchMH}
+          />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Crear"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={CreateMH}
           />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Editar/:id"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={CreateMH}
           />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Detalles/:id"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={MedicalHistory}
           />
-          <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
+          <GuardedRoute
+            exact
+            path="/Estadisticas"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={Dashboard}
+          />
           <GuardedRoute
             exact
             path="/FormularioDeUsuario"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={FormularioDeUsuario}
           />
           <GuardedRoute
             exact
             path="/NuevaConsulta"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={CreateConsultation}
           />
         </>

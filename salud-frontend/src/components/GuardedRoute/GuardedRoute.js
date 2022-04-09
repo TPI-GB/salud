@@ -5,6 +5,8 @@ const jwt = require("jsonwebtoken");
 export default function GuardedRoute({ component: Component, ...rest }) {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
+  const access = user.data.roles.some((r) => rest.roles.includes(r));
+
   function isExpired() {
     const { exp } = jwt.decode(user.data.token);
 
@@ -15,7 +17,7 @@ export default function GuardedRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        user && !isExpired() ? (
+        user && !isExpired() && access ? (
           <Component {...props} />
         ) : (
           <Redirect to="/login" />
