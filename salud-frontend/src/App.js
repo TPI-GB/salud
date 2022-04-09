@@ -17,6 +17,7 @@ import CreateMH from "./pages/createMH";
 import CreateConsultation from "./pages/createConsultation";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
+import error401 from "./pages/error401/error401";
 
 function App() {
   return (
@@ -128,6 +129,7 @@ function App() {
             ]}
             component={CreateConsultation}
           />
+          <Route exact path="/error401" component={error401} />
         </>
       </Switch>
     </Router>
