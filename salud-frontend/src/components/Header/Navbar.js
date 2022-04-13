@@ -79,9 +79,8 @@ function logOut() {
         )}
 
         <div className="logout">
-
           <button onClick={handleClick} class="btn waves-effect green darken-1" type="submit" name="action">{nickName}
-            <i class="material-icons right">exit_to_app</i>
+              <i class="material-icons right">exit_to_app</i>
           </button>
           <Menu
             id="simple-menu"
