@@ -9,11 +9,11 @@ import {
   Collapse,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { useHistory } from "react-router-dom";
-/* import { ReactComponent as LoginLogo } from "../../assets/img/loginlogo.svg"; */
+import { Link, NavLink, useHistory } from "react-router-dom";
 import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
+import "./resetPassword";
 
 export default function Login() {
   const [valores, setValores] = useState({
@@ -57,7 +57,6 @@ export default function Login() {
     <div className="loginBackground">
       <Box component="form" className="loginForm">
         <div className="loginForm-logo">
-          {/* <LoginLogo /> */}
           <img src={loginImg} />
         </div>
         <TextField
@@ -103,6 +102,12 @@ export default function Login() {
             Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
+        <nav className="reset-contrasenia">
+          <Link 
+            to="/resetPassword"
+          >RESTABLECER CONTRASEÑA
+          </Link>
+        </nav>
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
