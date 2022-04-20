@@ -4,6 +4,8 @@ import { Link, useHistory } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 import { useForm } from "react-hook-form";
 import swal from "sweetalert";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import {
   Box,
   TextField,
@@ -17,51 +19,110 @@ import {
 import { createUser, updateUser } from "../../services/user-service";
 import "./UserForm.scss";
 
+const schema = yup
+  .object()
+  .shape({
+    email: yup
+      .string()
+      .email("Please enter a valid email")
+      .required("Email is required"),
+    tipodocumento: yup.string().required("is required"),
+    numerodocumento: yup
+      .string()
+      .matches(/^[1-9][0-9]{6,8}$/i, "Is not in correct format")
+      .required("is required"),
+    nombre: yup.string().required("is required"),
+    apellido: yup.string().required("is required"),
+    showValidarContrasenia: yup.boolean(),
+    contrasenia: yup.string().required("is required").min(6),
+    roles: yup.array().min(1, "falta"),
+  })
+  .required();
+
+const schema2 = yup.object().shape({
+  email: yup
+    .string()
+    .email("Please enter a valid email")
+    .required("Email is required"),
+  tipodocumento: yup.string().required("is required"),
+  numerodocumento: yup
+    .string()
+    .matches(/^[1-9][0-9]{6,8}$/i, "Is not in correct format")
+    .required("is required"),
+  nombre: yup.string().required("is required"),
+  apellido: yup.string().required("is required"),
+  roles: yup.array().min(1, "falta"),
+});
+
 export default function UserForm(props) {
   const history = useHistory();
   const { buttonText, id } = props;
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm({ mode: "onBlur" });
+  } = useForm({
+    mode: "onBlur",
+    resolver: yupResolver(!id ? schema : schema2),
+  });
   const onSubmit = async (data) => {
     console.log("onSubmit");
+
     //var verificoContrasena = await verificarContrasenias(data);
     //var verificoMail = await verificarEmail(data);
     // var verificoTipoDocumento = await verificarTipoDocumento(data);
     // var verificoNumeroDocumento = await verificarNumeroDocumento(data);
     // var verificoNombre = await verificarNombre(data);
     // var verificoApellido = await verificarApellido(data);
-    console.log(!(await verificarContrasenias(data)));
-    if (
-      await verificarContrasenias(data)
-      //&&
-      //verificoMail
-      // &&
-      // verificoTipoDocumento &&
-      // verificoNumeroDocumento &&
-      // verificoNombre &&
-      // verificoApellido
-    ) {
-      let response = id ? await updateUser(id, data) : await createUser(data);
-      if (id) {
-        updateUser(id, data)
-          .then(() => {
-            mostrarAlertaConfirmacion();
-            history.push("/MostrarUsuarios");
-          })
-          .catch(() => mostrarAlertaError());
-      } else {
-        createUser(data)
-          .then(() => {
-            mostrarAlertaConfirmacion();
-            history.push("/MostrarUsuarios");
-          })
-          .catch(() => mostrarAlertaError());
-      }
+    console.log(!id + "no id");
+    // if (
+    //   !id &&
+    //   (await verificarContrasenias(data))
+
+    //   //&&
+    //   //verificoMail
+    //   // &&
+    //   // verificoTipoDocumento &&
+    //   // verificoNumeroDocumento &&
+    //   // verificoNombre &&
+    //   // verificoApellido
+    // ) {
+    //   let response = id ? await updateUser(id, data) : await createUser(data);
+    //   if (id) {
+    //     updateUser(id, data)
+    //       .then(() => {
+    //         mostrarAlertaConfirmacion();
+    //         history.push("/MostrarUsuarios");
+    //       })
+    //       .catch(() => mostrarAlertaError());
+    //   } else {
+    //     createUser(data)
+    //       .then(() => {
+    //         mostrarAlertaConfirmacion();
+    //         history.push("/MostrarUsuarios");
+    //       })
+    //       .catch(() => mostrarAlertaError());
+    //   }
+    // }
+    if (!id && (await verificarContrasenias(data))) {
+      createUser(data)
+        .then(() => {
+          mostrarAlertaConfirmacion();
+          history.push("/MostrarUsuarios");
+        })
+        .catch(() => mostrarAlertaError());
+    } else {
+      updateUser(id, data)
+        .then(() => {
+          mostrarAlertaConfirmacion();
+          history.push("/MostrarUsuarios");
+        })
+        .catch(() => mostrarAlertaError());
     }
   };
+
+  const [validarContrasenia, setValidarContrasenia] = useState(true);
 
   const [mensajeContrasenia, setMensajeContrasenia] = useState({
     show: false,
@@ -182,12 +243,19 @@ export default function UserForm(props) {
   useEffect(() => {
     const getData = async () => {
       const response = await getUserById(id);
-      setEmail(response.data.email); //falta poner los sets aca
-      setTipoDocumento(response.data.tipodocumento);
-      setNumeroDocumento(response.data.numerodocumento);
-      setNombre(response.data.nombre);
-      setApellido(response.data.apellido);
-      setContrasenia(response.data.contrasenia);
+      // setEmail(response.data.email); //falta poner los sets aca}
+      reset({
+        email: response.data.email,
+        nombre: response.data.nombre,
+        tipodocumento: response.data.tipodocumento,
+        numerodocumento: response.data.numerodocumento,
+        apellido: response.data.apellido,
+      });
+      // setTipoDocumento(response.data.tipodocumento);
+      // setNumeroDocumento(response.data.numerodocumento);
+      // //setNombre(response.data.nombre);
+      // setApellido(response.data.apellido);
+      // setContrasenia(response.data.contrasenia);
       setRoles({
         medico: response.data.roles.includes("medico"),
         admin: response.data.roles.includes("admin"),
@@ -212,17 +280,17 @@ export default function UserForm(props) {
                 id="emailid"
                 type="email"
                 label="Mail"
-                value={email}
+                //value={email}
                 placeholder="ejemplo@gmail.com"
                 {...register("email", {
-                  required: {
-                    value: true,
-                    message: "Necesitas este campo",
-                  },
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                    message: "El formato no es correcto",
-                  },
+                  // required: {
+                  //   value: true,
+                  //   message: "Necesitas este campo",
+                  // },
+                  // pattern: {
+                  //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                  //   message: "El formato no es correcto",
+                  // },
                   onChange: (event) => {
                     setEmail(event.target.value);
                   },
@@ -237,7 +305,7 @@ export default function UserForm(props) {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     defaultValue="DNI"
-                    value={tipodocumento}
+                    //value={tipodocumento}
                     {...register("tipodocumento", {
                       required: {
                         value: true,
@@ -267,7 +335,7 @@ export default function UserForm(props) {
                     id="numDocid"
                     type="text"
                     label="Numero de documento"
-                    value={numerodocumento}
+                    //value={numerodocumento}
                     {...register("numerodocumento", {
                       required: {
                         value: true,
@@ -292,7 +360,7 @@ export default function UserForm(props) {
                 id="nombreid"
                 type="text"
                 label="Nombre"
-                value={nombre}
+                //value={nombre}
                 {...register("nombre", {
                   required: {
                     value: true,
@@ -312,7 +380,7 @@ export default function UserForm(props) {
                 id="apellidoid"
                 type="text"
                 label="Apellido"
-                value={apellido}
+                //value={apellido}
                 {...register("apellido", {
                   required: {
                     value: true,
@@ -391,15 +459,14 @@ export default function UserForm(props) {
                     //pattern=".{6}"
                     label="Contraseña"
                     {...register("contrasenia", {
-                      required: {
-                        value: id ? false : true,
-                        message: "El campo es requerido",
-                      },
-                      minLength: {
-                        value: 6,
-                        message:
-                          "La contraseña debe tener al menos 6 caracteres",
-                      },
+                      // required: {
+                      //   value: id ? false : true,
+                      //   message: "El campo es requerido",
+                      // },
+                      // minLength: {
+                      //   value: 6,
+                      //   message:
+                      //     "La contraseña debe tener al menos 6 caracteres",
                       onChange: (event) => {
                         setContrasenia(event.target.value);
                         console.log(contrasenia);
