@@ -104,7 +104,7 @@ export default function Login() {
         </Collapse>
         <nav className="reset-contrasenia">
           <Link 
-            to="/resetPassword"
+            to="/reset"
           >RESTABLECER CONTRASEÑA
           </Link>
         </nav>
@@ -115,7 +115,7 @@ export default function Login() {
           color="success"
           onClick={handleSubmit}
         >
-          Ingresar
+          INGRESAR
         </Button>
       </Box>
     </div>
