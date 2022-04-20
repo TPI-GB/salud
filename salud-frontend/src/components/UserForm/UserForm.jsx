@@ -250,6 +250,7 @@ export default function UserForm(props) {
         tipodocumento: response.data.tipodocumento,
         numerodocumento: response.data.numerodocumento,
         apellido: response.data.apellido,
+        roles: response.data.roles,
       });
       // setTipoDocumento(response.data.tipodocumento);
       // setNumeroDocumento(response.data.numerodocumento);
