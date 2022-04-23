@@ -21,7 +21,6 @@ export default function ResetPassword() {
 			msg: 'El Email es obligatorio',
 			error: true
 		});
-        console.log({handleSubmit});
 		return
 	}
       }
@@ -29,9 +28,9 @@ export default function ResetPassword() {
 	const { msg } = alerta
 
     return (
-        <>
         <div className="loginBackground">
             <Box component="form" className="loginForm">
+                { msg && <Alerta alerta={alerta} /> }
                 <TextField
                     fullWidth
                     sx={{ marginTop: "20px" }}
@@ -51,8 +50,6 @@ export default function ResetPassword() {
                     ENVIAR INSTRUCCIONES
                 </Button>
             </Box>
-            { msg && <Alerta alerta={Alerta} />}
         </div>
-    </>
 	);
 }
