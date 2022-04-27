@@ -7,6 +7,7 @@ import {
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 import Alerta from "./Alerta";
+import axios from "axios";
 
 export default function ResetPassword() {
 
@@ -23,6 +24,11 @@ export default function ResetPassword() {
 		});
 		return
 	}
+    try {
+        const { data } = await axios.post()
+    } catch (error) {
+        console.log(error)
+    }
       }
 	
 	const { msg } = alerta
