@@ -52,7 +52,7 @@ function App() {
               "Medico",
               "Secretaria",
             ]}
-            component={MostrarUsuarios}
+            component={PinnedSubheaderList}
           />
           {/* <GuardedRoute
           exact
