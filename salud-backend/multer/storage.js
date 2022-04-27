@@ -3,7 +3,7 @@ const path = require("path");
 
 const diskStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "./storage/files");
+    cb(null, "./images");
   },
   filename: function (req, file, cb) {
     const uniqueSuffix =
@@ -16,6 +16,6 @@ const diskStorage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: diskStorage }).array("archivos");
+const upload = multer({ storage: diskStorage }).single("image");
 
 module.exports = upload;

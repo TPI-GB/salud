@@ -11,6 +11,7 @@ import {
 import MultipleFileUploadField from "./DropzoneUploader/MultipleFileUploadField";
 import Loading from "../Loading";
 import {
+  saveImageAndGetName,
   getMedicalTestByIds,
   createMedicalTest,
   editMedicalTest,
@@ -93,7 +94,19 @@ export default function MedicalTestForm(props) {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setInfo({ ...info, [name]: value });
-    console.log(info);
+  };
+
+  const handleFiles = (event) => {
+    setInfo({ ...info, archivos: event.target.files });
+  };
+
+  const sendHandler = async () => {
+    let arrayImages = [];
+    for (var i = 0; i < info.archivos.length; i++) {
+      const response = await saveImageAndGetName(info.archivos[i]);
+      arrayImages.push(response);
+    }
+    return arrayImages;
   };
 
   function handleChangeStatus(loadedFiles) {
@@ -124,10 +137,11 @@ export default function MedicalTestForm(props) {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
+
     if (noErrors(validate())) {
-      createMedicalTest(idHistoria, info)
+      createMedicalTest(idHistoria, { ...info, archivos: await sendHandler() })
         .then(() => {
           console.log("success!");
           setAlert({
@@ -139,6 +153,7 @@ export default function MedicalTestForm(props) {
         })
         .catch((err) => {
           console.log(err);
+          console.log(info);
           setAlert({
             show: true,
             message: "Algo salio mal!",
@@ -175,6 +190,13 @@ export default function MedicalTestForm(props) {
         onChange={handleChangeStatus}
         initialFiles={info.archivos}
         filesLimit={100}
+      />
+      <input
+        id="fileinput"
+        name="archivos"
+        type="file"
+        onChange={handleFiles}
+        multiple
       />
       <Box display={"flex"} justifyContent={"space-between"}>
         <Button

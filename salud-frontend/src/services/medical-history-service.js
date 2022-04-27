@@ -39,17 +39,37 @@ export async function getMedicalTestByIds(idHistory, idTest) {
 }
 
 export async function createMedicalTest(idHistory, medicalTestData) {
+  console.log(idHistory);
+  console.log(medicalTestData);
   const formData = new FormData();
 
   formData.append("nombre", medicalTestData.nombre);
   formData.append("textoLibre", medicalTestData.textoLibre);
   formData.append("archivos", medicalTestData.archivos);
 
+  console.log(formData);
+
   const response = await axios.post(
     `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test`,
-    formData
+    medicalTestData
   );
 
+  return response;
+}
+
+export async function saveImageAndGetName(file) {
+  const formdata = new FormData();
+  formdata.append("image", file);
+  const response = await fetch(
+    `${config.baseURL}:${config.port}/medical-histories/img`,
+    {
+      method: "POST",
+      enctype: "multipart/form-data",
+      body: formdata,
+    }
+  )
+    .then((res) => res.json())
+    .catch((e) => console.log(e));
   return response;
 }
 

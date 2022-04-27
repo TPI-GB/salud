@@ -18,6 +18,6 @@ app.use(express.json());
 app.use("/users", userController.router);
 app.use("/medical-histories", medicalHistoryController.router);
 app.use("/stats", estadisticasController.router);
-app.use("/public", express.static(`${__dirname}/storage/files`));
+app.use("/images", express.static("images"));
 
 module.exports = app;

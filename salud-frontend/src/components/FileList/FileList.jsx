@@ -18,15 +18,18 @@ export default function FileList({ files, ...props }) {
 }
 
 function FileCard({ file, ...props }) {
-  const fileName = file.split("/").pop();
-
   return (
     <Card {...props}>
       <CardContent>
-        <Typography>{fileName}</Typography>
+        <Typography>{file}</Typography>
       </CardContent>
       <CardActions>
-        <a href={file} download target="_blank" rel="noreferrer">
+        <a
+          href={"http://localhost:8080/images/" + file}
+          download
+          target="_blank"
+          rel="noreferrer"
+        >
           <Button size="small">Descargar</Button>
         </a>
       </CardActions>
