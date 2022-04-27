@@ -8,16 +8,19 @@ import {
 //Pages
 import Login from "./pages/login";
 import Home from "./pages/home/home";
-import MostrarUsuarios from "./components/MostrarUsuarios";
+import PinnedSubheaderList from "./components/MostrarUsuarios/MostrarUsuariosSinModal";
 import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
 import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
+import CreateUser from "./pages/createUser/CreateUser";
 import CreateMH from "./pages/createMH";
 import CreateConsultation from "./pages/createConsultation";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 import error401 from "./pages/error401/error401";
+import MostrarUsuarios from "./components/MostrarUsuarios/MostrarUsuarios";
+//import LayoutTemplate from "./components/";
 
 function App() {
   return (
@@ -50,6 +53,23 @@ function App() {
               "Secretaria",
             ]}
             component={MostrarUsuarios}
+          />
+          {/* <GuardedRoute
+          exact
+          path="/MostrarUsuarios"
+          component={LayoutTemplate(PinnedSubheaderList)}
+        /> */}
+          <GuardedRoute
+            exact
+            path="/NuevoUsuario"
+            roles={["Admin", "Director"]}
+            component={CreateUser}
+          />
+          <GuardedRoute
+            exact
+            path="/EditarUsuario/:id"
+            roles={["Admin", "Director"]}
+            component={CreateUser}
           />
           <GuardedRoute
             exact

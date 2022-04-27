@@ -12,13 +12,17 @@ import "./FormularioUsuario.scss";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Grid from "@mui/material/Grid";
+import { Link } from "react-router-dom";
 export default function FormularioDeUsuario() {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => verificarContrasenias(data);
+  const onSubmit = (data) => {
+    alert("fred");
+    verificarContrasenias(data);
+  };
   const [probar, setProbar] = useState({ show: false, message: "" });
   function verificarContrasenias(data) {
     var p1 = document.getElementById("contraseniaid1").value;
@@ -93,7 +97,6 @@ export default function FormularioDeUsuario() {
                   </Select>
                 </FormControl>
                 <TextField
-                  //className="Box"
                   id="numDocid"
                   type="text"
                   style={{ width: 143 }}
@@ -172,37 +175,6 @@ export default function FormularioDeUsuario() {
                   helperText={probar.message}
                 />
               </Grid>
-
-              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                <TextField
-                  id="apellidoid"
-                  type="text"
-                  label="Apellido"
-                  {...register("apellido", {
-                    required: {
-                      value: true,
-                      message: "El campo es requerido",
-                    },
-                  })}
-                  error={Boolean(errors.apellido)}
-                  helperText={errors.apellido?.message}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={6} lg={6} xl={6}>
-                <TextField
-                  id="nombreid"
-                  type="text"
-                  label="Nombre"
-                  {...register("nombre", {
-                    required: {
-                      value: true,
-                      message: "El campo es requerido",
-                    },
-                  })}
-                  error={Boolean(errors.nombre)}
-                  helperText={errors.nombre?.message}
-                />
-              </Grid>
               <div>
                 Roles:
                 <Grid container spacing={2}>
@@ -262,7 +234,16 @@ export default function FormularioDeUsuario() {
                   variant="contained"
                   color="success"
                 >
-                  Enviar
+                  Crear
+                </Button>
+                <Button
+                  type="button"
+                  variant="contained"
+                  color="error"
+                  component={Link}
+                  to="/MostrarUsuarios"
+                >
+                  Cancelar
                 </Button>
               </Grid>
             </Grid>

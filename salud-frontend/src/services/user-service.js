@@ -22,8 +22,6 @@ export async function loginUser(credentials) {
 }
 
 export async function createUser(data) {
-  console.log(data.roles);
-
   const {
     nombre,
     apellido,
@@ -34,8 +32,6 @@ export async function createUser(data) {
     numerodocumento,
   } = data;
 
-  console.log(contrasenia);
-
   const token = Buffer.from(email + ":" + contrasenia).toString("base64");
   const method = "Basic ";
   const encriptado = method + token;
@@ -44,18 +40,22 @@ export async function createUser(data) {
   console.log(email);
   console.log(contrasenia);
 
-  const response = await axios.post(
-    "http://localhost:8080/users/register",
-    usuario,
-    {
-      headers: {
-        credentials: encriptado,
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return response;
+  try {
+    const response = await axios.post(
+      "http://localhost:8080/users/register",
+      usuario,
+      {
+        headers: {
+          credentials: encriptado,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return 0;
+  } catch (err) {
+    console.log(err);
+    return 1;
+  }
 }
 
 export async function updateUser(id, data) {
@@ -66,5 +66,11 @@ export async function updateUser(id, data) {
 
 export async function getUsers() {
   const response = await axios.get(`http://localhost:8080/users`);
+  return response;
+}
+
+export async function getUserById(id) {
+  const response = await axios.get(`http://localhost:8080/users/${id}`);
+
   return response;
 }
