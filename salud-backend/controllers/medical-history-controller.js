@@ -33,7 +33,10 @@ class MedicalHistoryController {
     this.router.post("/:id/consultation", (req, res) => {
       this.addMedicalConsultation(req, res);
     });
-    this.router.post("/:id/test", upload, (req, res) => {
+    this.router.post("/img", upload, (req, res) => {
+      return res.status(200).json(req.file.filename);
+    });
+    this.router.post("/:id/test", (req, res) => {
       this.addMedicalTest(req, res);
     });
     this.router.put("/:id/test/:idTest", (req, res) => {
@@ -288,7 +291,6 @@ class MedicalHistoryController {
     const id = req.params.id;
     const data = req.body;
     console.log(data);
-    console.log(req.files);
 
     const addMedicalTestPromise = this.medicalHistoryService.addMedicalTest(
       id,
