@@ -55,6 +55,9 @@ export default function Login() {
 
   return (
     <div className="loginBackground">
+        {/* <div className="titulo">
+          <h1>Salud Belgrano</h1>
+        </div> */}
       <Box component="form" className="loginForm">
         <div className="loginForm-logo">
           <img src={loginImg} />
