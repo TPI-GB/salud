@@ -105,12 +105,12 @@ export default function Login() {
             Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
-        <nav className="reset-contrasenia">
+        {/* <nav className="reset-contrasenia">
           <Link 
             to="/reset"
           >RESTABLECER CONTRASEÑA
           </Link>
-        </nav>
+        </nav> */}
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
