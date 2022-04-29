@@ -12,10 +12,11 @@ import PinnedSubheaderList from "./components/MostrarUsuarios/MostrarUsuariosSin
 import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
-import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
+//import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
 import CreateUser from "./pages/createUser/CreateUser";
 import CreateMH from "./pages/createMH";
 import CreateConsultation from "./pages/createConsultation";
+import CreateMT from "./pages/createMT";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 import error401 from "./pages/error401/error401";
@@ -74,7 +75,13 @@ function App() {
           <GuardedRoute
             exact
             path="/HistoriasClinicas"
-            roles={["Laboratorio", "Recepcion", "Medico", "Secretaria"]}
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={SearchMH}
           />
           <GuardedRoute
@@ -127,6 +134,31 @@ function App() {
           />
           <GuardedRoute
             exact
+            path="/HistoriasClinicas/:idHistoria/estudios"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={CreateMT}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas/:idHistoria/estudios/:idEstudio"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={CreateMT}
+          />
+
+          {/* <GuardedRoute
+            exact
             path="/FormularioDeUsuario"
             roles={[
               "Admin",
@@ -136,7 +168,7 @@ function App() {
               "Secretaria",
             ]}
             component={FormularioDeUsuario}
-          />
+          /> */}
           <GuardedRoute
             exact
             path="/NuevaConsulta"

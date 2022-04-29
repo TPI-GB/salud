@@ -45,7 +45,10 @@ export default function MedicalHistory() {
           <MedicalConsultationList consultas={medicalHistory.consultas} />
         </Box>
         <Box sx={{ marginTop: "12px", marginBottom: "12px" }}>
-          <MedicalTestsList estudios={medicalHistory.estudios} />
+          <MedicalTestsList
+            estudios={medicalHistory.estudios}
+            idHistoria={id}
+          />
         </Box>
       </Paper>
     </Box>

@@ -30,6 +30,71 @@ export async function getMedicalHistoryDetailsById(id) {
   return response;
 }
 
+export async function getMedicalTestByIds(idHistory, idTest) {
+  const response = await axios.get(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test/${idTest}`
+  );
+
+  return response;
+}
+
+export async function createMedicalTest(idHistory, medicalTestData) {
+  const formData = new FormData();
+
+  formData.append("nombre", medicalTestData.nombre);
+  formData.append("textoLibre", medicalTestData.textoLibre);
+  formData.append("archivos", medicalTestData.archivos);
+
+  const response = await axios.post(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test`,
+    formData
+  );
+
+  return response;
+}
+
+export async function editMedicalTest(idHistory, idTest, medicalTestData) {
+  const response = await axios.put(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test/${idTest}`,
+    medicalTestData
+  );
+
+  return response;
+}
+
+export async function getMedicalConsultationByIds(idHistory, idConsultation) {
+  const response = await axios.get(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`
+  );
+
+  return response;
+}
+
+export async function createMedicalConsultation(
+  idHistory,
+  medicalConsultationData
+) {
+  const response = await axios.post(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation`,
+    medicalConsultationData
+  );
+
+  return response;
+}
+
+export async function editMedicalConsultation(
+  idHistory,
+  idConsultation,
+  medicalConsultationData
+) {
+  const response = await axios.put(
+    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`,
+    medicalConsultationData
+  );
+
+  return response;
+}
+
 export async function getMedicalHistoryByDocument(docType, docNumber) {
   const response = await axios.get(
     `${config.baseURL}:${config.port}/medical-histories/${docType}/${docNumber}`

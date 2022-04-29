@@ -12,7 +12,8 @@ import {
   Pagination,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
+import FileList from "../FileList";
+import { Link as ScrollLink } from "react-scroll";
 
 import { localTZDate } from "../../services/medical-history-service";
 import ExpandLess from "@mui/icons-material/ExpandLess";
@@ -99,6 +100,8 @@ function DataItemList(props) {
     modificacion: localTZDate(info.ultimaModificacion, dateFormat),
   };
 
+  console.log(info.archivos);
+
   const [openDescripcion, setOpenDescripcion] = useState(false);
   const [openArchivos, setOpenArchivos] = useState(false);
 
@@ -143,7 +146,7 @@ function DataItemList(props) {
             size="small"
             fullWidth
             component={Link}
-            to={editLink}
+            to={editLink + info._id}
           >
             Editar
           </Button>
@@ -195,11 +198,13 @@ function DataItemList(props) {
             {openArchivos ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
           <Collapse in={openArchivos} timeout="auto" unmountOnExit>
-            <Typography padding={"16px 16px"} backgroundColor={"#F2F3F4"}>
-              {info.archivos.lenght === 0
-                ? info.archivos
-                : "No se encontraron archivos"}
-            </Typography>
+            <Box padding={"16px 16px"} backgroundColor={"#F2F3F4"}>
+              {info.archivos.length === 0 ? (
+                "No se encontraron archivos"
+              ) : (
+                <FileList files={info.archivos} />
+              )}
+            </Box>
           </Collapse>
         </Box>
       </Grid>

@@ -25,6 +25,25 @@ class MedicalHistoryService {
     return medicalHistory;
   }
 
+  async getMedicalTestByIds(idHistory, idTest) {
+    let medicalTest = await this.medicalHistoryRepository.findTestByIds(
+      idHistory,
+      idTest
+    );
+
+    return medicalTest;
+  }
+
+  async getMedicalConsultationByIds(idHistory, idConsultation) {
+    let medicalConsultation =
+      await this.medicalHistoryRepository.findConsultationByIds(
+        idHistory,
+        idConsultation
+      );
+
+    return medicalConsultation;
+  }
+
   async getMedicalHistoryByDocument(docType, docNumber) {
     let medicalHistory = await this.medicalHistoryRepository.findByDocument(
       docType,

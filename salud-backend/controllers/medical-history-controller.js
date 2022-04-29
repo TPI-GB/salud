@@ -1,4 +1,5 @@
 const express = require("express");
+const upload = require("../multer/storage");
 const MedicalHistoryService = require("../services/medical-history-service");
 
 class MedicalHistoryController {
@@ -14,6 +15,12 @@ class MedicalHistoryController {
     this.router.get("/details/:id", (req, res) => {
       this.getMedicalHistoryDetailsById(req, res);
     });
+    this.router.get("/:idHistory/test/:idTest", (req, res) => {
+      this.getMedicalTestByIds(req, res);
+    });
+    this.router.get("/:idHistory/consultation/:idConsultation", (req, res) => {
+      this.getMedicalConsultationByIds(req, res);
+    });
     this.router.get("/:docType/:docNumber", (req, res) => {
       this.getMedicalHistoryByDocument(req, res);
     });
@@ -26,7 +33,7 @@ class MedicalHistoryController {
     this.router.post("/:id/consultation", (req, res) => {
       this.addMedicalConsultation(req, res);
     });
-    this.router.post("/:id/test", (req, res) => {
+    this.router.post("/:id/test", upload, (req, res) => {
       this.addMedicalTest(req, res);
     });
     this.router.put("/:id/test/:idTest", (req, res) => {
@@ -72,6 +79,45 @@ class MedicalHistoryController {
     medicalHistoryPromise
       .then((medicalHistory) => {
         res.status(200).json(medicalHistory);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalTestByIds(req, res) {
+    const idHistory = req.params.idHistory;
+    const idTest = req.params.idTest;
+
+    let medicalTestPromise = this.medicalHistoryService.getMedicalTestByIds(
+      idHistory,
+      idTest
+    );
+
+    medicalTestPromise
+      .then((test) => {
+        res.status(200).json(test);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalConsultationByIds(req, res) {
+    const idHistory = req.params.idHistory;
+    const idConsultation = req.params.idConsultation;
+
+    let medicalConsultationPromise =
+      this.medicalHistoryService.getMedicalConsultationByIds(
+        idHistory,
+        idConsultation
+      );
+
+    medicalConsultationPromise
+      .then((consultation) => {
+        res.status(200).json(consultation);
       })
       .catch((err) => {
         console.log(err.message);
@@ -241,6 +287,8 @@ class MedicalHistoryController {
   addMedicalTest(req, res) {
     const id = req.params.id;
     const data = req.body;
+    console.log(data);
+    console.log(req.files);
 
     const addMedicalTestPromise = this.medicalHistoryService.addMedicalTest(
       id,
