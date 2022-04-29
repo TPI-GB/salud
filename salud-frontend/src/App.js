@@ -22,11 +22,13 @@ import Navbar from "./components/Header/Navbar";
 import error401 from "./pages/error401/error401";
 import MostrarUsuarios from "./components/MostrarUsuarios/MostrarUsuarios";
 //import LayoutTemplate from "./components/";
+import ResetPassword from "./pages/login/resetPassword";
 
 function App() {
   return (
     <Router>
       <Switch>
+        <Route exact path="/reset" component={ResetPassword} />
         <Route exact path="/login" component={Login} />
         <Redirect exact from="/" to={"/Home"} />
         <>

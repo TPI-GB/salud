@@ -398,7 +398,8 @@ export default function UserForm(props) {
               />
 
               <div sx={{ mt: "8px", width: "100%" }}>
-                Roles:
+                <br />
+                Roles: <br />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Laboratorio"

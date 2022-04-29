@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   imagen: {
     borderRadius: "50%",
   },
-}));
+}))
 
 export default function Navbar() {
   const classes = useStyles();
