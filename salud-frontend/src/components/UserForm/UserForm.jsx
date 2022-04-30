@@ -205,12 +205,12 @@ export default function UserForm(props) {
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
   const [roles, setRoles] = useState({
-    medico: false,
-    admin: false,
-    secretaria: false,
-    director: false,
-    laboratorio: false,
-    recepcion: false,
+    Medico: false,
+    Admin: false,
+    Secretaria: false,
+    Director: false,
+    Laboratorio: false,
+    Recepcion: false,
   });
   const [contrasenia, setContrasenia] = useState("");
 
@@ -258,12 +258,12 @@ export default function UserForm(props) {
       // setApellido(response.data.apellido);
       // setContrasenia(response.data.contrasenia);
       setRoles({
-        medico: response.data.roles.includes("medico"),
-        admin: response.data.roles.includes("admin"),
-        secretaria: response.data.roles.includes("secretaria"),
-        director: response.data.roles.includes("director"),
-        laboratorio: response.data.roles.includes("laboratorio"),
-        recepcion: response.data.roles.includes("recepcion"),
+        Medico: response.data.roles.includes("Medico"),
+        Admin: response.data.roles.includes("Admin"),
+        Secretaria: response.data.roles.includes("Secretaria"),
+        Director: response.data.roles.includes("Director"),
+        Laboratorio: response.data.roles.includes("Laboratorio"),
+        Recepcion: response.data.roles.includes("Recepcion"),
       });
     };
     if (id) {
@@ -403,42 +403,42 @@ export default function UserForm(props) {
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Laboratorio"
-                  value="laboratorio"
+                  value="Laboratorio"
                   checked={roles.laboratorio}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Recepción"
-                  value="recepcion"
+                  value="Recepcion"
                   checked={roles.recepcion}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Secretaria"
-                  value="secretaria"
+                  value="Secretaria"
                   checked={roles.secretaria}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Director"
-                  value="director"
+                  value="Director"
                   checked={roles.director}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Admin"
-                  value="admin"
+                  value="Admin"
                   checked={roles.admin}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Médico"
-                  value="medico"
+                  value="Medico"
                   checked={roles.medico}
                   {...register("roles", {
                     onChange: (event) => {

@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   imagen: {
     borderRadius: "50%",
   },
-}))
+}));
 
 export default function Navbar() {
   const classes = useStyles();
@@ -30,14 +30,13 @@ export default function Navbar() {
             className={classes.menuButton}
             color="inherit"
           >
-            <MenuIcon/>
-
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             ESTADISTICAS
           </Typography>
           <IconButton color="inherit">
-            <LoginLogo className='logo' width='38px'/>
+            <LoginLogo className="logo" width="38px" />
           </IconButton>
         </Toolbar>
       </AppBar>
