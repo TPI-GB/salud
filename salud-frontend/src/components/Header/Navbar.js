@@ -6,6 +6,8 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@mui/material/Button';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 function Navbar() {
   const location = useLocation();
@@ -36,7 +38,10 @@ function Navbar() {
 
 useEffect(() => {
         let user = JSON.parse(sessionStorage.getItem('user'))
-        setNickName(user.data.apellido)
+        if (user === null) {
+          return "Avatar";
+        }
+        return setNickName(user.data.apellido)
     }, [])
 
 const handleClick = (event) => {
@@ -79,9 +84,14 @@ function logOut() {
         )}
 
         <div className="logout">
-          <button onClick={handleClick} class="btn waves-effect green darken-1" type="submit" name="action">{nickName}
-              <i class="material-icons right">exit_to_app</i>
-          </button>
+          <Button
+            id="demo-customized-button"
+            variant="contained"
+            onClick={handleClick}
+            endIcon={<ExitToAppIcon />}
+          >
+            {nickName}
+          </Button>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
