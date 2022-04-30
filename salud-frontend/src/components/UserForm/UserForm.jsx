@@ -67,84 +67,24 @@ export default function UserForm(props) {
     resolver: yupResolver(!id ? schema : schema2),
   });
   const onSubmit = async (data) => {
-    console.log("onSubmit");
-
-    //var verificoContrasena = await verificarContrasenias(data);
-    //var verificoMail = await verificarEmail(data);
-    // var verificoTipoDocumento = await verificarTipoDocumento(data);
-    // var verificoNumeroDocumento = await verificarNumeroDocumento(data);
-    // var verificoNombre = await verificarNombre(data);
-    // var verificoApellido = await verificarApellido(data);
-    console.log(!id + "no id");
-    // if (
-    //   !id &&
-    //   (await verificarContrasenias(data))
-
-    //   //&&
-    //   //verificoMail
-    //   // &&
-    //   // verificoTipoDocumento &&
-    //   // verificoNumeroDocumento &&
-    //   // verificoNombre &&
-    //   // verificoApellido
-    // ) {
-    //   let response = id ? await updateUser(id, data) : await createUser(data);
-    //   if (id) {
-    //     updateUser(id, data)
-    //       .then(() => {
-    //         mostrarAlertaConfirmacion();
-    //         history.push("/MostrarUsuarios");
-    //       })
-    //       .catch(() => mostrarAlertaError());
-    //   } else {
-    //     createUser(data)
-    //       .then(() => {
-    //         mostrarAlertaConfirmacion();
-    //         history.push("/MostrarUsuarios");
-    //       })
-    //       .catch(() => mostrarAlertaError());
-    //   }
-    // }
     if (!id && (await verificarContrasenias(data))) {
       createUser(data)
         .then(() => {
           mostrarAlertaConfirmacion();
-          history.push("/MostrarUsuarios");
+          history.push("/Usuarios");
         })
         .catch(() => mostrarAlertaError());
     } else {
       updateUser(id, data)
         .then(() => {
-          mostrarAlertaConfirmacion();
-          history.push("/MostrarUsuarios");
+          mostrarAlertaEdicion();
+          history.push("/Usuarios");
         })
         .catch(() => mostrarAlertaError());
     }
   };
 
-  const [validarContrasenia, setValidarContrasenia] = useState(true);
-
   const [mensajeContrasenia, setMensajeContrasenia] = useState({
-    show: false,
-    message: "",
-  });
-  const [mensajeEmail, setMensajeEmail] = useState({
-    show: false,
-    message: "",
-  });
-  const [mensajeTipoDocumento, setMensajeTipoDocumento] = useState({
-    show: false,
-    message: "",
-  });
-  const [mensajeNumeroDocumento, setMensajeNumeroDocumento] = useState({
-    show: false,
-    message: "",
-  });
-  const [mensajeNombre, setMensajeNombre] = useState({
-    show: false,
-    message: "",
-  });
-  const [mensajeApellido, setMensajeApellido] = useState({
     show: false,
     message: "",
   });
@@ -163,41 +103,6 @@ export default function UserForm(props) {
       return true;
     }
   }
-  //FALTAN DESARROLLAR ESTAS FUNCIONES PARA LOS CAMPOS REQUERIDOS USANDO REGEX EXPRESIONES REGULARES QUE ME DIJO FEDE
-
-  // async function verificarEmail(data) {
-  //   // value: true,
-  //   // message: "Necesitas este campo",
-  //   // pattern: {
-  //   //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-  //   //   message: "El formato no es correcto",
-  //   // },
-  //   // var campoDeMail = document.getElementById("emailid").value;
-  //   if (campoDeMail == null) {
-  //     setMensajeEmail({
-  //       show: true,
-  //       mensaje: "Necesitas este campo",
-  //     });
-  //   } else {
-  //     setMensajeEmail({ show: false, mensaje: "" });
-  //   }
-  //   if (!campoDeMail.test(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i)) {
-  //     setMensajeEmail({
-  //       show: true,
-  //       mensaje: "El formato no es correcto",
-  //     });
-  //   } else {
-  //     setMensajeEmail({ show: false, mensaje: "" });
-  //   }
-  // }
-
-  async function verificarTipoDocumento(data) {}
-
-  async function verificarNumeroDocumento(data) {}
-
-  async function verificarNombre(data) {}
-
-  async function verificarApellido(data) {}
 
   const [email, setEmail] = useState("");
   const [tipodocumento, setTipoDocumento] = useState("");
@@ -213,8 +118,6 @@ export default function UserForm(props) {
     Recepcion: false,
   });
   const [contrasenia, setContrasenia] = useState("");
-
-  //falta todos los atributos
 
   const mostrarAlertaConfirmacion = () => {
     swal({
@@ -243,7 +146,6 @@ export default function UserForm(props) {
   useEffect(() => {
     const getData = async () => {
       const response = await getUserById(id);
-      // setEmail(response.data.email); //falta poner los sets aca}
       reset({
         email: response.data.email,
         nombre: response.data.nombre,
@@ -252,11 +154,6 @@ export default function UserForm(props) {
         apellido: response.data.apellido,
         roles: response.data.roles,
       });
-      // setTipoDocumento(response.data.tipodocumento);
-      // setNumeroDocumento(response.data.numerodocumento);
-      // //setNombre(response.data.nombre);
-      // setApellido(response.data.apellido);
-      // setContrasenia(response.data.contrasenia);
       setRoles({
         Medico: response.data.roles.includes("Medico"),
         Admin: response.data.roles.includes("Admin"),
@@ -281,17 +178,8 @@ export default function UserForm(props) {
                 id="emailid"
                 type="email"
                 label="Mail"
-                //value={email}
                 placeholder="ejemplo@gmail.com"
                 {...register("email", {
-                  // required: {
-                  //   value: true,
-                  //   message: "Necesitas este campo",
-                  // },
-                  // pattern: {
-                  //   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  //   message: "El formato no es correcto",
-                  // },
                   onChange: (event) => {
                     setEmail(event.target.value);
                   },
@@ -306,7 +194,6 @@ export default function UserForm(props) {
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     defaultValue="DNI"
-                    //value={tipodocumento}
                     {...register("tipodocumento", {
                       required: {
                         value: true,
@@ -314,7 +201,6 @@ export default function UserForm(props) {
                       },
                       onChange: (event) => {
                         setTipoDocumento(event.target.value);
-                        console.log(tipodocumento);
                       },
                     })}
                     error={Boolean(errors.tipodocumento)}
@@ -336,7 +222,6 @@ export default function UserForm(props) {
                     id="numDocid"
                     type="text"
                     label="Numero de documento"
-                    //value={numerodocumento}
                     {...register("numerodocumento", {
                       required: {
                         value: true,
@@ -361,7 +246,6 @@ export default function UserForm(props) {
                 id="nombreid"
                 type="text"
                 label="Nombre"
-                //value={nombre}
                 {...register("nombre", {
                   required: {
                     value: true,
@@ -369,7 +253,6 @@ export default function UserForm(props) {
                   },
                   onChange: (event) => {
                     setNombre(event.target.value);
-                    console.log(nombre);
                   },
                 })}
                 error={Boolean(errors.nombre)}
@@ -381,7 +264,6 @@ export default function UserForm(props) {
                 id="apellidoid"
                 type="text"
                 label="Apellido"
-                //value={apellido}
                 {...register("apellido", {
                   required: {
                     value: true,
@@ -389,7 +271,6 @@ export default function UserForm(props) {
                   },
                   onChange: (event) => {
                     setApellido(event.target.value);
-                    console.log(apellido);
                   },
                 })}
                 error={Boolean(errors.apellido)}
@@ -404,42 +285,42 @@ export default function UserForm(props) {
                   control={<Checkbox />}
                   label="Laboratorio"
                   value="Laboratorio"
-                  checked={roles.laboratorio}
+                  checked={roles.Laboratorio}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Recepción"
                   value="Recepcion"
-                  checked={roles.recepcion}
+                  checked={roles.Recepcion}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Secretaria"
                   value="Secretaria"
-                  checked={roles.secretaria}
+                  checked={roles.Secretaria}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Director"
                   value="Director"
-                  checked={roles.director}
+                  checked={roles.Director}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Admin"
                   value="Admin"
-                  checked={roles.admin}
+                  checked={roles.Admin}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Médico"
                   value="Medico"
-                  checked={roles.medico}
+                  checked={roles.Medico}
                   {...register("roles", {
                     onChange: (event) => {
                       roles[event.target.value] = event.target.checked;
@@ -456,22 +337,11 @@ export default function UserForm(props) {
                 <>
                   <TextField
                     id="contraseniaid1"
-                    //onChange="contraseniaid1"
                     type="password"
-                    //pattern=".{6}"
                     label="Contraseña"
                     {...register("contrasenia", {
-                      // required: {
-                      //   value: id ? false : true,
-                      //   message: "El campo es requerido",
-                      // },
-                      // minLength: {
-                      //   value: 6,
-                      //   message:
-                      //     "La contraseña debe tener al menos 6 caracteres",
                       onChange: (event) => {
                         setContrasenia(event.target.value);
-                        console.log(contrasenia);
                       },
                     })}
                     error={Boolean(errors.contrasenia)}
@@ -502,7 +372,7 @@ export default function UserForm(props) {
                 variant="contained"
                 color="error"
                 component={Link}
-                to="/MostrarUsuarios"
+                to="/Usuarios"
                 sx={{ mt: "8px", mb: "4px", width: "100%" }}
               >
                 Cancelar

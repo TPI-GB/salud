@@ -32,10 +32,4 @@ export const SidebarData = [
     icon: <DashboardIcon />,
     cName: "nav-text",
   },
-  {
-    title: "Nuevo Usuario",
-    path: "/NuevoUsuario",
-    icon: <AccountBoxIcon />,
-    cName: "nav-text",
-  },
 ];
