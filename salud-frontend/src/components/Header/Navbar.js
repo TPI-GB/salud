@@ -4,10 +4,20 @@ import { Tabs, Tab, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Button from "@mui/material/Button";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Stack from '@mui/material/Stack';
+import { green, grey } from '@mui/material/colors';
+
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(grey[50]),
+  backgroundColor: green[200],
+  '&:hover': {
+    backgroundColor: green[300],
+  },
+}));
 
 function Navbar() {
   const location = useLocation();
@@ -39,10 +49,11 @@ function Navbar() {
   useEffect(() => {
     let user = JSON.parse(sessionStorage.getItem("user"));
     if (user === null) {
-      return "Avatar";
+      return "";
     }
     return setNickName(user.data.apellido);
   }, []);
+
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,6 +66,7 @@ function Navbar() {
   function logOut() {
     sessionStorage.clear();
     history.push("/login");
+
   }
 
   return (
@@ -80,17 +92,20 @@ function Navbar() {
               );
             })}
           </Tabs>
+
         )}
 
         <div className="logout">
-          <Button
-            id="demo-customized-button"
-            variant="contained"
-            onClick={handleClick}
-            endIcon={<ExitToAppIcon />}
-          >
-            {nickName}
-          </Button>
+          <Stack spacing={2} direction="row">
+            <ColorButton
+              id="demo-customized-button"
+              variant="contained"
+              onClick={handleClick}
+              endIcon={<ExitToAppIcon />}
+            >
+              {nickName}
+            </ColorButton>
+          </Stack>
           <Menu
             id="simple-menu"
             anchorEl={anchorEl}
@@ -98,7 +113,9 @@ function Navbar() {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={logOut}>Cerrar sesión</MenuItem>
+            <MenuItem onClick={logOut}>
+              Cerrar sesión
+            </MenuItem>
           </Menu>
         </div>
       </div>

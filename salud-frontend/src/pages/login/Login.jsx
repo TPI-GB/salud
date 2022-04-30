@@ -9,7 +9,7 @@ import {
   Collapse,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
@@ -118,6 +118,12 @@ export default function Login() {
           INGRESAR
         </Button>
       </Box>
+      <div className="reset">
+        {/* <Link 
+          to="/reset"
+          >Olvide mi contraseña
+        </Link> */}
+      </div>
     </div>
   );
 }
