@@ -291,6 +291,7 @@ export default function MedicalHistoryForm(props) {
             <Button
               type="button"
               variant="contained"
+              color="success"
               onClick={id ? handleEdit : handleSubmit}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             >
