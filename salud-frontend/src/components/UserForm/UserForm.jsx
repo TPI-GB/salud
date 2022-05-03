@@ -404,42 +404,42 @@ export default function UserForm(props) {
                   control={<Checkbox />}
                   label="Laboratorio"
                   value="Laboratorio"
-                  checked={roles.laboratorio}
+                  checked={roles.Laboratorio}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Recepción"
                   value="Recepcion"
-                  checked={roles.recepcion}
+                  checked={roles.Recepcion}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Secretaria"
                   value="Secretaria"
-                  checked={roles.secretaria}
+                  checked={roles.Secretaria}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Director"
                   value="Director"
-                  checked={roles.director}
+                  checked={roles.Director}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Admin"
                   value="Admin"
-                  checked={roles.admin}
+                  checked={roles.Admin}
                   {...register("roles")}
                 />
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Médico"
                   value="Medico"
-                  checked={roles.medico}
+                  checked={roles.Medico}
                   {...register("roles", {
                     onChange: (event) => {
                       roles[event.target.value] = event.target.checked;
