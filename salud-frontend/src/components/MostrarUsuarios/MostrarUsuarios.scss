@@ -54,5 +54,46 @@
 }
 
 .left {
-  margin-left: 250px;
+  margin-left: 1250px;
+}
+
+.left2 {
+  margin-left: 10px;
+}
+.right {
+  margin-right: 1250px;
+}
+.ButtonMas {
+  margin-left: 1000px;
+}
+.botonNuevoUsuario {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 1360px;
+  color: #ffffff;
+}
+.tituloTabla {
+  margin: auto;
+  width: 150%;
+  padding: 10px;
+  background: #008f4c;
+  color: #ffffff;
+}
+
+
+.container{
+  text-align:center
+}
+.left{
+  float: left;
+  background:blue
+}
+.right{
+  float: right;
+  background:red
+}
+.center{
+  background:green;
+  margin:0 auto; 
+ display:inline-block
 }

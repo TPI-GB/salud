@@ -19,6 +19,8 @@ import {
   MenuItem,
   FormControl,
   Fab,
+  Box,
+  Stack,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -138,75 +140,83 @@ export default function PinnedSubheaderList() {
   }
 
   return (
-    <div className="App">
-      <TableContainer component={Paper}>
-        <h1 align="right">
-          <label>"Nuevo usuario"</label>
-          <Tooltip title="Crear nuevo usuario">
-            <Fab
-              size="large"
-              sx={{ mr: 1, mt: 2 }}
-              component={Link}
-              to={"/NuevoUsuario"}
-            >
-              <AddIcon />
-            </Fab>
-          </Tooltip>
-        </h1>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table"></Table>
-      </TableContainer>
-      <h1>Usuarios actuales</h1>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow key={"nombreColumnas"}>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Apellido</TableCell>
-              <TableCell>Tipo documento</TableCell>
-              <TableCell>Numero documento</TableCell>
-              <TableCell>Estado</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((usuario) => (
-              <TableRow key={usuario._id}>
-                <TableCell>{usuario.nombre}</TableCell>
-                <TableCell>{usuario.apellido}</TableCell>
-                <TableCell>{usuario.tipodocumento}</TableCell>
-                <TableCell>{usuario.numerodocumento}</TableCell>
-                <TableCell>{usuario.activo ? "Activo" : "Inactivo"}</TableCell>
-                <TableCell>
-                  <Tooltip title="Editar">
-                    <ModeEditOutlineTwoToneIcon
-                      className={styles.iconos}
-                      onClick={() =>
-                        history.push(`/EditarUsuario/${usuario._id}`)
-                      }
-                    />
-                  </Tooltip>
-                  &nbsp;&nbsp;&nbsp;
-                  {usuario.activo ? (
-                    <Tooltip title="Deshabilitar">
-                      <NotInterestedIcon
-                        className={styles.iconos}
-                        onClick={() => cambiarHabilitacion(usuario)}
-                      />
-                    </Tooltip>
-                  ) : (
-                    <Tooltip title="Habilitar">
-                      <CheckOutlinedIcon
-                        className={styles.iconos}
-                        onClick={() => cambiarHabilitacion(usuario)}
-                      />
-                    </Tooltip>
-                  )}
-                </TableCell>
+    //<div className="App">
+    <Box component="form">
+      <Grid container>
+        <div className="botonNuevoUsuario">
+          <Button
+            variant="contained"
+            style={{ background: "#008f4c" }}
+            href="/NuevoUsuario"
+          >
+            <AddIcon /> Nuevo usuario
+          </Button>
+        </div>
+        <div class="container">
+          <div class="right">
+            <input type="search" placeHolder="Search Text..."></input>
+          </div>
+          <div class="center">Menu</div>
+        </div>
+        <div className="tituloTabla">
+          <h1 align="center">Usuarios actuales</h1>
+        </div>
+
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow key={"nombreColumnas"}>
+                <TableCell>Nombre</TableCell>
+                <TableCell>Apellido</TableCell>
+                <TableCell>Tipo documento</TableCell>
+                <TableCell>Numero documento</TableCell>
+                <TableCell>Estado</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+            </TableHead>
+            <TableBody>
+              {data.map((usuario) => (
+                <TableRow key={usuario._id}>
+                  <TableCell>{usuario.nombre}</TableCell>
+                  <TableCell>{usuario.apellido}</TableCell>
+                  <TableCell>{usuario.tipodocumento}</TableCell>
+                  <TableCell>{usuario.numerodocumento}</TableCell>
+                  <TableCell>
+                    {usuario.activo ? "Activo" : "Inactivo"}
+                  </TableCell>
+                  <TableCell>
+                    <Tooltip title="Editar">
+                      <ModeEditOutlineTwoToneIcon
+                        className={styles.iconos}
+                        onClick={() =>
+                          history.push(`/EditarUsuario/${usuario._id}`)
+                        }
+                      />
+                    </Tooltip>
+                    &nbsp;&nbsp;&nbsp;
+                    {usuario.activo ? (
+                      <Tooltip title="Deshabilitar">
+                        <NotInterestedIcon
+                          className={styles.iconos}
+                          onClick={() => cambiarHabilitacion(usuario)}
+                        />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip title="Habilitar">
+                        <CheckOutlinedIcon
+                          className={styles.iconos}
+                          onClick={() => cambiarHabilitacion(usuario)}
+                        />
+                      </Tooltip>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Grid>
+    </Box>
+    //</div>
   );
 }
