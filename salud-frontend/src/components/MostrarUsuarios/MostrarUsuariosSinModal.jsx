@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
 import ModeEditOutlineTwoToneIcon from "@mui/icons-material/ModeEditOutlineTwoTone";
 import NotInterestedIcon from "@mui/icons-material/NotInterested";
@@ -145,19 +146,22 @@ export default function PinnedSubheaderList() {
       <Grid container>
         <div className="botonNuevoUsuario">
           <Button
+            className="izquierda"
             variant="contained"
             style={{ background: "#008f4c" }}
             href="/NuevoUsuario"
           >
             <AddIcon /> Nuevo usuario
           </Button>
+          <Button
+            className="derecha"
+            variant="contained"
+            style={{ background: "#008f4c" }}
+          >
+            <SearchIcon /> Buscar usuario por nombre
+          </Button>
         </div>
-        <div class="container">
-          <div class="right">
-            <input type="search" placeHolder="Search Text..."></input>
-          </div>
-          <div class="center">Menu</div>
-        </div>
+
         <div className="tituloTabla">
           <h1 align="center">Usuarios actuales</h1>
         </div>

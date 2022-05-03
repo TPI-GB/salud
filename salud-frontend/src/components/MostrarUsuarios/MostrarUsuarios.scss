@@ -69,9 +69,13 @@
 .botonNuevoUsuario {
   margin-top: 20px;
   margin-bottom: 20px;
-  margin-left: 1360px;
+  //margin-left: 1360px;
+  
   color: #ffffff;
 }
+.derecha   { right: 120px; }
+.izquierda { left: 1360px;  }
+
 .tituloTabla {
   margin: auto;
   width: 150%;
@@ -80,20 +84,13 @@
   color: #ffffff;
 }
 
+//no se usa por ahora
+// #paginacion {
+//   border: 1px solid #CCC;
+//   background-color: #E0E0E0;
+//   padding: .5em;
+//   overflow: hidden;
+// }
 
-.container{
-  text-align:center
-}
-.left{
-  float: left;
-  background:blue
-}
-.right{
-  float: right;
-  background:red
-}
-.center{
-  background:green;
-  margin:0 auto; 
- display:inline-block
-}
+// .derecha   { float: right; }
+// .izquierda { float: left;  }
