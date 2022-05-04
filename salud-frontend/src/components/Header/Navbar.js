@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./Navbar.css";
 import { Tabs, Tab, useTheme, useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Link, useLocation, useHistory } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
@@ -39,7 +39,7 @@ function Navbar() {
 useEffect(() => {
         let user = JSON.parse(sessionStorage.getItem('user'))
         if (user === null) {
-          return "Avatar";
+          return " ";
         }
         return setNickName(user.data.apellido)
     }, [])
@@ -86,6 +86,7 @@ function logOut() {
         <div className="logout">
           <Button
             id="demo-customized-button"
+            color="success"
             variant="contained"
             onClick={handleClick}
             endIcon={<ExitToAppIcon />}

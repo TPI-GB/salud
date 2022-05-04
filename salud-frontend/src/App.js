@@ -17,12 +17,14 @@ import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 import ResetPassword from "./pages/login/resetPassword";
+import ResetPassword2 from "./pages/login/ressetPassword2";
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/reset" component={ResetPassword} />
+        <Route exact path="/resetpass" component={ResetPassword2} />
         <Route exact path="/login" component={Login} />
         <Redirect exact from="/" to={"/Home"} />
         <>

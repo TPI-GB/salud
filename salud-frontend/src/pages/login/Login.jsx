@@ -9,7 +9,7 @@ import {
   Collapse,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
@@ -105,12 +105,6 @@ export default function Login() {
             Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
-        <nav className="reset-contrasenia">
-          <Link 
-            to="/reset"
-          >RESTABLECER CONTRASEÑA
-          </Link>
-        </nav>
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
@@ -120,6 +114,11 @@ export default function Login() {
         >
           INGRESAR
         </Button>
+        <div className="reset">
+          <Link to="/reset">
+            Olvide mi contraseña
+          </Link>
+      </div>
       </Box>
     </div>
   );

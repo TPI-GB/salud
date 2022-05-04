@@ -12,7 +12,6 @@ export default function ResetPassword() {
     const [mostrarContrasenia] = useState(false);
     const [setMostrarErrorAlIngresar] = useState(false);
     const [valores, setValores] = useState({
-        email: "",
         contrasenia: "",
         contrasenia2: "",
     });
@@ -30,7 +29,7 @@ export default function ResetPassword() {
             sessionStorage.setItem("user", JSON.stringify(usuario));
             // Para que el hook useHistory funcione, este componente debe estar envuelto
             // en un componente Router, de lo contrario history quedara indefinido
-            history.push("/Home");
+            history.push("/login");
           })
           .catch((err) => {
             setMostrarErrorAlIngresar(true);
@@ -41,15 +40,6 @@ export default function ResetPassword() {
     return (
         <div className="loginBackground">
             <Box component="form" className="loginForm">
-                <TextField
-                    fullWidth
-                    sx={{ marginTop: "20px" }}
-                    required
-                    label="E-mail"
-                    name="email"
-                    value={valores.email}
-                    onChange={handleChange}
-                />
                 <TextField
                     fullWidth
                     sx={{ marginTop: "20px" }}

@@ -20,6 +20,9 @@ class UserController {
     this.router.put("/:id", (req, res) => {
       this.updateUser(req, res);
     });
+    /* this.router.post("/reset", (req, res) => {
+      this.resetUser(req, res);
+    }); */
   }
 
   getUsers(req, res) {
@@ -158,8 +161,24 @@ class UserController {
       }
     }
 
+    /* resetUser(req, res) {
+      // La logica del login empieza aca
+      // Conseguir los inputs del usuario
+      const authHeader = req.headers.authorization;
+  
+      let email;
+      if (authHeader) {
+        const method = authHeader.split(" ")[0];
+        const token = authHeader.split(" ")[1];
+        if (method && method === "Basic" && token) {
+          const b = Buffer.from(token, "base64");
+          const value = b.toString().split(":");
+          email = value[0];
+        }
+      } */
+
     // Validar los inputs del usuario
-    if (!(email && contrasenia)) {
+    if (!(email)) {
       return res.status(400).json("Se requieren todos los campos!");
     }
 

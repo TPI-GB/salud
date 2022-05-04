@@ -25,7 +25,7 @@ export default function ResetPassword() {
 		return
 	}
     try {
-        const { data } = await axios.post()
+        const { data } = await axios.post(`${"http://localhost:8080/users/reset"}`)
     } catch (error) {
         console.log(error)
     }
