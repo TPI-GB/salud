@@ -1,4 +1,9 @@
-import { updateUser, getUsers, getUserById } from "../../services/user-service";
+import {
+  updateUser,
+  getUsers,
+  getUserById,
+  getUserByDocument,
+} from "../../services/user-service";
 import React, { useState, useEffect } from "react";
 import "./MostrarUsuarios.scss";
 import {
@@ -21,6 +26,9 @@ import {
   Fab,
   Box,
   Stack,
+  IconButton,
+  Divider,
+  InputBase,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,12 +39,14 @@ import NotInterestedIcon from "@mui/icons-material/NotInterested";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
+
 import { useForm } from "react-hook-form";
 import Tooltip from "@mui/material/Tooltip";
 import UserForm from "../UserForm/UserForm";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import AppBar from "@mui/material/AppBar";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -63,10 +73,7 @@ const useStyles = makeStyles({
 });
 
 export default function PinnedSubheaderList() {
-  const history = useHistory();
-
   const { register } = useForm();
-  const styles = useStyles();
   const [data, setData] = useState([]);
   const [modalEditar, setModalEditar] = useState(false);
   const [mostrarConfirmacionAlEditar, setMostrarConfirmacionAlEditar] =
@@ -117,21 +124,16 @@ export default function PinnedSubheaderList() {
 
   async function getData() {
     const response = await getUsers();
-    setData(response.data);
+    setUsuarios(response.data);
   }
-
-  const cambiarHabilitacion = async (usuario) => {
-    await updateUser(usuario._id, { activo: !usuario.activo });
-    getData();
-  };
 
   const abrirCerrarModalEditar = () => {
     setModalEditar(!modalEditar);
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   useEffect(() => {}, [usuarioSeleccionado.roles]);
 
@@ -139,6 +141,13 @@ export default function PinnedSubheaderList() {
     setModalEditar(!modalEditar);
     setMostrarConfirmacionAlEditar(false);
   }
+
+  const [usuarios, setUsuarios] = useState([]);
+
+  const cambiarHabilitacion = async (usuario) => {
+    await updateUser(usuario._id, { activo: !usuario.activo });
+    getData();
+  };
 
   return (
     //<div className="App">
@@ -153,74 +162,205 @@ export default function PinnedSubheaderList() {
           >
             <AddIcon /> Nuevo usuario
           </Button>
-          <Button
-            className="derecha"
-            variant="contained"
-            style={{ background: "#008f4c" }}
-          >
-            <SearchIcon /> Buscar usuario por nombre
-          </Button>
+
+          <MiBuscador className="derecha" setUsuarios={setUsuarios} />
         </div>
 
         <div className="tituloTabla">
           <h1 align="center">Usuarios actuales</h1>
         </div>
-
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow key={"nombreColumnas"}>
-                <TableCell>Nombre</TableCell>
-                <TableCell>Apellido</TableCell>
-                <TableCell>Tipo documento</TableCell>
-                <TableCell>Numero documento</TableCell>
-                <TableCell>Estado</TableCell>
-                <TableCell>Acciones</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((usuario) => (
-                <TableRow key={usuario._id}>
-                  <TableCell>{usuario.nombre}</TableCell>
-                  <TableCell>{usuario.apellido}</TableCell>
-                  <TableCell>{usuario.tipodocumento}</TableCell>
-                  <TableCell>{usuario.numerodocumento}</TableCell>
-                  <TableCell>
-                    {usuario.activo ? "Activo" : "Inactivo"}
-                  </TableCell>
-                  <TableCell>
-                    <Tooltip title="Editar">
-                      <ModeEditOutlineTwoToneIcon
-                        className={styles.iconos}
-                        onClick={() =>
-                          history.push(`/EditarUsuario/${usuario._id}`)
-                        }
-                      />
-                    </Tooltip>
-                    &nbsp;&nbsp;&nbsp;
-                    {usuario.activo ? (
-                      <Tooltip title="Deshabilitar">
-                        <NotInterestedIcon
-                          className={styles.iconos}
-                          onClick={() => cambiarHabilitacion(usuario)}
-                        />
-                      </Tooltip>
-                    ) : (
-                      <Tooltip title="Habilitar">
-                        <CheckOutlinedIcon
-                          className={styles.iconos}
-                          onClick={() => cambiarHabilitacion(usuario)}
-                        />
-                      </Tooltip>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <MiTabla usuariosTotales={usuarios} miFuncion={cambiarHabilitacion} />
       </Grid>
     </Box>
     //</div>
+  );
+}
+
+function MiTabla(props) {
+  const { usuariosTotales, miFuncion } = props;
+
+  const styles = useStyles();
+  const history = useHistory();
+
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow key={"nombreColumnas"}>
+            <TableCell>Nombre</TableCell>
+            <TableCell>Apellido</TableCell>
+            <TableCell>Tipo documento</TableCell>
+            <TableCell>Numero documento</TableCell>
+            <TableCell>Estado</TableCell>
+            <TableCell>Acciones</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {usuariosTotales.map((usuario) => (
+            <TableRow key={usuario._id}>
+              <TableCell>{usuario.nombre}</TableCell>
+              <TableCell>{usuario.apellido}</TableCell>
+              <TableCell>{usuario.tipodocumento}</TableCell>
+              <TableCell>{usuario.numerodocumento}</TableCell>
+              <TableCell>{usuario.activo ? "Activo" : "Inactivo"}</TableCell>
+              <TableCell>
+                <Tooltip title="Editar">
+                  <ModeEditOutlineTwoToneIcon
+                    className={styles.iconos}
+                    onClick={() =>
+                      history.push(`/EditarUsuario/${usuario._id}`)
+                    }
+                  />
+                </Tooltip>
+                &nbsp;&nbsp;&nbsp;
+                {usuario.activo ? (
+                  <Tooltip title="Deshabilitar">
+                    <NotInterestedIcon
+                      className={styles.iconos}
+                      onClick={() => miFuncion(usuario)}
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Habilitar">
+                    <CheckOutlinedIcon
+                      className={styles.iconos}
+                      onClick={() => miFuncion(usuario)}
+                    />
+                  </Tooltip>
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
+
+function MiBuscador(props) {
+  const { className, setUsuarios } = props;
+
+  const [searchValue, setSearchValue] = useState("");
+  const [filter, setFilter] = useState("DOC");
+  const [docType, setDocType] = useState("DNI");
+  const [error, setError] = useState({ message: "", show: false });
+
+  const validateSearchInput = () => {
+    if (!/^(?!\s*$).+/.test(searchValue)) {
+      setError({
+        message: "El campo de busqueda esta vacío, ingrese un número.",
+        show: true,
+      });
+    } else if (!/^[1-9][0-9]{6,8}$/i.test(searchValue)) {
+      setError({
+        message: "En numero de documento ingresado es inválido.",
+        show: true,
+      });
+    } else {
+      handleSearch();
+    }
+  };
+  const handleSearch = async () => {
+    if (filter === "TODAS") {
+      const response = await getUsers();
+      setUsuarios(response.data);
+    } else {
+      const response = await getUserByDocument(docType, searchValue);
+      setUsuarios(response.data ? [response.data] : []);
+    }
+    setError({ show: false });
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    const value = event.target.value;
+    setFilter(value);
+    setError({ show: false });
+    if (value === "TODAS") {
+      setSearchValue("");
+    }
+  };
+
+  const handleDocChange = (event) => {
+    setDocType(event.target.value);
+    setError({ show: false });
+  };
+
+  return (
+    <>
+      <Paper
+        component="form"
+        sx={{
+          p: "2px 4px",
+          display: "flex",
+          alignItems: "center",
+          minWidth: 300,
+          maxWidth: 350,
+          mt: -5,
+          ml: "auto",
+          mr: "auto",
+        }}
+        className={className}
+      >
+        <Select value={filter} onChange={handleFilterChange} size="small">
+          <MenuItem value={"DOC"}>DOC</MenuItem>
+          <MenuItem value={"TODAS"}>TODAS</MenuItem>
+        </Select>
+        {filter === "DOC" && (
+          <Select
+            value={docType}
+            onChange={handleDocChange}
+            size="small"
+            sx={{ ml: 0.5 }}
+          >
+            <MenuItem value={"DNI"}>DNI</MenuItem>
+            <MenuItem value={"LE"}>LE</MenuItem>
+            <MenuItem value={"LC"}>LC</MenuItem>
+            <MenuItem value={"CI"}>CI</MenuItem>
+          </Select>
+        )}
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+        <InputBase
+          sx={{ ml: 1, flex: 1 }}
+          placeholder="Buscar..."
+          onChange={handleSearchChange}
+          disabled={filter === "TODAS"}
+          value={searchValue}
+        />
+        <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+        <IconButton
+          type="button"
+          sx={{ p: "10px" }}
+          aria-label="search"
+          onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
+        >
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+      <Box
+        sx={{
+          ml: "auto",
+          mr: "auto",
+          mt: "5px",
+          minWidth: 300,
+          maxWidth: 500,
+        }}
+      >
+        <Collapse in={error.show}>
+          <Alert
+            severity="error"
+            sx={{ borderRadius: "25px", mt: 1 }}
+            onClose={() => {
+              setError({ message: "", show: false });
+            }}
+          >
+            {error.message}
+          </Alert>
+        </Collapse>
+      </Box>
+    </>
   );
 }
