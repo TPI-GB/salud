@@ -3,7 +3,7 @@ const LugarService = require("../services/lugar-service");
 
 class LugarController {
   constructor() {
-    this.LugarService = new LugarService();
+    this.lugarService = new LugarService();
     this.router = express.Router();
     this.router.get("/", (req, res) => {
       this.getLugares(req, res);
