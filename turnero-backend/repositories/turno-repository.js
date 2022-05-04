@@ -39,6 +39,24 @@ class TurnoRepository {
     }
   }
 
+  async asignarTurno(data) {
+    const { paciente } = data;
+    try {
+      let newData = {};
+
+      newData.paciente = paciente;
+      newData.disponible = false;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async borrarTurno(data) {
     const { id } = data;
     try {
