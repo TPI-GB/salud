@@ -1,31 +1,21 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-<<<<<<< HEAD
-const fileUpload = require("express-fileupload");
+var bodyParser = require("body-parser");
 const FeriadoController = require("./controllers/feriadoController");
-=======
-const lugarController = require("./controllers/lugar-controller");
-const turnoController = require("./controllers/turno-controller");
->>>>>>> b4ea7d108008a5841b49c63ad51b550b8719e7fe
+const LugarController = require("./controllers/lugar-controller");
+const TurnoController = require("./controllers/turno-controller");
 
 app.use(cors());
-
-var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+let feriadoController = new FeriadoController();
+let lugarController = new LugarController();
+let turnoController = new TurnoController();
+
 app.use("/places", lugarController.router);
 app.use("/turns", turnoController.router);
-
-<<<<<<< HEAD
-let feriadoController = new FeriadoController();
-
 app.use("/feriado", feriadoController.router);
 
-
-
-
 module.exports = app;
-=======
-module.exports = app;
->>>>>>> b4ea7d108008a5841b49c63ad51b550b8719e7fe
