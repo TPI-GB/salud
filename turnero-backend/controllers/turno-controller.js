@@ -11,6 +11,9 @@ class TurnoController {
     this.router.post("/", (req, res) => {
       this.crearTurno(req, res);
     });
+    this.router.post("/on", (req, res) => {
+      this.crearSobreTurno(req, res);
+    });
     this.router.put("/", (req, res) => {
       this.editarTurno(req, res);
     });
@@ -38,7 +41,22 @@ class TurnoController {
   crearTurno(req, res) {
     const data = req.body;
 
-    const turnoPromise = this.turnoService.getTurnos(data);
+    const turnoPromise = this.turnoService.crearTurno(data);
+
+    turnoPromise
+      .then((turno) => {
+        res.status(200).json(turno);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  crearSobreTurno(req, res) {
+    const data = req.body;
+
+    const turnoPromise = this.turnoService.crearSobreTurno(data);
 
     turnoPromise
       .then((turno) => {

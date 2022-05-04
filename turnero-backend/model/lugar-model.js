@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 
 const LugarSchema = Schema(
   {
-    activo: { type: Boolean, required: true },
-    nombre: { type: String, required: true },
-    descripcion: { type: String, required: true },
-    direccion: { type: String, required: true },
-    telefono: { type: Number, required: true },
+    activo: { type: Boolean, require: true },
+    nombre: { type: String, require: true },
+    descripcion: { type: String, require: true },
+    direccion: { type: String, require: true },
+    telefono: { type: Number, require: true },
   },
   {
     timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
