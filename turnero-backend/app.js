@@ -22,4 +22,8 @@ app.use("/turns", turnoController.router);
 app.use("/feriado", feriadoController.router);
 app.use("/disponibilidadMedica", disponibilidadMedica.router);
 
+<<<<<<< HEAD
 module.exports = app;
+=======
+module.exports = app;
+>>>>>>> 60f25369f82f39a36c3d04866b40c6d26b8e6f7b
