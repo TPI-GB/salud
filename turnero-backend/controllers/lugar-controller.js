@@ -20,11 +20,11 @@ class LugarController {
   }
 
   getLugares(req, res) {
-    const lugarPromise = this.lugarService.getLugares();
+    const lugaresPromise = this.lugarService.getLugares();
 
-    lugarPromise
-      .then((lugar) => {
-        res.status(200).json(lugar);
+    lugaresPromise
+      .then((lugares) => {
+        res.status(200).json(lugares);
       })
       .catch((err) => {
         console.log(err.message);
@@ -34,11 +34,11 @@ class LugarController {
 
   crearLugar(req, res) {
     const data = req.body;
-    const lugaresPromise = this.lugarService.crearLugar(data);
+    const lugarPromise = this.lugarService.crearLugar(data);
 
-    lugaresPromise
-      .then((lugares) => {
-        res.status(200).json(lugares);
+    lugarPromise
+      .then((lugar) => {
+        res.status(200).json(lugar);
       })
       .catch((err) => {
         console.log(err.message);
