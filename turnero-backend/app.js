@@ -15,8 +15,8 @@ let turnoController = new TurnoController();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/places", lugarController.router);
-app.use("/turns", feriadoController.router);
-app.use("/feriado", turnoController.router);
+app.use("/turns", turnoController.router);
+app.use("/feriado", feriadoController.router);
 
 module.exports = app;
 module.exports = app;
