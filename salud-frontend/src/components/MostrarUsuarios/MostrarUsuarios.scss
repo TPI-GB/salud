@@ -70,11 +70,12 @@
   margin-top: 20px;
   margin-bottom: 20px;
   //margin-left: 1360px;
-  
+  //background-color: #008f4c;
   color: #ffffff;
+  
 }
 .derecha   { right: 150px;  }
-.izquierda { left: 1330px;  }
+.izquierda { left: 1340px;  }
 
 .tituloTabla {
   margin: auto;
@@ -84,6 +85,21 @@
   color: #ffffff;
 }
 
+select {
+  appearance: none;
+  padding: 15px 20px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+  border-radius: 150px;
+  border: 1px solid green;
+  background-color: green;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+select:focus {
+  outline: none;
+}
 //no se usa por ahora
 // #paginacion {
 //   border: 1px solid #CCC;

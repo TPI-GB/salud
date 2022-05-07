@@ -29,6 +29,7 @@ import {
   IconButton,
   Divider,
   InputBase,
+  Pagination,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
@@ -47,6 +48,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
+import { yellow } from "@mui/material/colors";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -69,6 +71,9 @@ const useStyles = makeStyles({
   },
   inputMaterial: {
     width: "100%",
+  },
+  estiloBuscador: {
+    backgroundColor: "green",
   },
 });
 
@@ -182,6 +187,32 @@ function MiTabla(props) {
   const styles = useStyles();
   const history = useHistory();
 
+  //definiendo cosas para paginar
+  const [persons, setPersons] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [personsPerPage, setPersonsPerPage] = useState(5);
+
+  useEffect(() => {
+    const fetchPersons = async () => {
+      setLoading(true);
+      const res = await axios.get(`http://localhost:8080/users`);
+      setPersons(res.data);
+      setLoading(false);
+    };
+
+    fetchPersons();
+  }, []);
+
+  console.log(persons);
+  //get current persons
+  const indexOfLastPerson = currentPage * personsPerPage;
+  const indexOfFirstPerson = indexOfLastPerson - personsPerPage;
+  const currentPersons = usuariosTotales.slice(
+    indexOfFirstPerson,
+    indexOfLastPerson
+  );
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -196,7 +227,7 @@ function MiTabla(props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {usuariosTotales.map((usuario) => (
+          {currentPersons.map((usuario) => (
             <TableRow key={usuario._id}>
               <TableCell>{usuario.nombre}</TableCell>
               <TableCell>{usuario.apellido}</TableCell>
@@ -238,6 +269,7 @@ function MiTabla(props) {
 }
 
 function MiBuscador(props) {
+  const styles = useStyles();
   const { className, setUsuarios } = props;
 
   const [searchValue, setSearchValue] = useState("");
@@ -294,27 +326,36 @@ function MiBuscador(props) {
       <Paper
         component="form"
         sx={{
-          p: "2px 4px",
+          p: "0px 4px",
           display: "flex",
           alignItems: "center",
           minWidth: 300,
           maxWidth: 350,
           mt: -5,
-          ml: "auto",
+          ml: 3,
           mr: "auto",
+          backgroundColor: "#008f4c",
         }}
         className={className}
+        //className={styles.estiloBuscador}
       >
-        <Select value={filter} onChange={handleFilterChange} size="small">
+        <Select
+          value={filter}
+          onChange={handleFilterChange}
+          size="small"
+          sx={{ ml: 0.5, color: "#ffffff" }}
+          //color="#ffffff"
+        >
           <MenuItem value={"DOC"}>DOC</MenuItem>
           <MenuItem value={"TODAS"}>TODAS</MenuItem>
         </Select>
+
         {filter === "DOC" && (
           <Select
             value={docType}
             onChange={handleDocChange}
             size="small"
-            sx={{ ml: 0.5 }}
+            sx={{ ml: 0.5, color: "#ffffff" }}
           >
             <MenuItem value={"DNI"}>DNI</MenuItem>
             <MenuItem value={"LE"}>LE</MenuItem>
@@ -324,7 +365,7 @@ function MiBuscador(props) {
         )}
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <InputBase
-          sx={{ ml: 1, flex: 1 }}
+          sx={{ ml: 1, flex: 1, color: "#ffffff" }}
           placeholder="Buscar..."
           onChange={handleSearchChange}
           disabled={filter === "TODAS"}
@@ -333,7 +374,7 @@ function MiBuscador(props) {
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <IconButton
           type="button"
-          sx={{ p: "10px" }}
+          sx={{ p: "10px", color: "#ffffff" }}
           aria-label="search"
           onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
         >
