@@ -8,8 +8,9 @@ const TurnoSchema = Schema(
     fecha: { type: Date, required: true },
     lugar: { type: String, required: true },
     medico: { type: String },
-    paciente: { type: String },
-    disponible: { type: Boolean, required: true },
+    paciente: { type: String, default: "" },
+    disponible: { type: Boolean, require: true },
+    esSobreTurno: { type: Boolean, require: true },
   },
   {
     timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },

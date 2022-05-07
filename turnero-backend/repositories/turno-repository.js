@@ -13,6 +13,24 @@ class TurnoRepository {
         lugar,
         medico,
         disponible: true,
+        esSobreTurno: false,
+      });
+      return await turno.save();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async crearSobreTurno(data) {
+    const { fecha, lugar, medico, paciente } = data;
+    try {
+      const turno = await Turno.create({
+        fecha,
+        lugar,
+        medico,
+        paciente,
+        disponible: false,
+        esSobreTurno: true,
       });
       return await turno.save();
     } catch (err) {
