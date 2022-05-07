@@ -1,4 +1,4 @@
-const Feriado = require("../model/feriadoModel");
+const Feriado = require("../models/feriadoModel");
 
 
 class FeriadoRepository {

@@ -11,7 +11,6 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-module.exports = app;
 let feriadoController = new FeriadoController();
 let lugarController = new LugarController();
 let turnoController = new TurnoController();
@@ -22,8 +21,4 @@ app.use("/turns", turnoController.router);
 app.use("/feriado", feriadoController.router);
 app.use("/disponibilidadMedica", disponibilidadMedica.router);
 
-<<<<<<< HEAD
 module.exports = app;
-=======
-module.exports = app;
->>>>>>> 60f25369f82f39a36c3d04866b40c6d26b8e6f7b

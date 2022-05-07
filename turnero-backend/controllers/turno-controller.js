@@ -8,13 +8,16 @@ class TurnoController {
     this.router.get("/", (req, res) => {
       this.getTurnos(req, res);
     });
+    this.router.get("/buscador", (req, res) => {
+      this.getTurnoPorNomvreYFecha(req, res);
+    })
     this.router.post("/", (req, res) => {
       this.crearTurno(req, res);
     });
     this.router.put("/", (req, res) => {
       this.editarTurno(req, res);
     });
-    this.router.put("/", (req, res) => {
+    this.router.put("/asignar", (req, res) => {
       this.asignarTurno(req, res);
     });
     this.router.delete("/", (req, res) => {
@@ -27,6 +30,19 @@ class TurnoController {
 
     turnosPromise
       .then((turnos) => {
+        res.status(200).json(turnos);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getTurnoPorNomvreYFecha(req, res) {
+    const turnoPromise = this.lugarService.getTurnoPorNomvreYFecha();
+
+    turnoPromise
+      .then((turno) => {
         res.status(200).json(turnos);
       })
       .catch((err) => {

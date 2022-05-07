@@ -65,6 +65,18 @@ class TurnoRepository {
       console.log(err);
     }
   }
+
+  async getTurnoPorNombreYFecha(data){
+    const {fecha, medico} = data;
+    let fechaFilter = {fecha}
+    let medicoFilter = {medico: { $regex: medico }}
+
+    const turnoFilter = Turno.find({
+      $and: [fechaFilter, medicoFilter]
+    });
+
+    return turnoFilter
+  }
 }
 
 module.exports = TurnoRepository;
