@@ -1,13 +1,12 @@
 const express = require("express");
 const FeriadoService = require("../services/feriadoservice");
-const upload = require("../libs/storage");
 
 class FeriadoController {
     constructor() {
         this.feriadoService = new FeriadoService();
         this.router = express.Router();
-        this.router.post("/", upload, (req, res) => this.createFeriado(req, res));
-        this.router.put("/:id", upload, (req, res) => this.editFeriado(req, res)),
+        this.router.post("/", (req, res) => this.createFeriado(req, res));
+        this.router.put("/:id", (req, res) => this.editFeriado(req, res)),
         this.router.get("/", (req, res) => this.getFeriado(req, res));
         this.router.delete("/", (req, res) => this.deleteFeriado(req, res));
     }

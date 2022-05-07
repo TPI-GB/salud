@@ -15,4 +15,4 @@ const LugarSchema = Schema(
   }
 );
 
-module.exports = LugarSchema;
+module.exports = mongoose.model("Lugar", LugarSchema);

@@ -1,4 +1,4 @@
-const Turno = require("../models/turno-model");
+const Turno = require("../models/turno_model");
 
 class TurnoRepository {
   async getTurnos() {
