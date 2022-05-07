@@ -26,6 +26,10 @@ class TurnoController {
     this.router.delete("/", (req, res) => {
       this.borrarTurno(req, res);
     });
+    this.router.put("/anular", (req, res) => {
+      this.anularTurno(req, res);
+    });
+
   }
 
   getTurnos(req, res) {
@@ -114,10 +118,40 @@ class TurnoController {
       });
   }
 
+  liberarTurno(req, res) {
+    const data = req.body;
+
+    const turnoPromise = this.turnoService.liberarTurno(data);
+
+    turnoPromise
+      .then((turno) => {
+        res.status(200).json(turno);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
   borrarTurno(req, res) {
     const data = req.body;
 
     const turnoPromise = this.turnoService.borrarTurno(data);
+
+    turnoPromise
+      .then((turno) => {
+        res.status(200).json(turno);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  anularTurno(req, res) {
+    const data = req.body;
+
+    const turnoPromise = this.turnoService.anularTurno(data);
 
     turnoPromise
       .then((turno) => {

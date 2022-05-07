@@ -32,5 +32,14 @@ class TurnoService {
   async getTurnoPorNombreYFecha(data){
     return this.turnoRepository.getTurnoPorNombreYFecha(data);
   }
+
+  async anularTurno(data) {
+    return this.turnoRepository.anularTurno(data);
+
+  }
+
+  async liberarTurno(data){
+    return this.turnoRepository.liberarTurno(data);
+  }
 }
 module.exports = TurnoService;

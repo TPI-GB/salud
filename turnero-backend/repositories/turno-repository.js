@@ -75,6 +75,23 @@ class TurnoRepository {
     }
   }
 
+  async liberarTurno() {
+    try {
+      let newData = {};
+
+      newData.paciente = null;
+      newData.disponible = true;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async borrarTurno(data) {
     const { id } = data;
     try {
@@ -95,6 +112,38 @@ class TurnoRepository {
 
     return turnoFilter
   }
+  async anularTurno() {
+    try {
+      let newData = {};
+
+      newData.paciente = null;
+      newData.disponible = null;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async anularTodosLosTurnos(data) {
+    let newData = {};
+
+    newData.paciente = null;
+    newData.disponible = null;
+
+    let turnos = this.getTurnoPorNombreYFecha(data)
+
+    turnos.array.forEach(t => { t.anularTurno(data), newData});
+
+    return turnos;      
+  } catch (error) {
+      console.log(err);
+  }
 }
+
 
 module.exports = TurnoRepository;
