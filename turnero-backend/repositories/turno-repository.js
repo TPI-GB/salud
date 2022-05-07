@@ -83,6 +83,24 @@ class TurnoRepository {
       console.log(err);
     }
   }
+
+  async anularTurno() {
+    try {
+      let newData = {};
+
+      newData.paciente = null;
+      newData.disponible = null;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 }
 
 module.exports = TurnoRepository;

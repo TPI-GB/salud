@@ -28,5 +28,9 @@ class TurnoService {
   async borrarTurno(data) {
     return this.turnoRepository.borrarTurno(data);
   }
+
+  async anularTurno(data) {
+    return this.turnoRepository.anularTurno(data);
+  }
 }
 module.exports = TurnoService;
