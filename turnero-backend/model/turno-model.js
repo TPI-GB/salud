@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
-const Lugar = require("./lugar-model");
 
 const Schema = mongoose.Schema;
 
 const TurnoSchema = Schema(
   {
     fecha: { type: Date, require: true },
-    lugar: { type: Lugar, require: true },
+    lugar: { type: String, require: true },
     medico: { type: String },
     paciente: { type: String, default: "" },
     disponible: { type: Boolean, require: true },
@@ -17,4 +16,4 @@ const TurnoSchema = Schema(
   }
 );
 
-module.exports = TurnoSchema;
+module.exports = mongoose.model("Turnos", TurnoSchema);
