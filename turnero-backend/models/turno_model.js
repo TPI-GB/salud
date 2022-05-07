@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Lugar = require("./lugar-model");
 
 const Schema = mongoose.Schema;
 
