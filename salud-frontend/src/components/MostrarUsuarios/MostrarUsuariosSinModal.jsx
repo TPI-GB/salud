@@ -49,6 +49,7 @@ import { useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import AppBar from "@mui/material/AppBar";
 import { yellow } from "@mui/material/colors";
+//import Pagination from "./Pagination";
 
 const baseUrl = "http://localhost:8080/users/";
 
@@ -93,6 +94,7 @@ export default function PinnedSubheaderList() {
     numerodocumento: "",
     activo: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const checkedAux = (rol, roles) => {
     return roles.includes(rol);
@@ -158,23 +160,45 @@ export default function PinnedSubheaderList() {
     //<div className="App">
     <Box component="form">
       <Grid container>
-        <div className="botonNuevoUsuario">
+        {/* <div className="botonNuevoUsuario"> */}
+        <Grid item xs={3}>
+          <MiBuscador
+            //className="derecha"
+            setUsuarios={setUsuarios}
+            setLoading={setLoading}
+          />
+          {/* </div> */}
+        </Grid>
+
+        <Grid item xs={3}></Grid>
+        <Grid item xs={4}></Grid>
+
+        <Grid item xs={2}>
           <Button
-            className="izquierda"
+            //className="izquierda"
+
             variant="contained"
-            style={{ background: "#008f4c" }}
+            style={{
+              background: "#008f4c",
+              marginTop: "7px",
+              marginLeft: "60px",
+            }}
             href="/NuevoUsuario"
           >
             <AddIcon /> Nuevo usuario
           </Button>
-
-          <MiBuscador className="derecha" setUsuarios={setUsuarios} />
-        </div>
+        </Grid>
 
         <div className="tituloTabla">
           <h1 align="center">Usuarios actuales</h1>
         </div>
-        <MiTabla usuariosTotales={usuarios} miFuncion={cambiarHabilitacion} />
+        {!loading && (
+          <MiTabla
+            usuariosTotales={usuarios}
+            miFuncion={cambiarHabilitacion}
+            loading={loading}
+          />
+        )}
       </Grid>
     </Box>
     //</div>
@@ -182,36 +206,40 @@ export default function PinnedSubheaderList() {
 }
 
 function MiTabla(props) {
-  const { usuariosTotales, miFuncion } = props;
+  const { usuariosTotales, miFuncion, loading } = props;
 
   const styles = useStyles();
   const history = useHistory();
 
   //definiendo cosas para paginar
-  const [persons, setPersons] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [personsPerPage, setPersonsPerPage] = useState(5);
+  const [persons, setPersons] = useState(usuariosTotales.slice(0, 5));
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    const fetchPersons = async () => {
-      setLoading(true);
-      const res = await axios.get(`http://localhost:8080/users`);
-      setPersons(res.data);
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   setPersons(paginatedData(0, 5));
+  //   console.log(persons);
+  //   console.log(paginatedData(0, 5));
+  // }, []);
+  //probando lo de martin
 
-    fetchPersons();
-  }, []);
+  function pageCount() {
+    if (usuariosTotales.length % 5 >= 1) {
+      return Math.floor(usuariosTotales.length / 5) + 1;
+    } else {
+      return Math.floor(usuariosTotales.length / 5);
+    }
+  }
+  function paginatedData(pageNumber, pageSize) {
+    return usuariosTotales.slice(
+      (pageNumber - 1) * pageSize,
+      pageNumber * pageSize
+    );
+  }
 
-  console.log(persons);
-  //get current persons
-  const indexOfLastPerson = currentPage * personsPerPage;
-  const indexOfFirstPerson = indexOfLastPerson - personsPerPage;
-  const currentPersons = usuariosTotales.slice(
-    indexOfFirstPerson,
-    indexOfLastPerson
-  );
+  function handleChange(event, value) {
+    setPersons(paginatedData(value, 5));
+    setPage(value);
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -226,8 +254,9 @@ function MiTabla(props) {
             <TableCell>Acciones</TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {currentPersons.map((usuario) => (
+          {persons.map((usuario) => (
             <TableRow key={usuario._id}>
               <TableCell>{usuario.nombre}</TableCell>
               <TableCell>{usuario.apellido}</TableCell>
@@ -263,6 +292,15 @@ function MiTabla(props) {
             </TableRow>
           ))}
         </TableBody>
+        {usuariosTotales.length / 5 > 1 && (
+          <Pagination
+            count={pageCount()}
+            page={page}
+            variant="outlined"
+            color="primary"
+            onChange={handleChange}
+          />
+        )}
       </Table>
     </TableContainer>
   );
@@ -270,7 +308,7 @@ function MiTabla(props) {
 
 function MiBuscador(props) {
   const styles = useStyles();
-  const { className, setUsuarios } = props;
+  const { className, setUsuarios, setLoading } = props;
 
   const [searchValue, setSearchValue] = useState("");
   const [filter, setFilter] = useState("DOC");
@@ -293,6 +331,7 @@ function MiBuscador(props) {
     }
   };
   const handleSearch = async () => {
+    setLoading(true);
     if (filter === "TODAS") {
       const response = await getUsers();
       setUsuarios(response.data);
@@ -301,6 +340,7 @@ function MiBuscador(props) {
       setUsuarios(response.data ? [response.data] : []);
     }
     setError({ show: false });
+    setLoading(false);
   };
 
   const handleSearchChange = (event) => {
@@ -331,7 +371,7 @@ function MiBuscador(props) {
           alignItems: "center",
           minWidth: 300,
           maxWidth: 350,
-          mt: -5,
+          mt: 1,
           ml: 3,
           mr: "auto",
           backgroundColor: "#008f4c",
