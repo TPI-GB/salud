@@ -12,8 +12,8 @@ const TurnoSchema = Schema(
     esSobreTurno: { type: Boolean, require: true },
   },
   {
-    timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
+    timestamps: true,
   }
 );
 
-module.exports = mongoose.model("Turno", TurnoSchema);
+module.exports = mongoose.model("Turnos", TurnoSchema);
