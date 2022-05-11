@@ -1,4 +1,4 @@
-const Turno = require("../models/turno_model");
+const Turno = require("../models/turno-model");
 
 class TurnoRepository {
   async getTurnos() {
@@ -101,16 +101,16 @@ class TurnoRepository {
     }
   }
 
-  async getTurnoPorNombreYFecha(data){
-    const {fecha, medico} = data;
-    let fechaFilter = {fecha}
-    let medicoFilter = {medico: { $regex: medico }}
+  async getTurnoPorNombreYFecha(data) {
+    const { fecha, medico } = data;
+    let fechaFilter = { fecha };
+    let medicoFilter = { medico: { $regex: medico } };
 
     const turnoFilter = Turno.find({
-      $and: [fechaFilter, medicoFilter]
+      $and: [fechaFilter, medicoFilter],
     });
 
-    return turnoFilter
+    return turnoFilter;
   }
   async anularTurno() {
     try {
@@ -135,15 +135,17 @@ class TurnoRepository {
     newData.paciente = null;
     newData.disponible = null;
 
-    let turnos = this.getTurnoPorNombreYFecha(data)
+    let turnos = this.getTurnoPorNombreYFecha(data);
 
-    turnos.array.forEach(t => { t.anularTurno(data), newData});
+    turnos.array.forEach((t) => {
+      t.anularTurno(data), newData;
+    });
 
-    return turnos;      
-  } catch (error) {
-      console.log(err);
+    return turnos;
+  }
+  catch(error) {
+    console.log(err);
   }
 }
-
 
 module.exports = TurnoRepository;
