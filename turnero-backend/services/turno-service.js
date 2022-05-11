@@ -38,6 +38,11 @@ class TurnoService {
 
   }
 
+  async anularTodosLosTurnos(data) {
+    return this.turnoRepository.anularTodosLosTurnos(data);
+
+  }
+
   async liberarTurno(data){
     return this.turnoRepository.liberarTurno(data);
   }
