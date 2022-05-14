@@ -6,9 +6,8 @@ import { Link, useLocation, useHistory } from "react-router-dom";
 import { SidebarData } from "./SidebarData";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-
+import Button from "@mui/material/Button";
 function Navbar() {
   const location = useLocation();
   const theme = useTheme();
