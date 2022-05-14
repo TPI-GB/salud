@@ -3,6 +3,7 @@ const cors = require("cors");
 const UserController = require("./controllers/user-controller");
 const MedicalHistoryController = require("./controllers/medical-history-controller");
 const StatisticsController = require("./controllers/estadisticas-controller");
+const auth = require("./middleware/auth");
 
 const app = express();
 const userController = new UserController();
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+//meter auth como middleware y funcion que checkea roles
 app.use("/users", userController.router);
 app.use("/medical-histories", medicalHistoryController.router);
 app.use("/stats", estadisticasController.router);

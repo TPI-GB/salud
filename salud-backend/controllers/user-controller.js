@@ -1,11 +1,28 @@
 const express = require("express");
 const UserService = require("../services/user-service");
+const auth = require("../middleware/auth");
 
+const rolMiddleware = (rolesWithAccess) => {
+  return (req, res, next) => {
+    let { roles } = req.user;
+    console.log("rolMiddleware");
+    console.log(roles);
+    console.log(rolesWithAccess);
+    if (
+      rolesWithAccess.length &&
+      !rolesWithAccess.some((x) => roles.includes(x))
+    ) {
+      return res.status(401).json({ message: "Unauthorized" });
+    } else {
+      next();
+    }
+  };
+};
 class UserController {
   constructor() {
     this.userService = new UserService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
+    this.router.get("/", [auth, rolMiddleware([])], (req, res) => {
       this.getUsers(req, res);
     });
     this.router.get("/:id", (req, res) => {

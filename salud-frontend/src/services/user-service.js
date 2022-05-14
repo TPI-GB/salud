@@ -65,7 +65,13 @@ export async function updateUser(id, data) {
 }
 
 export async function getUsers() {
-  const response = await axios.get(`http://localhost:8080/users`);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+  console.log(user);
+  const response = await axios.get(`http://localhost:8080/users`, {
+    headers: {
+      Authorization: `Bearer ${user.data.token}`,
+    },
+  });
   return response;
 }
 
