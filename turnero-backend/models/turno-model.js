@@ -4,12 +4,13 @@ const Schema = mongoose.Schema;
 
 const TurnoSchema = Schema(
   {
-    fecha: { type: Date, required: true },
-    lugar: { type: String, required: true },
+    fecha: { type: Date, require: true },
+    horaInicio: { type: Number, require: true },
+    minutoInicio: { type: Number, require: true },
     medico: { type: String },
     paciente: { type: String, default: "" },
-    disponible: { type: Boolean, require: true },
-    esSobreTurno: { type: Boolean, require: true },
+    disponible: { type: Boolean, default: true },
+    esSobreTurno: { type: Boolean, default: true },
   },
   {
     timestamps: true,
