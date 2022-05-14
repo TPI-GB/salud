@@ -159,49 +159,39 @@ export default function PinnedSubheaderList() {
   return (
     //<div className="App">
     <Box component="form">
-      <Grid container>
-        {/* <div className="botonNuevoUsuario"> */}
-        <Grid item xs={6} xl={2}>
-          <MiBuscador
-            //className="derecha"
-            setUsuarios={setUsuarios}
-            setLoading={setLoading}
-          />
-          {/* </div> */}
-        </Grid>
+      <div className="botonNuevoUsuario">
+        <MiBuscador
+          //className="derecha"
+          setUsuarios={setUsuarios}
+          setLoading={setLoading}
+        />
 
-        <Grid item xl={3}></Grid>
-        <Grid item xl={4}></Grid>
+        <Button
+          //justify-content="space-between"
+          //className="box"
+          //className="izquierda"
+          variant="contained"
+          style={{
+            background: "#008f4c",
+            // marginTop: "7px",
+            // marginLeft: "500px",
+          }}
+          href="/NuevoUsuario"
+        >
+          <AddIcon /> Nuevo usuario
+        </Button>
+      </div>
 
-        <Grid item xs={6} xl={2}>
-          <Button
-            justify-content="space-between"
-            //className="box"
-            //className="izquierda"
-
-            variant="contained"
-            style={{
-              background: "#008f4c",
-              marginTop: "7px",
-              marginLeft: "500px",
-            }}
-            href="/NuevoUsuario"
-          >
-            <AddIcon /> Nuevo usuario
-          </Button>
-        </Grid>
-
-        <div className="tituloTabla">
-          <h1 align="center">Usuarios actuales</h1>
-        </div>
-        {!loading && (
-          <MiTabla
-            usuariosTotales={usuarios}
-            miFuncion={cambiarHabilitacion}
-            loading={loading}
-          />
-        )}
-      </Grid>
+      <div className="tituloTabla">
+        <h1 align="center">Usuarios actuales</h1>
+      </div>
+      {!loading && (
+        <MiTabla
+          usuariosTotales={usuarios}
+          miFuncion={cambiarHabilitacion}
+          loading={loading}
+        />
+      )}
     </Box>
     //</div>
   );
@@ -370,12 +360,13 @@ function MiBuscador(props) {
         sx={{
           p: "0px 4px",
           display: "flex",
-          alignItems: "center",
+          //justifyContent: "center",
+          //alignItems: "center",
           minWidth: 300,
           maxWidth: 350,
-          mt: 1,
-          ml: 3,
-          mr: "auto",
+          // mt: 1,
+          // ml: 0,
+          // mr: "auto",
           backgroundColor: "#008f4c",
         }}
         className={className}
