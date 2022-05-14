@@ -20,6 +20,28 @@ class UserController {
     this.router.put("/:id", (req, res) => {
       this.updateUser(req, res);
     });
+    this.router.get("/:tipoDocumento/:numeroDocumento", (req, res) => {
+      this.getUserByDocument(req, res);
+    });
+  }
+
+  getUserByDocument(req, res) {
+    const tipoDocumento = req.params.tipoDocumento;
+    const numeroDocumento = req.params.numeroDocumento;
+
+    let usersPromise = this.userService.getUserByDocument(
+      tipoDocumento,
+      numeroDocumento
+    );
+
+    usersPromise
+      .then((user) => {
+        res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
   }
 
   getUsers(req, res) {
