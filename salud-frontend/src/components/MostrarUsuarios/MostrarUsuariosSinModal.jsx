@@ -183,7 +183,7 @@ export default function PinnedSubheaderList() {
       </div>
 
       <div className="tituloTabla">
-        <h1 align="center">Usuarios actuales</h1>
+        <h1 className="flexbox">Usuarios actuales</h1>
       </div>
       {!loading && (
         <MiTabla

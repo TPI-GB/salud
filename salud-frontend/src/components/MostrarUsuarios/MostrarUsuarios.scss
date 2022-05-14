@@ -83,6 +83,7 @@
   padding: 10px;
   background: #008f4c;
   color: #ffffff;
+  left: 10%;
 }
 
 select {
@@ -104,4 +105,12 @@ select:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.flexbox {
+  align-items: center;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  width: 1400px;
+  color: rgb(255, 255, 255);
 }
