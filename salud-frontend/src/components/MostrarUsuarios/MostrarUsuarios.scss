@@ -100,13 +100,8 @@ select {
 select:focus {
   outline: none;
 }
-//no se usa por ahora
-// #paginacion {
-//   border: 1px solid #CCC;
-//   background-color: #E0E0E0;
-//   padding: .5em;
-//   overflow: hidden;
-// }
-
-// .derecha   { float: right; }
-// .izquierda { float: left;  }
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

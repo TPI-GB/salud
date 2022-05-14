@@ -161,7 +161,7 @@ export default function PinnedSubheaderList() {
     <Box component="form">
       <Grid container>
         {/* <div className="botonNuevoUsuario"> */}
-        <Grid item xs={3}>
+        <Grid item xs={6} xl={2}>
           <MiBuscador
             //className="derecha"
             setUsuarios={setUsuarios}
@@ -170,18 +170,20 @@ export default function PinnedSubheaderList() {
           {/* </div> */}
         </Grid>
 
-        <Grid item xs={3}></Grid>
-        <Grid item xs={4}></Grid>
+        <Grid item xl={3}></Grid>
+        <Grid item xl={4}></Grid>
 
-        <Grid item xs={2}>
+        <Grid item xs={6} xl={2}>
           <Button
+            justify-content="space-between"
+            //className="box"
             //className="izquierda"
 
             variant="contained"
             style={{
               background: "#008f4c",
               marginTop: "7px",
-              marginLeft: "60px",
+              marginLeft: "500px",
             }}
             href="/NuevoUsuario"
           >
