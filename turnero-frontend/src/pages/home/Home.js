@@ -1,14 +1,9 @@
 import * as React from "react";
-import "./Home.scss";
 
-function Home() {
+export default function Home() {
   return (
-    <div className="home">
-        <h2>
-            este es el home de turnero!
-        </h2>
-    </div>    
+    <>
+      <div>ACA VA EL HOME CON EL BUSCADOR</div>
+    </>
   );
 }
-
-export default Home;
