@@ -24,7 +24,7 @@ async function GeneradorAgenda(today, offset) {
   targetDay.setDate(today.getDate() + offset);
 
   const esFeriado = await esFeriadoElDia(targetDay);
-  if (esFeriado) {
+  if (!esFeriado) {
     const medicos = await UsuarioDisponibilidad.find().distinct("user");
 
     for await (const nombreMedico of medicos) {
@@ -42,6 +42,7 @@ async function GeneradorAgenda(today, offset) {
 
 async function crearTurnosParaMedico(medico, disponibilidad, targetDay) {
   const turnosACrear = await calcularTurnosACrear(disponibilidad);
+  console.log("---Turnos Generados este dia---");
   for (i = 0; i < turnosACrear.length; i++) {
     const turno = await Turno.create({
       fecha: targetDay,
@@ -51,6 +52,7 @@ async function crearTurnosParaMedico(medico, disponibilidad, targetDay) {
       medico: medico.user,
     });
     await turno.save();
+    console.log(turno);
   }
 }
 
@@ -70,7 +72,6 @@ async function calcularTurnosACrear(disponibilidad) {
 
 async function esFeriadoElDia(day) {
   const feriado = await Feriado.findOne({ fecha: day });
-  console.log(feriado);
   return feriado != null;
 }
 
