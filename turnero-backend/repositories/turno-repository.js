@@ -13,6 +13,24 @@ class TurnoRepository {
         lugar,
         medico,
         disponible: true,
+        esSobreTurno: false,
+      });
+      return await turno.save();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async crearSobreTurno(data) {
+    const { fecha, lugar, medico, paciente } = data;
+    try {
+      const turno = await Turno.create({
+        fecha,
+        lugar,
+        medico,
+        paciente,
+        disponible: false,
+        esSobreTurno: true,
       });
       return await turno.save();
     } catch (err) {
@@ -57,6 +75,23 @@ class TurnoRepository {
     }
   }
 
+  async liberarTurno() {
+    try {
+      let newData = {};
+
+      newData.paciente = null;
+      newData.disponible = true;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async borrarTurno(data) {
     const { id } = data;
     try {
@@ -64,6 +99,52 @@ class TurnoRepository {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  async getTurnoPorNombreYFecha(data) {
+    const { fecha, medico } = data;
+    let fechaFilter = { fecha };
+    let medicoFilter = { medico: { $regex: medico } };
+
+    const turnoFilter = Turno.find({
+      $and: [fechaFilter, medicoFilter],
+    });
+
+    return turnoFilter;
+  }
+  async anularTurno() {
+    try {
+      let newData = {};
+
+      newData.paciente = null;
+      newData.disponible = null;
+
+      await Turno.findByIdAndUpdate({ _id: id }, newData);
+
+      const turnoStored = await Turno.findById(id);
+
+      return turnoStored;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async anularTodosLosTurnos(data) {
+    let newData = {};
+
+    newData.paciente = null;
+    newData.disponible = null;
+
+    let turnos = this.getTurnoPorNombreYFecha(data);
+
+    turnos.array.forEach((t) => {
+      t.anularTurno(data), newData;
+    });
+
+    return turnos;
+  }
+  catch(error) {
+    console.log(err);
   }
 }
 

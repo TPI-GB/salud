@@ -13,6 +13,10 @@ class TurnoService {
     return this.turnoRepository.crearTurno(data);
   }
 
+  async crearSobreTurno(data) {
+    return this.turnoRepository.crearTurno(data);
+  }
+
   async editarTurno(data) {
     return this.turnoRepository.editarTurno(data);
   }
@@ -23,6 +27,24 @@ class TurnoService {
 
   async borrarTurno(data) {
     return this.turnoRepository.borrarTurno(data);
+  }
+
+  async getTurnoPorNombreYFecha(data){
+    return this.turnoRepository.getTurnoPorNombreYFecha(data);
+  }
+
+  async anularTurno(data) {
+    return this.turnoRepository.anularTurno(data);
+
+  }
+
+  async anularTodosLosTurnos(data) {
+    return this.turnoRepository.anularTodosLosTurnos(data);
+
+  }
+
+  async liberarTurno(data){
+    return this.turnoRepository.liberarTurno(data);
   }
 }
 module.exports = TurnoService;
