@@ -3,8 +3,10 @@ import axios from "axios";
 export function jwtInterceptor() {
   axios.interceptors.request.use(
     (config) => {
+      console.log("config");
+      console.log(config);
       const user = JSON.parse(sessionStorage.getItem("user"));
-      if (user && user.data) {
+      if (user && user.data && !config.url.endsWith("/users/login")) {
         config.headers["Authorization"] = `Bearer ${user.data.token}`;
       }
       return config;
