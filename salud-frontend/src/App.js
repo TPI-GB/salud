@@ -19,7 +19,9 @@ import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 import error401 from "./pages/error401/error401";
 import ResetPassword from "./pages/login/resetPassword";
+import jwtInterceptor from "./services/interceptors";
 
+jwtInterceptor();
 function App() {
   return (
     <Router>

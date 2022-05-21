@@ -1,5 +1,4 @@
 import axios from "axios";
-
 export async function loginUser(credentials) {
   const { email, contrasenia } = credentials;
 
@@ -65,7 +64,14 @@ export async function updateUser(id, data) {
 }
 
 export async function getUsers() {
-  const response = await axios.get(`http://localhost:8080/users`);
+  const user = JSON.parse(sessionStorage.getItem("user"));
+
+  const response = await axios.get(`http://localhost:8080/users`, {
+    //inyecta token
+    headers: {
+      Authorization: `Bearer ${user.data.token}`,
+    },
+  });
   return response;
 }
 

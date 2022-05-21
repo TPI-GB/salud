@@ -76,13 +76,16 @@ class UserService {
     if (user && (await bcrypt.compare(password, user.contrasenia))) {
       // Crear Token
       const token = jwt.sign(
-        { user_id: user._id, email },
+        { user_id: user._id, email, roles: user.roles },
         process.env.TOKEN_KEY,
         {
           expiresIn: "30m",
         }
       );
       // Se guarda el token en el usuario si el login es exitoso.
+      console.log(process.env.TOKEN_KEY);
+
+      console.log(token);
       user.token = token;
 
       return user;

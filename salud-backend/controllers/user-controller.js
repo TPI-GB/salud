@@ -1,26 +1,45 @@
 const express = require("express");
 const UserService = require("../services/user-service");
+const auth = require("../middleware/auth");
+const rolMiddleware = require("../middleware/roles");
 
 class UserController {
   constructor() {
     this.userService = new UserService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
-      this.getUsers(req, res);
-    });
-    this.router.get("/:id", (req, res) => {
-      this.getUserById(req, res);
-    });
-    this.router.post("/register", (req, res) => {
-      this.registerUser(req, res);
-    });
+    this.router.get(
+      "/",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getUsers(req, res);
+      }
+    );
+    this.router.get(
+      "/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getUserById(req, res);
+      }
+    );
+    this.router.post(
+      "/register",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.registerUser(req, res);
+      }
+    );
     this.router.post("/login", (req, res) => {
       this.loginUser(req, res);
     });
-    this.router.put("/:id", (req, res) => {
+    this.router.put("/:id", 
+    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+    (req, res) => {
       this.updateUser(req, res);
     });
-    this.router.get("/:tipoDocumento/:numeroDocumento", (req, res) => {
+    
+    this.router.get("/:tipoDocumento/:numeroDocumento",
+    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+    (req, res) => {
       this.getUserByDocument(req, res);
     });
   }

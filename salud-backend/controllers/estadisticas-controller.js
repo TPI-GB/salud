@@ -1,5 +1,7 @@
 const express = require("express");
 const StatisticsService = require("../services/estadisticas-service");
+const auth = require("../middleware/auth");
+const rolMiddleware = require("../middleware/roles");
 
 class StatisticsController {
   constructor() {
