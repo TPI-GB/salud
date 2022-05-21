@@ -80,3 +80,11 @@ export async function getUserById(id) {
 
   return response;
 }
+
+export async function getUserByDocument(tipodocumento, numerodocumento) {
+  const response = await axios.get(
+    `http://localhost:8080/users/${tipodocumento}/${numerodocumento}`
+  );
+
+  return response;
+}
