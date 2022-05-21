@@ -1,25 +1,39 @@
-import { axios } from "axios";
+import axios from "axios";
 
-axios.interceptors.request.use(
-  (config) => {
-    console.log("asdsad");
-    const user = JSON.parse(sessionStorage.getItem("user"));
+export function jwtInterceptor() {
+  axios.interceptors.request.use(
+    (config) => {
+      const user = JSON.parse(sessionStorage.getItem("user"));
+      if (user && user.data) {
+        config.headers["Authorization"] = `Bearer ${user.data.token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    }
+  );
 
-    config.headers["Authorization"] = `Bearer ${user.token}`;
+  //we intercept every response
+  axios.interceptors.request.use(
+    async function (config) {
+      return config;
+    },
+    (error) => {
+      //check for authentication or anything like that
+      return Promise.reject(error);
+    }
+  );
+}
+export default jwtInterceptor;
 
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-)
+// axios.interceptors.request.use((req) => {
+//   // `req` is the Axios request config, so you can modify
+//   // the `headers`.
+//   req.headers.authorization = "my secret token";
+//   return req;
+// });
 
-
-//we intercept every response
-axiosAuth.interceptors.request.use(async function(config){
-    
-  return config;
-}, error => {
-//check for authentication or anything like that
-  return Promise.reject(error)
-});
+// // Automatically sets the authorization header because
+// // of the request interceptor
+// const res = await axios.get("https://httpbin.org/get");

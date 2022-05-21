@@ -23,7 +23,9 @@ import error401 from "./pages/error401/error401";
 import MostrarUsuarios from "./components/MostrarUsuarios/MostrarUsuarios";
 //import LayoutTemplate from "./components/";
 import ResetPassword from "./pages/login/resetPassword";
+import jwtInterceptor from "./services/interceptors";
 
+jwtInterceptor();
 function App() {
   return (
     <Router>

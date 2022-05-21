@@ -1,50 +1,105 @@
 const express = require("express");
 const upload = require("../multer/storage");
 const MedicalHistoryService = require("../services/medical-history-service");
+const auth = require("../middleware/auth");
+const rolMiddleware = require("../middleware/roles");
 
 class MedicalHistoryController {
   constructor() {
     this.medicalHistoryService = new MedicalHistoryService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
-      this.getMedicalHistories(req, res);
-    });
-    this.router.get("/:id", (req, res) => {
-      this.getMedicalHistoryById(req, res);
-    });
-    this.router.get("/details/:id", (req, res) => {
-      this.getMedicalHistoryDetailsById(req, res);
-    });
-    this.router.get("/:idHistory/test/:idTest", (req, res) => {
-      this.getMedicalTestByIds(req, res);
-    });
-    this.router.get("/:idHistory/consultation/:idConsultation", (req, res) => {
-      this.getMedicalConsultationByIds(req, res);
-    });
-    this.router.get("/:docType/:docNumber", (req, res) => {
-      this.getMedicalHistoryByDocument(req, res);
-    });
-    this.router.post("/create", (req, res) => {
-      this.createMedicalHistory(req, res);
-    });
-    this.router.put("/:id", (req, res) => {
-      this.updateMedicalHistory(req, res);
-    });
-    this.router.post("/:id/consultation", (req, res) => {
-      this.addMedicalConsultation(req, res);
-    });
-    this.router.post("/img", upload, (req, res) => {
-      return res.status(200).json(req.file.filename);
-    });
-    this.router.post("/:id/test", (req, res) => {
-      this.addMedicalTest(req, res);
-    });
-    this.router.put("/:id/test/:idTest", (req, res) => {
-      this.updateMedicalTest(req, res);
-    });
-    this.router.put("/:id/consultation/:idConsultation", (req, res) => {
-      this.updateMedicalConsultation(req, res);
-    });
+    this.router.get(
+      "/",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalHistories(req, res);
+      }
+    );
+    this.router.get(
+      "/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalHistoryById(req, res);
+      }
+    );
+    this.router.get(
+      "/details/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalHistoryDetailsById(req, res);
+      }
+    );
+    this.router.get(
+      "/:idHistory/test/:idTest",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalTestByIds(req, res);
+      }
+    );
+    this.router.get(
+      "/:idHistory/consultation/:idConsultation",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalConsultationByIds(req, res);
+      }
+    );
+    this.router.get(
+      "/:docType/:docNumber",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getMedicalHistoryByDocument(req, res);
+      }
+    );
+    this.router.post(
+      "/create",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.createMedicalHistory(req, res);
+      }
+    );
+    this.router.put(
+      "/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.updateMedicalHistory(req, res);
+      }
+    );
+    this.router.post(
+      "/:id/consultation",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.addMedicalConsultation(req, res);
+      }
+    );
+    this.router.post(
+      "/img",
+      upload,
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        return res.status(200).json(req.file.filename);
+      }
+    );
+    this.router.post(
+      "/:id/test",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.addMedicalTest(req, res);
+      }
+    );
+    this.router.put(
+      "/:id/test/:idTest",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.updateMedicalTest(req, res);
+      }
+    );
+    this.router.put(
+      "/:id/consultation/:idConsultation",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.updateMedicalConsultation(req, res);
+      }
+    );
   }
 
   getMedicalHistories(req, res) {
