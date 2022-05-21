@@ -3,6 +3,19 @@ const Turno = require("../models/turno-model");
 const UsuarioDisponibilidad = require("../models/disponibilidadUsuarioModel");
 const Feriado = require("../models/feriadoModel");
 
+async function TryGeneradorAgenda(today, offset) {
+  let attemps = 0;
+  while (attemps < 3) {
+    try {
+      await GeneradorAgenda(today, offset);
+    } catch (err) {
+      console.log("Error ejecutando intento " + attemps);
+      console.log(err);
+      attemps++;
+    }
+  }
+}
+
 async function GeneradorAgenda(today, offset) {
   const mongoDB = "mongodb://127.0.0.1/turnerodb";
   await mongoose
@@ -15,7 +28,7 @@ async function GeneradorAgenda(today, offset) {
     })
     .catch((err) => {
       console.error("App starting error:", err.stack);
-      process.exit(1);
+      return;
     });
   var db = mongoose.connection;
 
@@ -84,4 +97,4 @@ async function esFeriadoElDia(day) {
   return feriado != null;
 }
 
-GeneradorAgenda(new Date(), 60).catch(console.dir);
+TryGeneradorAgenda(new Date(), 60).catch(console.dir);
