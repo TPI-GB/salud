@@ -1,6 +1,7 @@
 const express = require("express");
 const ObraSocialService = require("../services/obra-social-service");
-
+const auth = require("../middleware/auth");
+const rolMiddleware = require("../middleware/roles");
 class ObraSocialController {
   constructor() {
     this.ObraSocialService = new ObraSocialService();
