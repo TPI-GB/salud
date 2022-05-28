@@ -8,9 +8,9 @@ class TurnoController {
     this.router.get("/", (req, res) => {
       this.getTurnos(req, res);
     });
-    this.router.get("/buscador", (req, res) => {
-      this.getTurnoPorNomvreYFecha(req, res);
-    })
+    this.router.post("/buscador", (req, res) => {
+      this.getTurnoPorNombreYFecha(req, res);
+    });
     this.router.post("/", (req, res) => {
       this.crearTurno(req, res);
     });
@@ -32,7 +32,6 @@ class TurnoController {
     this.router.put("/anularTodos", (req, res) => {
       this.anularTodosLosTurnos(req, res);
     });
-
   }
 
   getTurnos(req, res) {
@@ -48,12 +47,13 @@ class TurnoController {
       });
   }
 
-  getTurnoPorNomvreYFecha(req, res) {
-    const turnoPromise = this.lugarService.getTurnoPorNomvreYFecha();
+  getTurnoPorNombreYFecha(req, res) {
+    const data = req.body;
+    const turnoPromise = this.turnoService.getTurnoPorNombreYFecha(data);
 
     turnoPromise
       .then((turno) => {
-        res.status(200).json(turnos);
+        res.status(200).json(turno);
       })
       .catch((err) => {
         console.log(err.message);
