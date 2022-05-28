@@ -3,7 +3,10 @@ import { List, Pagination } from "antd";
 import { Stack, Button } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import AddBoxIcon from "@mui/icons-material/AddBox";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import PanToolOutlinedIcon from "@mui/icons-material/PanToolOutlined";
+import DoDisturbAltTwoToneIcon from "@mui/icons-material/DoDisturbAltTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import { GetTurnos } from "../../services/turno-service";
 import "./TurnoList.scss";
 import "antd/dist/antd.min.css";
@@ -83,6 +86,8 @@ export default function TurnoList() {
                 <List.Item.Meta title={<h3>Disponible</h3>}></List.Item.Meta>
                 <List.Item.Meta title={" "}></List.Item.Meta>
                 <List.Item.Meta title={" "}></List.Item.Meta>
+                <List.Item.Meta title={" "}></List.Item.Meta>
+                <List.Item.Meta title={" "}></List.Item.Meta>
               </List.Item>
             )}
           />
@@ -92,8 +97,8 @@ export default function TurnoList() {
             bordered="true"
             renderItem={(turno) => (
               <List.Item>
-                <List.Item.Meta title={<h4>{turno.lugar}</h4>}></List.Item.Meta>
                 <List.Item.Meta title={<h4>{turno.hora}</h4>}></List.Item.Meta>
+                <List.Item.Meta title={<h4>{turno.lugar}</h4>}></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{turno.paciente}</h4>}
                 ></List.Item.Meta>
@@ -101,10 +106,16 @@ export default function TurnoList() {
                   title={<h4>{turno.disponible}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h3>{AnularTurnoBoton()}</h3>}
+                  title={<h4>{AnularTurnoBoton()}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h3>{CargarTurnoBoton()}</h3>}
+                  title={<h4>{LiberarTurnoBoton()}</h4>}
+                ></List.Item.Meta>
+                <List.Item.Meta
+                  title={<h4>{EditarTurnoBoton()}</h4>}
+                ></List.Item.Meta>
+                <List.Item.Meta
+                  title={<h4>{AsignarTurnoBoton()}</h4>}
                 ></List.Item.Meta>
               </List.Item>
             )}
@@ -130,25 +141,6 @@ export default function TurnoList() {
   );
 }
 
-function CargarTurno() {
-  return;
-}
-
-function CargarTurnoBoton() {
-  let button = (
-    <Button
-      size="small"
-      variant="contained"
-      style={{ background: "green" }}
-      onClick={() => CargarTurno()}
-    >
-      <div style={{ marginRight: 8 }}>Asignar</div>
-      <AddBoxIcon />
-    </Button>
-  );
-  return button;
-}
-
 function AnularTurno() {
   return;
 }
@@ -162,7 +154,64 @@ function AnularTurnoBoton() {
       onClick={() => AnularTurno()}
     >
       <div style={{ marginRight: 8 }}>Anular</div>
-      <AddBoxIcon />
+      <DoDisturbAltTwoToneIcon />
+    </Button>
+  );
+  return button;
+}
+
+function LiberarTurno() {
+  return;
+}
+
+function LiberarTurnoBoton() {
+  let button = (
+    <Button
+      size="small"
+      variant="contained"
+      style={{ background: "#D68910" }}
+      onClick={() => LiberarTurno()}
+    >
+      <div style={{ marginRight: 8 }}>Liberar</div>
+      <PanToolOutlinedIcon />
+    </Button>
+  );
+  return button;
+}
+
+function EditarTurno() {
+  return;
+}
+
+function EditarTurnoBoton() {
+  let button = (
+    <Button
+      size="small"
+      variant="contained"
+      style={{ background: "blue" }}
+      onClick={() => EditarTurno()}
+    >
+      <div style={{ marginRight: 8 }}>Editar</div>
+      <EditTwoToneIcon />
+    </Button>
+  );
+  return button;
+}
+
+function AsignarTurno() {
+  return;
+}
+
+function AsignarTurnoBoton() {
+  let button = (
+    <Button
+      size="small"
+      variant="contained"
+      style={{ background: "green" }}
+      onClick={() => AsignarTurno()}
+    >
+      <div style={{ marginRight: 8 }}>Asignar</div>
+      <AssignmentTurnedInIcon />
     </Button>
   );
   return button;
