@@ -1,5 +1,5 @@
-Start-Transcript "C:\Users\juani\Documents\proyectosMERN\salud\turnero-backend\agenda\log.txt" 
+Start-Transcript "C:\Users\Franco\Desktop\Programacion\QuintoAnio\Proyectos\salud\turnero-backend\agenda\log.txt" 
 
-node C:\Users\juani\Documents\proyectosMERN\salud\turnero-backend\agenda\GeneradorAgenda.cjs
+node C:\Users\Franco\Desktop\Programacion\QuintoAnio\Proyectos\salud\turnero-backend\agenda\GeneradorAgenda.ps1
 
 Stop-Transcript
