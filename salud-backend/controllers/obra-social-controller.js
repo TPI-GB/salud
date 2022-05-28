@@ -5,9 +5,13 @@ class ObraSocialController {
   constructor() {
     this.ObraSocialService = new ObraSocialService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
-      this.getObrasSociales(req, res);
-    });
+    this.router.get(
+      "/",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getObrasSociales(req, res);
+      }
+    );
   }
 
   getObrasSociales(req, res) {
