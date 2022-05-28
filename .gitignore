@@ -108,3 +108,5 @@ dist
 
 # vsCode
 .vscode
+
+.ps1
