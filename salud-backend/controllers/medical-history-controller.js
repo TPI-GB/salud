@@ -216,6 +216,8 @@ class MedicalHistoryController {
       ocupacionActual,
       estadoCivil,
       domicilioActual,
+      obraSocial,
+      plan,
     } = req.body;
 
     // Validar los inputs del usuario
@@ -273,8 +275,10 @@ class MedicalHistoryController {
         ocupacionActual,
         estadoCivil,
         domicilioActual,
+        obraSocial,
+        plan,
       };
-
+      console.log(medicalHistoryData);
       const medicalHistoryStored =
         await this.medicalHistoryService.createMedicalHistory(
           medicalHistoryData

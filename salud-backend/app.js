@@ -4,9 +4,11 @@ const UserController = require("./controllers/user-controller");
 const MedicalHistoryController = require("./controllers/medical-history-controller");
 const StatisticsController = require("./controllers/estadisticas-controller");
 const auth = require("./middleware/auth");
+const ObrasocialController = require("./controllers/obra-social-controller");
 
 const app = express();
 const userController = new UserController();
+const obrasocialController = new ObrasocialController();
 const medicalHistoryController = new MedicalHistoryController();
 const estadisticasController = new StatisticsController();
 
@@ -21,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 //meter auth como middleware y funcion que checkea roles
 app.use("/users", userController.router);
+app.use("/obras-sociales", obrasocialController.router);
 app.use("/medical-histories", medicalHistoryController.router);
 app.use("/stats", estadisticasController.router);
 app.use("/images", express.static("images"));
