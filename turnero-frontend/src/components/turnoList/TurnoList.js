@@ -7,6 +7,7 @@ import AddBoxIcon from "@mui/icons-material/AddBox";
 import { GetTurnos } from "../../services/turno-service";
 import "./TurnoList.scss";
 import "antd/dist/antd.min.css";
+import Search from "antd/lib/transfer/search";
 
 export default function TurnoList() {
   const [turnos, setTurnos] = useState([]);
@@ -43,12 +44,18 @@ export default function TurnoList() {
     }
   };
 
+  //const buscar = (turnos) => {
+  //  setTurnos(turnos)
+  //}
+  //<Search turnos={buscar}></Search>;
+
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="l">
         <div className="TurnoList">
           <h2>TURNOS</h2>
+          <Search />
           <Stack
             direction="row"
             ml={10}
