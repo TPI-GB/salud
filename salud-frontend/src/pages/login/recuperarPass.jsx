@@ -4,12 +4,13 @@ import {
     TextField,
     Button,
 } from "@mui/material";
+import { Link } from 'react-router-dom';
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 import Alerta from "./Alerta";
 import axios from "axios";
 
-export default function ResetPassword() {
+export default function RecuperarPass() {
 
     const [email, setEmail] = useState('');
 	const [alerta, setAlerta] = useState({});
@@ -25,9 +26,11 @@ export default function ResetPassword() {
 		return
 	}
     try {
-        const { data } = await axios.post(`${"http://localhost:8080/users/reset"}`)
+        const { data } = await axios.post(`${process.env.APP_HOST}:${process.env.APP_PORT}/users/reset`, { email })
+
+        console.log(data)
     } catch (error) {
-        console.log(error)
+        console.log(error.response)
     }
       }
 	
@@ -35,6 +38,9 @@ export default function ResetPassword() {
 
     return (
         <div className="loginBackground">
+            <h1 className="titulo">
+                Reestablece tu contraseña
+            </h1>
             <Box component="form" className="loginForm">
                 { msg && <Alerta alerta={alerta} /> }
                 <TextField
@@ -53,7 +59,7 @@ export default function ResetPassword() {
                     color="success"
                     onClick={handleSubmit}
                 >
-                    ENVIAR INSTRUCCIONES
+                    Enviar email
                 </Button>
             </Box>
         </div>

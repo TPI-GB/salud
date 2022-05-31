@@ -16,15 +16,15 @@ import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuari
 import CreateMH from "./pages/createMH";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
-import ResetPassword from "./pages/login/resetPassword";
-import ResetPassword2 from "./pages/login/ressetPassword2";
+import confirmarRecuperarPass from "./pages/login/confirmarRecuperarPass";
+import recuperarPass from "./pages/login/recuperarPass";
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/reset" component={ResetPassword} />
-        <Route exact path="/resetpass" component={ResetPassword2} />
+        <Route exact path="/recuperarPass" component={recuperarPass} />
+        <Route exact path="/confirmarPass/:token" component={confirmarRecuperarPass} />
         <Route exact path="/login" component={Login} />
         <Redirect exact from="/" to={"/Home"} />
         <>

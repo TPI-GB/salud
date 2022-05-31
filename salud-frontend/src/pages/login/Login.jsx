@@ -13,7 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
-import "./resetPassword";
+import "./recuperarPass";
 
 export default function Login() {
   const [valores, setValores] = useState({
@@ -55,9 +55,9 @@ export default function Login() {
 
   return (
     <div className="loginBackground">
-        {/* <div className="titulo">
-          <h1>Salud Belgrano</h1>
-        </div> */}
+      <h1 className="titulo">
+        BIENVENIDOS A SALUD GB
+      </h1>
       <Box component="form" className="loginForm">
         <div className="loginForm-logo">
           <img src={loginImg} />
@@ -105,6 +105,9 @@ export default function Login() {
             Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
+        <Link className="reset" to="./recuperarPass">
+          He olvidado mi contraseña
+        </Link>
         <Button
           type="submit"
           sx={{ marginTop: "20px" }}
@@ -114,11 +117,6 @@ export default function Login() {
         >
           INGRESAR
         </Button>
-        <div className="reset">
-          <Link to="/reset">
-            Olvide mi contraseña
-          </Link>
-      </div>
       </Box>
     </div>
   );

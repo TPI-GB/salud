@@ -1,5 +1,6 @@
 const express = require("express");
 const UserService = require("../services/user-service");
+const emailResetPass = require("../helpers/email");
 
 class UserController {
   constructor() {
@@ -20,9 +21,9 @@ class UserController {
     this.router.put("/:id", (req, res) => {
       this.updateUser(req, res);
     });
-    /* this.router.post("/reset", (req, res) => {
-      this.resetUser(req, res);
-    }); */
+    this.router.put("/reset", (req, res) => {
+      emailResetPass(req, res);
+    });
   }
 
   getUsers(req, res) {
@@ -144,6 +145,23 @@ class UserController {
       });
   }
 
+  emailResetPass = async (req, res) => {
+    const { email } = req.body;
+    const user = await this.userService.getUserByEmail(email);
+      if (!user) {
+        const error = new Error("El usuario no existe");
+        return res.status(404).json ({ error: err.message });
+      }
+
+      try {
+        user.token = generarId();
+        await user.save();
+        res.json({ msg: "Hemos enviado un mail con las instrucciones" });
+      } catch (error) {
+        console.log(error);
+      }
+  } 
+
   loginUser(req, res) {
     // La logica del login empieza aca
     // Conseguir los inputs del usuario
@@ -160,22 +178,6 @@ class UserController {
         contrasenia = value[1];
       }
     }
-
-    /* resetUser(req, res) {
-      // La logica del login empieza aca
-      // Conseguir los inputs del usuario
-      const authHeader = req.headers.authorization;
-  
-      let email;
-      if (authHeader) {
-        const method = authHeader.split(" ")[0];
-        const token = authHeader.split(" ")[1];
-        if (method && method === "Basic" && token) {
-          const b = Buffer.from(token, "base64");
-          const value = b.toString().split(":");
-          email = value[0];
-        }
-      } */
 
     // Validar los inputs del usuario
     if (!(email)) {
