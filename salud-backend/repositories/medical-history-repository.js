@@ -16,6 +16,36 @@ class MedicalHistoryRepository {
     return await MedicalHistory.findById(id);
   }
 
+  async findTestByIds(idHistory, idTest) {
+    return await MedicalHistory.find(
+      {
+        _id: idHistory,
+      },
+      {
+        estudios: {
+          $elemMatch: {
+            _id: idTest,
+          },
+        },
+      }
+    );
+  }
+
+  async findConsultationByIds(idHistory, idConsultation) {
+    return await MedicalHistory.find(
+      {
+        _id: idHistory,
+      },
+      {
+        consultas: {
+          $elemMatch: {
+            _id: idConsultation,
+          },
+        },
+      }
+    );
+  }
+
   async findByDocument(docType, docNumber) {
     return await MedicalHistory.findOne(
       {

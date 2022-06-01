@@ -5,6 +5,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PeopleIcon from "@mui/icons-material/People";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
 export const SidebarData = [
   {

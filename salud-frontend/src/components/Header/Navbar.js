@@ -44,18 +44,18 @@ useEffect(() => {
         return setNickName(user.data.apellido)
     }, [])
 
-const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-    };
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
 
-const handleClose = () => {
-        setAnchorEl(null);
-    };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-function logOut() {
-        sessionStorage.clear();
-        history.push('/login');
-    }
+  function logOut() {
+    sessionStorage.clear();
+    history.push("/login");
+  }
 
   return (
     <>
@@ -80,7 +80,6 @@ function logOut() {
               );
             })}
           </Tabs>
-          
         )}
 
         <div className="logout">
@@ -102,7 +101,7 @@ function logOut() {
           >
             <MenuItem onClick={logOut}>Cerrar sesión</MenuItem>
           </Menu>
-        </div> 
+        </div>
       </div>
     </>
   );

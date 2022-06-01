@@ -3,10 +3,10 @@ import MedicalGenericList from "../MedicalGenericList";
 import BiotechIcon from "@mui/icons-material/Biotech";
 
 export default function MedicalTestsList(props) {
-  const { estudios } = props;
+  const { estudios, idHistoria } = props;
   const links = {
-    create: "/",
-    edit: "/",
+    create: `/HistoriasClinicas/${idHistoria}/estudios`,
+    edit: `/HistoriasClinicas/${idHistoria}/estudios/`,
   };
 
   return (

@@ -17,3 +17,98 @@
   align-items: center;
   left: 0px;
 }
+
+// csss formulario alta
+.PruebaAux {
+  margin: 0 auto;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.BotonAux {
+  padding-bottom: 20px;
+  align-items: center;
+  left: 0px;
+}
+
+.container {
+  max-width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5em;
+}
+
+.row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.SelectConNum {
+  right: 10%;
+}
+
+.Movermail {
+  margin-left: 10%;
+}
+
+.left {
+  margin-left: 1250px;
+}
+
+.left2 {
+  margin-left: 10px;
+}
+.right {
+  margin-right: 1250px;
+}
+.ButtonMas {
+  margin-left: 1000px;
+}
+.botonNuevoUsuario {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  display: flex;
+  margin-left: 1rem;
+  margin-right: 2rem;
+}
+// .derecha   { right: 150px;  }
+// .izquierda { left: 1340px;  }
+
+.tituloTabla {
+  margin: auto;
+  width: 150%;
+  padding: 10px;
+  background: #008f4c;
+  color: #ffffff;
+}
+
+select {
+  appearance: none;
+  padding: 15px 20px;
+  -webkit-border-radius: 150px;
+  -moz-border-radius: 150px;
+  border-radius: 150px;
+  border: 1px solid green;
+  background-color: green;
+  color: #ffffff;
+  font-size: 18px;
+}
+
+select:focus {
+  outline: none;
+}
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flexbox {
+  width: 1400px;
+  
+  display: flex;
+  justify-content: center;
+  color: rgb(255, 255, 255);
+}

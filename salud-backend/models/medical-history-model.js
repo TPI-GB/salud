@@ -19,6 +19,8 @@ const MedicalHistorySchema = Schema(
     domicilioActual: { type: String },
     consultas: [medicalConsultationSchema],
     estudios: [medicalTestSchema],
+    obraSocial: { type: String },
+    plan: { type: String },
   },
   {
     collection: "medicalHistories",

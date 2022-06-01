@@ -21,6 +21,7 @@ import {
   createMedicalHistory,
   editMedicalHistory,
 } from "../../services/medical-history-service";
+import { getObrasSociales } from "../../services/obra-social-service";
 import CountrySelector from "./CountrySelector";
 import "./MedicalHistoryForm.scss";
 
@@ -38,7 +39,37 @@ export default function MedicalHistoryForm(props) {
     ocupacionActual: "",
     estadoCivil: "",
     domicilioActual: "",
+    obraSocial: "",
+    plan: "",
   });
+  const [obrasSoc, setObrasSoc] = useState([""]);
+  //const [obraSocialSeleccionada, setObraSocialSeleccionada] = useState("");
+  const [planesObrasSociales, setPlanesObrasSociales] = useState([]);
+  //const [planSeleccionado, setPlanSeleccionado] = useState("");
+  const [obrasSociales, setObrasSociales] = useState([""]);
+
+  async function getObrasSocTotales() {
+    const response = await getObrasSociales();
+    setObrasSociales(response.data);
+    setObrasSoc([""].concat(response.data.map((x) => x.nombre)));
+  }
+
+  useEffect(() => {
+    //obtener aca las obras sociales, falta un poco de desarrollo por aca
+    getObrasSocTotales();
+  }, []);
+
+  const handleChangeObraSocial = (e) => {
+    //setObraSocialSeleccionada(e.target.value);
+    setInfo({ ...info, ["obraSocial"]: e.target.value });
+    console.log(obrasSociales.find((x) => x.nombre == e.target.value));
+    console.log(obrasSociales);
+    setPlanesObrasSociales(
+      obrasSociales.find((x) => x.nombre == e.target.value).planes
+    );
+  };
+  //onChangeObraSocial={(e) => handleChangeObraSocial("nombre", e.target.value)}
+
   const [errors, setErrors] = useState({
     numeroHistoriaClinica: { message: "", error: false },
     numeroDocumento: { message: "", error: false },
@@ -74,21 +105,23 @@ export default function MedicalHistoryForm(props) {
     ];
     const temp = { ...errors };
     requiredFields.forEach((field) => {
-      if (!info[field] || !/^(?!\s*$).+/.test(info[field])) {
+      if (!info[field].trim()) {
         temp[field] = { message: "Requerido.", error: true };
       } else {
         temp[field] = { message: "", error: false };
       }
     });
     setErrors(temp);
+
+    return temp;
   }
 
-  function noErrors() {
+  function noErrors(errorsList) {
     const boolErrors = [];
-    for (const field in errors) {
-      boolErrors.push(field.error);
+    for (const field in errorsList) {
+      boolErrors.push(errorsList[field].error);
     }
-    return !boolErrors.every(Boolean);
+    return !boolErrors.some(Boolean);
   }
 
   function returnToSearchMH(time) {
@@ -104,8 +137,7 @@ export default function MedicalHistoryForm(props) {
 
   const handleEdit = (event) => {
     event.preventDefault();
-    validate();
-    if (noErrors()) {
+    if (noErrors(validate())) {
       editMedicalHistory(id, info)
         .then(() => {
           console.log("success!");
@@ -129,8 +161,8 @@ export default function MedicalHistoryForm(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    validate();
-    if (noErrors()) {
+    if (noErrors(validate())) {
+      console.log(info);
       createMedicalHistory(info)
         .then(() => {
           console.log("success!");
@@ -238,6 +270,16 @@ export default function MedicalHistoryForm(props) {
               defaultValue={info.sexo}
               sx={{ mt: "8px", width: "100%" }}
             />
+            <Button
+              type="button"
+              variant="contained"
+              color="error"
+              component={Link}
+              to="/HistoriasClinicas"
+              sx={{ mt: "17px", mb: "4px", width: "100%" }}
+            >
+              Cancelar
+            </Button>
           </Box>
         </Grid>
         <Grid item xs={6}>
@@ -276,21 +318,52 @@ export default function MedicalHistoryForm(props) {
               value={info.domicilioActual}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             />
+            <FormControl sx={{ width: "100%" }}>
+              <Box>
+                <Box>
+                  <FormLabel sx={{ display: "block", maxWidth: "50%" }}>
+                    Obra social
+                  </FormLabel>
+                  <Select
+                    sx={{ display: "block" }}
+                    id="obra-social-select"
+                    label="Obra Social"
+                    value={info.obraSocial}
+                    onChange={handleChangeObraSocial}
+                  >
+                    {obrasSoc.map((obra) => (
+                      <MenuItem key={obra} value={obra}>
+                        {obra}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+                <Box>
+                  <FormLabel sx={{ display: "block", maxWidth: "50%" }}>
+                    Plan
+                  </FormLabel>
+                  <Select
+                    sx={{ display: "block" }}
+                    id="planes-social-select"
+                    label="Planes"
+                    value={info.plan}
+                    onChange={handleChange}
+                    name="plan"
+                  >
+                    {planesObrasSociales.map((plan) => (
+                      <MenuItem key={plan} value={plan}>
+                        {plan}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </Box>
+              </Box>
+            </FormControl>
 
             <Button
               type="button"
               variant="contained"
-              color="error"
-              component={Link}
-              to="/HistoriasClinicas"
-              sx={{ mt: "8px", mb: "4px", width: "100%" }}
-            >
-              Cancelar
-            </Button>
-
-            <Button
-              type="button"
-              variant="contained"
+              color="success"
               onClick={id ? handleEdit : handleSubmit}
               sx={{ mt: "8px", mb: "4px", width: "100%" }}
             >

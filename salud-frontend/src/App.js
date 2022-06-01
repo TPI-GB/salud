@@ -5,20 +5,25 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-//Pages
 import Login from "./pages/login";
 import Home from "./pages/home/home";
-import MostrarUsuarios from "./components/MostrarUsuarios";
+import PinnedSubheaderList from "./components/MostrarUsuarios/MostrarUsuariosSinModal";
 import SearchMH from "./components/SearchMH";
 import MedicalHistory from "./pages/medicalHistory/MedicalHistory";
 import Dashboard from "./components/Dashboard/Dashboard";
-import FormularioDeUsuario from "./components/FormularioUsuario/FormularioUsuario";
+import CreateUser from "./pages/createUser/CreateUser";
 import CreateMH from "./pages/createMH";
+import CreateConsultation from "./pages/createConsultation";
+import CreateMT from "./pages/createMT";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
 import confirmarRecuperarPass from "./pages/login/confirmarRecuperarPass";
 import recuperarPass from "./pages/login/recuperarPass";
+import error401 from "./pages/error401/error401";
+import ResetPassword from "./pages/login/resetPassword";
+import jwtInterceptor from "./services/interceptors";
 
+jwtInterceptor();
 function App() {
   return (
     <Router>
@@ -29,30 +34,157 @@ function App() {
         <Redirect exact from="/" to={"/Home"} />
         <>
           <Navbar />
-          <GuardedRoute exact path="/Home" component={Home} />
-          <GuardedRoute exact path="/Usuarios" component={MostrarUsuarios} />
-          <GuardedRoute exact path="/HistoriasClinicas" component={SearchMH} />
+          <GuardedRoute
+            exact
+            path="/Home"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={Home}
+          />
+          <GuardedRoute
+            exact
+            path="/Usuarios"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={PinnedSubheaderList}
+          />
+          {/* <GuardedRoute
+          exact
+          path="/MostrarUsuarios"
+          component={LayoutTemplate(PinnedSubheaderList)}
+        /> */}
+          <GuardedRoute
+            exact
+            path="/NuevoUsuario"
+            roles={["Admin", "Director"]}
+            component={CreateUser}
+          />
+          <GuardedRoute
+            exact
+            path="/EditarUsuario/:id"
+            roles={["Admin", "Director"]}
+            component={CreateUser}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={SearchMH}
+          />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Crear"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={CreateMH}
           />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Editar/:id"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={CreateMH}
           />
           <GuardedRoute
             exact
             path="/HistoriasClinicas/Detalles/:id"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
             component={MedicalHistory}
           />
-          <GuardedRoute exact path="/Estadisticas" component={Dashboard} />
           <GuardedRoute
             exact
-            path="/FormularioDeUsuario"
-            component={FormularioDeUsuario}
+            path="/Estadisticas"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={Dashboard}
           />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas/:idHistoria/estudios"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={CreateMT}
+          />
+          <GuardedRoute
+            exact
+            path="/HistoriasClinicas/:idHistoria/estudios/:idEstudio"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={CreateMT}
+          />
+
+          {/* <GuardedRoute
+            exact
+            path="/FormularioDeUsuario"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={FormularioDeUsuario}
+          /> */}
+          <GuardedRoute
+            exact
+            path="/NuevaConsulta"
+            roles={[
+              "Admin",
+              "Laboratorio",
+              "Recepcion",
+              "Medico",
+              "Secretaria",
+            ]}
+            component={CreateConsultation}
+          />
+          <Route exact path="/error401" component={error401} />
         </>
       </Switch>
     </Router>

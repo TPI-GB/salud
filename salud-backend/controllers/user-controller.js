@@ -1,29 +1,70 @@
 const express = require("express");
 const UserService = require("../services/user-service");
 const emailResetPass = require("../helpers/email");
+const auth = require("../middleware/auth");
+const rolMiddleware = require("../middleware/roles");
 
 class UserController {
   constructor() {
     this.userService = new UserService();
     this.router = express.Router();
-    this.router.get("/", (req, res) => {
-      this.getUsers(req, res);
-    });
-    this.router.get("/:id", (req, res) => {
-      this.getUserById(req, res);
-    });
-    this.router.post("/register", (req, res) => {
-      this.registerUser(req, res);
-    });
+    this.router.get(
+      "/",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getUsers(req, res);
+      }
+    );
+    this.router.get(
+      "/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getUserById(req, res);
+      }
+    );
+    this.router.post(
+      "/register",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.registerUser(req, res);
+      }
+    );
     this.router.post("/login", (req, res) => {
       this.loginUser(req, res);
     });
-    this.router.put("/:id", (req, res) => {
+    this.router.put("/:id", 
+    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+    (req, res) => {
       this.updateUser(req, res);
     });
     this.router.put("/reset", (req, res) => {
       emailResetPass(req, res);
     });
+    
+    this.router.get("/:tipoDocumento/:numeroDocumento",
+    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+    (req, res) => {
+      this.getUserByDocument(req, res);
+    });
+  }
+
+  getUserByDocument(req, res) {
+    const tipoDocumento = req.params.tipoDocumento;
+    const numeroDocumento = req.params.numeroDocumento;
+
+    let usersPromise = this.userService.getUserByDocument(
+      tipoDocumento,
+      numeroDocumento
+    );
+
+    usersPromise
+      .then((user) => {
+        res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
   }
 
   getUsers(req, res) {
