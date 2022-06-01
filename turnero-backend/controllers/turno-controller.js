@@ -35,7 +35,7 @@ class TurnoController {
   }
 
   getTurnos(req, res) {
-    const turnosPromise = this.lugarService.getTurnos();
+    const turnosPromise = this.turnoService.getTurnos();
 
     turnosPromise
       .then((turnos) => {

@@ -12,7 +12,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import petitions from "../petitions";
+import { GetTurnos, GetTurnosFilter } from "../../services/turno-service";
 
 export default function Search() {
   const { handleSubmit } = useForm();
@@ -21,15 +21,21 @@ export default function Search() {
     let data = {};
     data.medico = medico;
     data.fecha = date;
-    const turnos = await petitions.GetTurnosFilter(data);
+    const turnos = await GetTurnosFilter(data);
     setTurnos(turnos);
   };
 
-  const [date, setDate] = useState([]);
+  const [date, setDate] = useState("");
   const [turnos, setTurnos] = useState([]);
-  const [medico, setMedico] = useState([]);
+  const [medico, setMedico] = useState("");
+  const [medicos, setMedicos] = useState([]);
 
-  const getData = async () => {};
+  const getData = async () => {
+    const turnos = await GetTurnos();
+    console.log(turnos);
+    //setMedicos(new Set(turnos.map((t) => t.medico)));
+    console.log(medicos);
+  };
 
   useEffect(() => {
     getData();
@@ -52,9 +58,12 @@ export default function Search() {
           <Select
             labelId="medico-label"
             label="Medico"
+            value={medico}
             onChange={handleChangeMedico}
           >
-            <MenuItem value={"Todas"}>Medico</MenuItem>
+            {medicos.map((m) => (
+              <MenuItem value={m}>{`${m}`}</MenuItem>
+            ))}
           </Select>
         </FormControl>
         <LocalizationProvider
