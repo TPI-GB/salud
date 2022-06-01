@@ -1,14 +1,15 @@
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
  emailResetPass = async (datos) => {
     const { email, token } = datos;
     
     const transport = nodemailer.createTransport({
-        host: "smtp.mailtrap.io",
+        host: "smtp.gmail.com",
         port: 2525,
         auth: {
-          user: "afe4b52e0f288e",
-          pass: "8e918a41b607b4"
+          user: "saludgbelgrano@gmail.com",
+          pass: "zlcfiwuglylzyerz"
         }
       });
 

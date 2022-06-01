@@ -154,8 +154,13 @@ class UserController {
       }
 
       try {
-        user.token = generarId();
-        await user.save();
+        //Enviar mail
+        emailOlvidePassword({
+          email: user.email,
+          nombre: user.nombre,
+          token: user.token,
+        });
+        
         res.json({ msg: "Hemos enviado un mail con las instrucciones" });
       } catch (error) {
         console.log(error);
