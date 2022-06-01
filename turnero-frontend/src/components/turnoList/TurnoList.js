@@ -1,32 +1,48 @@
-import React, { useState, useEffect } from "react";
 import { List, Pagination } from "antd";
-import { Stack, Button } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
 import PanToolOutlinedIcon from "@mui/icons-material/PanToolOutlined";
 import DoDisturbAltTwoToneIcon from "@mui/icons-material/DoDisturbAltTwoTone";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
-import { GetTurnos } from "../../services/turno-service";
 import "./TurnoList.scss";
 import "antd/dist/antd.min.css";
-import Search from "../search";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Stack,
+} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { GetTurnos, GetTurnosFilter } from "../../services/turno-service";
 
 export default function TurnoList() {
+  const [date, setDate] = useState("");
+  const [dateRender, setDateRender] = useState("");
   const [turnos, setTurnos] = useState([]);
   const [allTurnos, setAllTurnos] = useState([]);
+  const [medico, setMedico] = useState("");
+  const [medicos, setMedicos] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const { handleSubmit } = useForm();
 
-  const getData = async () => {
-    const response = await GetTurnos();
-    setTotal(response.length);
+  const onSubmit = async () => {
+    let data = {};
+    data.medico = medico;
+    data.fecha = date;
+    const turnos = await GetTurnosFilter(data);
     setAllTurnos(
-      response.sort(function (a, b) {
+      turnos.sort(function (a, b) {
         if (a.name > b.name) {
           return 1;
         } else {
@@ -34,7 +50,18 @@ export default function TurnoList() {
         }
       })
     );
-    setTurnos(response.slice(0, 10));
+    setTurnos(turnos.slice(0, 10));
+    setTotal(turnos.length);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const response = await GetTurnos();
+    const medicos = Array.from(new Set(response)).map((t) => t.medico);
+    setMedicos([...new Set(medicos)]);
   };
 
   const handleChange = (event) => {
@@ -47,10 +74,28 @@ export default function TurnoList() {
     }
   };
 
-  //const buscar = (turnos) => {
-  //  setTurnos(turnos)
-  //}
-  //<Search turnos={buscar}></Search>;
+  const handleChangeMedico = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setMedico(value);
+  };
+
+  const renderHora = (turno) => {
+    if (turno.minutoInicio === 0) {
+      return `${turno.horaInicio}:00`;
+    } else {
+      return `${turno.horaInicio}:${turno.minutoInicio}`;
+    }
+  };
+
+  const renderDisponible = (turno) => {
+    if (turno.disponible) {
+      return "SI";
+    } else {
+      return "NO";
+    }
+  };
 
   return (
     <React.Fragment>
@@ -58,7 +103,6 @@ export default function TurnoList() {
       <Container maxWidth="l">
         <div className="TurnoList">
           <h2>TURNOS</h2>
-          <Search />
           <Stack
             direction="row"
             ml={10}
@@ -68,7 +112,7 @@ export default function TurnoList() {
             justifyContent="right"
             alignItems="flex"
           >
-            <h3>Médico: </h3>
+            <h3>Médico: {medico}</h3>
           </Stack>
           <Stack
             direction="row"
@@ -79,8 +123,54 @@ export default function TurnoList() {
             justifyContent="right"
             alignItems="flex"
           >
-            <h3>Fecha: </h3>
+            <h3>Fecha: {dateRender}</h3>
           </Stack>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="estilosDeSelect">
+              <FormControl sx={{ ml: 2, mr: 2, width: 250 }}>
+                <InputLabel id="medico-multiple-checkbox-label"></InputLabel>
+                <InputLabel id="medico-label">Medico</InputLabel>
+                <Select
+                  labelId="medico-label"
+                  label="Medico"
+                  value={medico}
+                  onChange={handleChangeMedico}
+                >
+                  {medicos.map((m) => (
+                    <MenuItem value={m}>{`${m}`}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                sx={{ ml: 2, mr: 2 }}
+              >
+                <DatePicker
+                  label="Fecha"
+                  value={date}
+                  onChange={(date) => {
+                    setDate(date);
+                    setDateRender(
+                      date.getDate() +
+                        "/" +
+                        (date.getMonth() + 1) +
+                        "/" +
+                        date.getFullYear()
+                    );
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ background: "#39A2DB" }}
+                sx={{ mt: 1, ml: 2, mr: 2 }}
+              >
+                <SearchIcon />
+              </Button>
+            </div>
+          </form>
           <List
             style={{ background: "#485d887d" }}
             dataSource={["this data is to show a single column"]}
@@ -104,25 +194,35 @@ export default function TurnoList() {
             bordered="true"
             renderItem={(turno) => (
               <List.Item>
-                <List.Item.Meta title={<h4>{turno.hora}</h4>}></List.Item.Meta>
+                <List.Item.Meta
+                  title={
+                    <h3>
+                      <b>{renderHora(turno)}</b>
+                    </h3>
+                  }
+                ></List.Item.Meta>
                 <List.Item.Meta title={<h4>{turno.lugar}</h4>}></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{turno.paciente}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{turno.disponible}</h4>}
+                  title={
+                    <h4>
+                      <b>{renderDisponible(turno)}</b>
+                    </h4>
+                  }
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{AnularTurnoBoton()}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{LiberarTurnoBoton()}</h4>}
+                  title={<h4>{LiberarTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{EditarTurnoBoton()}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{AsignarTurnoBoton()}</h4>}
+                  title={<h4>{AsignarTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
               </List.Item>
             )}
@@ -171,18 +271,34 @@ function LiberarTurno() {
   return;
 }
 
-function LiberarTurnoBoton() {
-  let button = (
-    <Button
-      size="small"
-      variant="contained"
-      style={{ background: "#D68910" }}
-      onClick={() => LiberarTurno()}
-    >
-      <div style={{ marginRight: 8 }}>Liberar</div>
-      <PanToolOutlinedIcon />
-    </Button>
-  );
+function LiberarTurnoBoton(turno) {
+  let button;
+  if (turno.disponible) {
+    button = (
+      <Button
+        size="small"
+        disabled
+        variant="contained"
+        style={{ background: "#D68910" }}
+        onClick={() => LiberarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Liberar</div>
+        <PanToolOutlinedIcon />
+      </Button>
+    );
+  } else {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        style={{ background: "#D68910" }}
+        onClick={() => LiberarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Liberar</div>
+        <PanToolOutlinedIcon />
+      </Button>
+    );
+  }
   return button;
 }
 
@@ -209,17 +325,33 @@ function AsignarTurno() {
   return;
 }
 
-function AsignarTurnoBoton() {
-  let button = (
-    <Button
-      size="small"
-      variant="contained"
-      style={{ background: "green" }}
-      onClick={() => AsignarTurno()}
-    >
-      <div style={{ marginRight: 8 }}>Asignar</div>
-      <AssignmentTurnedInIcon />
-    </Button>
-  );
+function AsignarTurnoBoton(turno) {
+  let button;
+  if (!turno.disponible) {
+    button = (
+      <Button
+        size="small"
+        disabled
+        variant="contained"
+        style={{ background: "green" }}
+        onClick={() => AsignarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Asignar</div>
+        <AssignmentTurnedInIcon />
+      </Button>
+    );
+  } else {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        style={{ background: "green" }}
+        onClick={() => AsignarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Asignar</div>
+        <AssignmentTurnedInIcon />
+      </Button>
+    );
+  }
   return button;
 }
