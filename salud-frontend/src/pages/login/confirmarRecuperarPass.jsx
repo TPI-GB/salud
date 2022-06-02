@@ -17,16 +17,13 @@ export default function ConfirmarRecuperarPass() {
   const [contrasenia2, setContrasenia2] = useState('');
   const [mostrarContrasenia, setMostrarContrasenia] = useState(false);
   const [alerta, setAlerta] = useState({})
-  const [tokenValido, setTokenValido] = useParams(false)
 
-  const params = useParams()
-  const { token } = params
+  const { token } = useParams()
   
     useEffect(() => {
       const comprobarToken = async () => {
         try {
           await axios(`http://localhost:8080/confirmarPass/${token}`)
-          setTokenValido(true)
         } catch (error) {
             console.log(error.response)
         }
@@ -68,7 +65,7 @@ export default function ConfirmarRecuperarPass() {
       <h1 className="titulo">
         Crea tu nueva contraseña
       </h1>
-     { tokenValido && (
+     { token && (
       <Box component="form" className="loginForm">
         { msg && <Alerta alerta={alerta} /> }
           <TextField

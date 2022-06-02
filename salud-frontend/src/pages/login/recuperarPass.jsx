@@ -4,8 +4,6 @@ import {
     TextField,
     Button,
 } from "@mui/material";
-import { Link } from 'react-router-dom';
-import { loginUser } from "../../services/user-service";
 import "./Login.scss";
 import Alerta from "./Alerta";
 import axios from "axios";
@@ -26,7 +24,7 @@ export default function RecuperarPass() {
 		return
 	}
     try {
-        const { data } = await axios.post(`${process.env.APP_HOST}:${process.env.APP_PORT}/users/reset`, { email })
+        const { data } = await axios.post(`http://localhost:8080/users/reset`, { email })
 
         console.log(data)
     } catch (error) {

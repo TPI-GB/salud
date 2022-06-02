@@ -24,7 +24,7 @@ class UserController {
     );
     this.router.post(
       "/register",
-      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+     [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
       (req, res) => {
         this.registerUser(req, res);
       }
@@ -37,7 +37,7 @@ class UserController {
     (req, res) => {
       this.updateUser(req, res);
     });
-    this.router.put("/reset", (req, res) => {
+    this.router.post("/reset", (req, res) => {
       emailResetPass(req, res);
     });
     
@@ -188,6 +188,7 @@ class UserController {
 
   emailResetPass = async (req, res) => {
     const { email } = req.body;
+    console.log(email)
     const user = await this.userService.getUserByEmail(email);
       if (!user) {
         const error = new Error("El usuario no existe");

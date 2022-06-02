@@ -6,7 +6,8 @@ const nodemailer = require("nodemailer");
     
     const transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
-        port: 2525,
+        port: 465,
+        secure: false,
         auth: {
           user: "saludgbelgrano@gmail.com",
           pass: "zlcfiwuglylzyerz"
@@ -27,4 +28,4 @@ const nodemailer = require("nodemailer");
 
 };
 
-module.exports=emailResetPass;
+module.exports = emailResetPass;
