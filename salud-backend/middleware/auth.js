@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const config = process.env;
 
 const verifyToken = (req, res, next) => {
-  console.log("verifyToken");
   const authHeader = req.headers.authorization;
 
   let authToken;
@@ -22,10 +21,8 @@ const verifyToken = (req, res, next) => {
   }
   try {
     const decoded = jwt.verify(authToken, process.env.TOKEN_KEY);
-    console.log(decoded);
+
     req.user = decoded;
-    console.log("auth");
-    console.log(req.user);
   } catch (err) {
     return res.status(401).send("Invalid Token 9000");
   }
