@@ -1,12 +1,12 @@
 ﻿**********************
 Inicio de la transcripción de Windows PowerShell
-Hora de inicio: 20220604104825
+Hora de inicio: 20220604111329
 Nombre de usuario: DESKTOP-6RFD0IG\Franco
 Usuario RunAs: DESKTOP-6RFD0IG\Franco
 Nombre de la configuración: 
 Máquina: DESKTOP-6RFD0IG (Microsoft Windows NT 10.0.19043.0)
 Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-Id. de proceso: 8872
+Id. de proceso: 11276
 PSVersion: 5.1.19041.1682
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.1682
@@ -16,20 +16,162 @@ WSManStackVersion: 3.0
 PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
-La transcripción ha comenzado. El archivo de salida es ./log.txt
-C:\Users\Franco\Desktop\Programacion\QuintoAnio\Proyectos\salud\turnero-backend\agenda\GeneradorAgenda.ps1:1
-Start-Transcript "./log.txt"
-                 ^^^^^^^^^^^
-
-SyntaxError: Unexpected string
-←[90m    at wrapSafe (internal/modules/cjs/loader.js:988:16)←[39m
-←[90m    at Module._compile (internal/modules/cjs/loader.js:1036:27)←[39m
-←[90m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)←[39m
-←[90m    at Module.load (internal/modules/cjs/loader.js:937:32)←[39m
-←[90m    at Function.Module._load (internal/modules/cjs/loader.js:778:12)←[39m
-←[90m    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)←[39m
-←[90m    at internal/main/run_main_module.js:17:47←[39m
+La transcripción ha comenzado. El archivo de salida es .\log.txt
+Mongoose connect
+Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argentina)
+---Turnos generados este dia---
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 7,
+  minutoInicio: 30,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688a3bae99387061750e"),
+  creacion: 2022-06-04T14:13:30.906Z,
+  ultimaModificacion: 2022-06-04T14:13:30.906Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 8,
+  minutoInicio: 15,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617511"),
+  creacion: 2022-06-04T14:13:31.438Z,
+  ultimaModificacion: 2022-06-04T14:13:31.438Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 9,
+  minutoInicio: 0,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617514"),
+  creacion: 2022-06-04T14:13:31.446Z,
+  ultimaModificacion: 2022-06-04T14:13:31.446Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 9,
+  minutoInicio: 45,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617517"),
+  creacion: 2022-06-04T14:13:31.453Z,
+  ultimaModificacion: 2022-06-04T14:13:31.453Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 10,
+  minutoInicio: 30,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae99387061751a"),
+  creacion: 2022-06-04T14:13:31.463Z,
+  ultimaModificacion: 2022-06-04T14:13:31.463Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 11,
+  minutoInicio: 15,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae99387061751d"),
+  creacion: 2022-06-04T14:13:31.479Z,
+  ultimaModificacion: 2022-06-04T14:13:31.479Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 12,
+  minutoInicio: 0,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617520"),
+  creacion: 2022-06-04T14:13:31.484Z,
+  ultimaModificacion: 2022-06-04T14:13:31.484Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 12,
+  minutoInicio: 45,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617523"),
+  creacion: 2022-06-04T14:13:31.491Z,
+  ultimaModificacion: 2022-06-04T14:13:31.491Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 13,
+  minutoInicio: 30,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617526"),
+  creacion: 2022-06-04T14:13:31.498Z,
+  ultimaModificacion: 2022-06-04T14:13:31.498Z,
+  __v: 0
+}
+{
+  fecha: 2022-08-03T14:13:30.331Z,
+  lugar: 'Un Lugar',
+  horaInicio: 14,
+  minutoInicio: 15,
+  medico: 'Pepe',
+  paciente: '',
+  disponible: true,
+  anulado: false,
+  esSobreTurno: true,
+  _id: new ObjectId("629b688b3bae993870617529"),
+  creacion: 2022-06-04T14:13:31.504Z,
+  ultimaModificacion: 2022-06-04T14:13:31.504Z,
+  __v: 0
+}
+END
 **********************
 Fin de la transcripción de Windows PowerShell
-Hora de finalización: 20220604104825
+Hora de finalización: 20220604111331
 **********************

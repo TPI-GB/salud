@@ -71,32 +71,16 @@ export async function GetTurnoById(id) {
   }
 }
 
-export async function EditTurno(data, id) {
+export async function EditarTurnoRequest(data) {
   try {
     const response = await axios({
-      url: `${baseUrl}/${id}`,
+      url: `${baseUrl}/turns/edit`,
       method: "PUT",
       data: data,
-    });
-    Swal.fire({
-      title: "Listo!",
-      text: "El turno ha sido editado correctamente",
-      icon: "success",
-      confirmButtonText: "Regresar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location = "/";
-      }
     });
     return response;
   } catch (err) {
     console.error(err);
-    Swal.fire({
-      title: "Error!",
-      text: "Error al editar el turno, asegurese de no haber ingresado datos incorrectos",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
   }
 }
 
@@ -118,6 +102,20 @@ export async function AnularTurnoRequest(data) {
   try {
     const response = await axios({
       url: `${baseUrl}/turns/anular`,
+      method: "PUT",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+  return [];
+}
+
+export async function LiberarTurnoRequest(data) {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/turns/liberar`,
       method: "PUT",
       data: data,
     });

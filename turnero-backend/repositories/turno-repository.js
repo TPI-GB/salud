@@ -1,7 +1,6 @@
 const Turno = require("../models/turno-model");
 
 class TurnoRepository {
-
   async getTurnoById(id) {
     try {
       const turno = await Turno.findById(id);
@@ -50,13 +49,11 @@ class TurnoRepository {
   }
 
   async editarTurno(data) {
-    const { fecha, lugar, medico } = data;
+    const { id, paciente } = data;
     try {
       let newData = {};
 
-      newData.fecha = fecha;
-      newData.lugar = lugar;
-      newData.medico = medico;
+      newData.paciente = paciente;
 
       await Turno.findByIdAndUpdate({ _id: id }, newData);
 
@@ -86,11 +83,13 @@ class TurnoRepository {
     }
   }
 
-  async liberarTurno() {
+  async liberarTurno(data) {
     try {
+      const { id } = data;
+
       let newData = {};
 
-      newData.paciente = null;
+      newData.paciente = "";
       newData.disponible = true;
 
       await Turno.findByIdAndUpdate({ _id: id }, newData);
@@ -125,18 +124,21 @@ class TurnoRepository {
     );
     return turnosFilter;
   }
-  async anularTurno() {
+  async anularTurno(data) {
     try {
       let newData = {};
+      const { id } = data;
 
       newData.paciente = "";
+      newData.lugar = "";
       newData.disponible = false;
+      newData.anulado = true;
 
       await Turno.findByIdAndUpdate({ _id: id }, newData);
 
-      const turnoStored = await Turno.findById(id);
+      const turno = Turno.findById({ _id: id });
 
-      return turnoStored;
+      return turno;
     } catch (err) {
       console.log(err);
     }

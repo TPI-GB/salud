@@ -15,6 +15,9 @@ import {
   Select,
   TextField,
   Stack,
+  Modal,
+  Box,
+  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -26,6 +29,8 @@ import {
   GetTurnos,
   GetTurnosFilter,
   AnularTurnoRequest,
+  LiberarTurnoRequest,
+  EditarTurnoRequest,
 } from "../../services/turno-service";
 
 export default function TurnoList() {
@@ -94,7 +99,9 @@ export default function TurnoList() {
   };
 
   const renderDisponible = (turno) => {
-    if (turno.disponible) {
+    if (turno.anulado) {
+      return "ANULADO";
+    } else if (turno.disponible) {
       return "SI";
     } else {
       return "NO";
@@ -217,13 +224,13 @@ export default function TurnoList() {
                   }
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{AnularTurnoBoton(turno)}</h4>}
+                  title={<h4>{AnularTurnoBoton(turno, onSubmit)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{LiberarTurnoBoton(turno)}</h4>}
+                  title={<h4>{LiberarTurnoBoton(turno, onSubmit)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{EditarTurnoBoton(turno)}</h4>}
+                  title={<h4>{EditarTurnoBoton(turno, onSubmit)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{AsignarTurnoBoton(turno)}</h4>}
@@ -245,10 +252,7 @@ export default function TurnoList() {
               showTotal={(total) => `Total ${total} Turnos`}
               onChange={handleChange}
             />
-
-              
           </Stack>
-          
         </div>
         {AsignarTurno()}
       </Container>
@@ -256,13 +260,14 @@ export default function TurnoList() {
   );
 }
 
-async function AnularTurno(turno) {
+async function AnularTurno(turno, actualizar) {
   let data = {};
   data.id = turno._id;
   await AnularTurnoRequest(data);
+  actualizar();
 }
 
-function AnularTurnoBoton(turno) {
+function AnularTurnoBoton(turno, actualizar) {
   let button;
   if (turno.anulado) {
     button = (
@@ -271,7 +276,7 @@ function AnularTurnoBoton(turno) {
         variant="contained"
         disabled
         style={{ background: "#AC0D0D" }}
-        onClick={() => AnularTurno(turno)}
+        onClick={() => AnularTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Anular</div>
         <DoDisturbAltTwoToneIcon />
@@ -283,7 +288,7 @@ function AnularTurnoBoton(turno) {
         size="small"
         variant="contained"
         style={{ background: "#AC0D0D" }}
-        onClick={() => AnularTurno(turno)}
+        onClick={() => AnularTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Anular</div>
         <DoDisturbAltTwoToneIcon />
@@ -293,11 +298,14 @@ function AnularTurnoBoton(turno) {
   return button;
 }
 
-function LiberarTurno() {
-  return;
+async function LiberarTurno(turno, actualizar) {
+  let data = {};
+  data.id = turno._id;
+  await LiberarTurnoRequest(data);
+  actualizar();
 }
 
-function LiberarTurnoBoton(turno) {
+function LiberarTurnoBoton(turno, actualizar) {
   let button;
   if (turno.disponible || turno.anulado) {
     button = (
@@ -306,7 +314,7 @@ function LiberarTurnoBoton(turno) {
         disabled
         variant="contained"
         style={{ background: "#D68910" }}
-        onClick={() => LiberarTurno()}
+        onClick={() => LiberarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Liberar</div>
         <PanToolOutlinedIcon />
@@ -318,7 +326,7 @@ function LiberarTurnoBoton(turno) {
         size="small"
         variant="contained"
         style={{ background: "#D68910" }}
-        onClick={() => LiberarTurno()}
+        onClick={() => LiberarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Liberar</div>
         <PanToolOutlinedIcon />
@@ -328,20 +336,81 @@ function LiberarTurnoBoton(turno) {
   return button;
 }
 
-function EditarTurno(turno) {
-  console.log(turno);
+async function EditarTurno(turno, actualizar) {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(true);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async () => {
+    let data = {};
+    data.id = turno._id;
+    data.paciente = "Pepe 2";
+    await EditarTurnoRequest(data);
+    actualizar();
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Button onClick={handleOpen}>Asignar</Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Editar Turno
+            </Typography>
+            <Stack direction="row" ml={2} mt={2}>
+              <TextField
+                style={{ background: "white" }}
+                required
+                {...register("paciente")}
+                label="Nombre De Paciente"
+              />
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+              <Button
+                variant="contained"
+                type="submit"
+                style={{ background: "#39A2DB" }}
+              >
+                Guardar Cambio
+              </Button>
+            </Stack>
+          </Box>
+        </Modal>
+      </form>
+    </div>
+  );
 }
 
-function EditarTurnoBoton(turno) {
+function EditarTurnoBoton(turno, actualizar) {
   let button;
-  if (turno.anulado || turno.disponible) {
+  if (turno.anulado) {
     button = (
       <Button
         size="small"
         variant="contained"
         disabled
         style={{ background: "blue" }}
-        onClick={() => EditarTurno()}
+        onClick={() => EditarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Editar</div>
         <EditTwoToneIcon />
@@ -353,7 +422,7 @@ function EditarTurnoBoton(turno) {
         size="small"
         variant="contained"
         style={{ background: "blue" }}
-        onClick={() => EditarTurno()}
+        onClick={() => EditarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Editar</div>
         <EditTwoToneIcon />
