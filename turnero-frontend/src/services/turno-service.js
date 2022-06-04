@@ -56,3 +56,17 @@ export async function GetTurnosFilter(data) {
   }
   return [];
 }
+
+export async function AnularTurnoRequest(data) {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/turns/anular`,
+      method: "PUT",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+  return [];
+}

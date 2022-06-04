@@ -22,7 +22,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { GetTurnos, GetTurnosFilter } from "../../services/turno-service";
+import {
+  GetTurnos,
+  GetTurnosFilter,
+  AnularTurnoRequest,
+} from "../../services/turno-service";
 
 export default function TurnoList() {
   const [date, setDate] = useState("");
@@ -213,13 +217,13 @@ export default function TurnoList() {
                   }
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{AnularTurnoBoton()}</h4>}
+                  title={<h4>{AnularTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{LiberarTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{EditarTurnoBoton()}</h4>}
+                  title={<h4>{EditarTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{AsignarTurnoBoton(turno)}</h4>}
@@ -248,22 +252,40 @@ export default function TurnoList() {
   );
 }
 
-function AnularTurno() {
-  return;
+async function AnularTurno(turno) {
+  let data = {};
+  data.id = turno._id;
+  await AnularTurnoRequest(data);
 }
 
-function AnularTurnoBoton() {
-  let button = (
-    <Button
-      size="small"
-      variant="contained"
-      style={{ background: "#AC0D0D" }}
-      onClick={() => AnularTurno()}
-    >
-      <div style={{ marginRight: 8 }}>Anular</div>
-      <DoDisturbAltTwoToneIcon />
-    </Button>
-  );
+function AnularTurnoBoton(turno) {
+  let button;
+  if (turno.anulado) {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        disabled
+        style={{ background: "#AC0D0D" }}
+        onClick={() => AnularTurno(turno)}
+      >
+        <div style={{ marginRight: 8 }}>Anular</div>
+        <DoDisturbAltTwoToneIcon />
+      </Button>
+    );
+  } else {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        style={{ background: "#AC0D0D" }}
+        onClick={() => AnularTurno(turno)}
+      >
+        <div style={{ marginRight: 8 }}>Anular</div>
+        <DoDisturbAltTwoToneIcon />
+      </Button>
+    );
+  }
   return button;
 }
 
@@ -273,7 +295,7 @@ function LiberarTurno() {
 
 function LiberarTurnoBoton(turno) {
   let button;
-  if (turno.disponible) {
+  if (turno.disponible || turno.anulado) {
     button = (
       <Button
         size="small"
@@ -302,22 +324,38 @@ function LiberarTurnoBoton(turno) {
   return button;
 }
 
-function EditarTurno() {
-  return;
+function EditarTurno(turno) {
+  console.log(turno);
 }
 
-function EditarTurnoBoton() {
-  let button = (
-    <Button
-      size="small"
-      variant="contained"
-      style={{ background: "blue" }}
-      onClick={() => EditarTurno()}
-    >
-      <div style={{ marginRight: 8 }}>Editar</div>
-      <EditTwoToneIcon />
-    </Button>
-  );
+function EditarTurnoBoton(turno) {
+  let button;
+  if (turno.anulado || turno.disponible) {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        disabled
+        style={{ background: "blue" }}
+        onClick={() => EditarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Editar</div>
+        <EditTwoToneIcon />
+      </Button>
+    );
+  } else {
+    button = (
+      <Button
+        size="small"
+        variant="contained"
+        style={{ background: "blue" }}
+        onClick={() => EditarTurno()}
+      >
+        <div style={{ marginRight: 8 }}>Editar</div>
+        <EditTwoToneIcon />
+      </Button>
+    );
+  }
   return button;
 }
 
@@ -327,7 +365,7 @@ function AsignarTurno() {
 
 function AsignarTurnoBoton(turno) {
   let button;
-  if (!turno.disponible) {
+  if (!turno.disponible || turno.anulado) {
     button = (
       <Button
         size="small"

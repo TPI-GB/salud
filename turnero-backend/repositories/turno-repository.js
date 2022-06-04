@@ -118,8 +118,8 @@ class TurnoRepository {
     try {
       let newData = {};
 
-      newData.paciente = null;
-      newData.disponible = null;
+      newData.paciente = "";
+      newData.disponible = false;
 
       await Turno.findByIdAndUpdate({ _id: id }, newData);
 
@@ -133,19 +133,20 @@ class TurnoRepository {
 
   async anularTodosLosTurnos(data) {
     let newData = {};
+    const { id } = data;
 
-    newData.paciente = null;
-    newData.disponible = null;
+    newData.paciente = "";
+    newData.lugar = "";
+    newData.disponible = false;
+    newData.anulado = true;
 
-    let turnos = this.getTurnoPorNombreYFecha(data);
+    await Turno.findByIdAndUpdate({ _id: id }, newData);
 
-    turnos.array.forEach((t) => {
-      t.anularTurno(data), newData;
-    });
+    const turno = Turno.findById({ _id: id });
 
-    return turnos;
+    return turno;
   }
-  catch(error) {
+  catch(err) {
     console.log(err);
   }
 }

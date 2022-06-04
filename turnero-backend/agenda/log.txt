@@ -1,25 +1,35 @@
 ﻿**********************
 Inicio de la transcripción de Windows PowerShell
-Hora de inicio: 20220528093017
-Nombre de usuario: LAPTOP-UL062ES2\juani
-Usuario RunAs: LAPTOP-UL062ES2\juani
+Hora de inicio: 20220604104825
+Nombre de usuario: DESKTOP-6RFD0IG\Franco
+Usuario RunAs: DESKTOP-6RFD0IG\Franco
 Nombre de la configuración: 
-Máquina: LAPTOP-UL062ES2 (Microsoft Windows NT 10.0.22000.0)
-Aplicación host: PowerShell.exe C:\Users\juani\Documents\proyectosMERN\salud\turnero-backend\agenda\GeneradorAgenda.ps1
-Id. de proceso: 11760
-PSVersion: 5.1.22000.653
+Máquina: DESKTOP-6RFD0IG (Microsoft Windows NT 10.0.19043.0)
+Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+Id. de proceso: 8872
+PSVersion: 5.1.19041.1682
 PSEdition: Desktop
-PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22000.653
-BuildVersion: 10.0.22000.653
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.1682
+BuildVersion: 10.0.19041.1682
 CLRVersion: 4.0.30319.42000
 WSManStackVersion: 3.0
 PSRemotingProtocolVersion: 2.3
 SerializationVersion: 1.1.0.1
 **********************
-La transcripción ha comenzado. El archivo de salida es C:\Users\juani\Documents\proyectosMERN\salud\turnero-backend\agenda\log.txt
-Mongoose connect
-END
+La transcripción ha comenzado. El archivo de salida es ./log.txt
+C:\Users\Franco\Desktop\Programacion\QuintoAnio\Proyectos\salud\turnero-backend\agenda\GeneradorAgenda.ps1:1
+Start-Transcript "./log.txt"
+                 ^^^^^^^^^^^
+
+SyntaxError: Unexpected string
+←[90m    at wrapSafe (internal/modules/cjs/loader.js:988:16)←[39m
+←[90m    at Module._compile (internal/modules/cjs/loader.js:1036:27)←[39m
+←[90m    at Object.Module._extensions..js (internal/modules/cjs/loader.js:1101:10)←[39m
+←[90m    at Module.load (internal/modules/cjs/loader.js:937:32)←[39m
+←[90m    at Function.Module._load (internal/modules/cjs/loader.js:778:12)←[39m
+←[90m    at Function.executeUserEntryPoint [as runMain] (internal/modules/run_main.js:76:12)←[39m
+←[90m    at internal/main/run_main_module.js:17:47←[39m
 **********************
 Fin de la transcripción de Windows PowerShell
-Hora de finalización: 20220528093019
+Hora de finalización: 20220604104825
 **********************
