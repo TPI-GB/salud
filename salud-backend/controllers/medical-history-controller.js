@@ -50,6 +50,7 @@ class MedicalHistoryController {
         this.getMedicalHistoryByDocument(req, res);
       }
     );
+
     this.router.post(
       "/create",
       [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
@@ -103,6 +104,9 @@ class MedicalHistoryController {
   }
 
   getMedicalHistories(req, res) {
+    if (req.query.nombre || req.query.apellido) {
+      return this.getMedicalHistoryByNameAndSurname(req, res);
+    }
     let medicalHistoriesPromise =
       this.medicalHistoryService.getMedicalHistories();
 
@@ -119,6 +123,23 @@ class MedicalHistoryController {
   getMedicalHistoryById(req, res) {
     let medicalHistoryPromise =
       this.medicalHistoryService.getMedicalHistoryById(req.params.id);
+
+    medicalHistoryPromise
+      .then((medicalHistory) => {
+        res.status(200).json(medicalHistory);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
+  }
+
+  getMedicalHistoryByNameAndSurname(req, res) {
+    let medicalHistoryPromise =
+      this.medicalHistoryService.getMedicalHistoryByNameAndSurname(
+        req.query.nombre,
+        req.query.apellido
+      );
 
     medicalHistoryPromise
       .then((medicalHistory) => {
@@ -216,6 +237,8 @@ class MedicalHistoryController {
       ocupacionActual,
       estadoCivil,
       domicilioActual,
+      obraSocial,
+      plan,
     } = req.body;
 
     // Validar los inputs del usuario
@@ -273,6 +296,8 @@ class MedicalHistoryController {
         ocupacionActual,
         estadoCivil,
         domicilioActual,
+        obraSocial,
+        plan,
       };
 
       const medicalHistoryStored =

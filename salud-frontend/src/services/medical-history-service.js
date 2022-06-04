@@ -123,6 +123,14 @@ export async function getMedicalHistoryByDocument(docType, docNumber) {
   return response;
 }
 
+export async function getMedicalHistoryByNameAndSurname(name, surname) {
+  const response = await axios.get(
+    `${config.baseURL}:${config.port}/medical-histories?nombre=${name}&apellido=${surname}`
+  );
+
+  return response;
+}
+
 export async function createMedicalHistory(medicalHistoryData) {
   const response = await axios.post(
     `${config.baseURL}:${config.port}/medical-histories/create`,

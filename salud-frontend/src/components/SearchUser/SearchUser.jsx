@@ -24,7 +24,7 @@ import "./SearchMH.scss";
 
 // Preguntar por el useState porque imprime siempre que cambia de estado
 export default function SearchMH() {
-  const [searchValue, setSearchValue] = useState("");
+  const [primarySearchValue, setPrimaryprimarySearchValue] = useState("");
   const [filter, setFilter] = useState("DOC");
   const [docType, setDocType] = useState("DNI");
   const [medicalHistories, setMedicalHistories] = useState([]);
@@ -33,7 +33,7 @@ export default function SearchMH() {
   const [error, setError] = useState({ message: "", show: false });
 
   const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
+    setPrimaryprimarySearchValue(event.target.value);
   };
 
   const handleFilterChange = (event) => {
@@ -41,7 +41,7 @@ export default function SearchMH() {
     setFilter(value);
     setError({ show: false });
     if (value === "TODAS") {
-      setSearchValue("");
+      setPrimaryprimarySearchValue("");
     }
   };
 
@@ -51,12 +51,12 @@ export default function SearchMH() {
   };
 
   const validateSearchInput = () => {
-    if (!/^(?!\s*$).+/.test(searchValue)) {
+    if (!/^(?!\s*$).+/.test(primarySearchValue)) {
       setError({
         message: "El campo de busqueda esta vacío, ingrese un número.",
         show: true,
       });
-    } else if (!/^[1-9][0-9]{6,8}$/i.test(searchValue)) {
+    } else if (!/^[1-9][0-9]{6,8}$/i.test(primarySearchValue)) {
       setError({
         message: "En numero de documento ingresado es inválido.",
         show: true,
@@ -72,7 +72,10 @@ export default function SearchMH() {
       const response = await getAllMedicalHistories();
       setMedicalHistories(response.data);
     } else {
-      const response = await getMedicalHistoryByDocument(docType, searchValue);
+      const response = await getMedicalHistoryByDocument(
+        docType,
+        primarySearchValue
+      );
       setMedicalHistories(response.data ? [response.data] : []);
     }
     setError({ show: false });
@@ -125,7 +128,7 @@ export default function SearchMH() {
               placeholder="Buscar..."
               onChange={handleSearchChange}
               disabled={filter === "TODAS"}
-              value={searchValue}
+              value={primarySearchValue}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <IconButton
