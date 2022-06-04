@@ -302,18 +302,18 @@ function MiBuscador(props) {
   const styles = useStyles();
   const { className, setUsuarios, setLoading } = props;
 
-  const [searchValue, setSearchValue] = useState("");
+  const [primarySearchValue, setPrimaryprimarySearchValue] = useState("");
   const [filter, setFilter] = useState("DOC");
   const [docType, setDocType] = useState("DNI");
   const [error, setError] = useState({ message: "", show: false });
 
   const validateSearchInput = () => {
-    if (!/^(?!\s*$).+/.test(searchValue)) {
+    if (!/^(?!\s*$).+/.test(primarySearchValue)) {
       setError({
         message: "El campo de busqueda esta vacío, ingrese un número.",
         show: true,
       });
-    } else if (!/^[1-9][0-9]{6,8}$/i.test(searchValue)) {
+    } else if (!/^[1-9][0-9]{6,8}$/i.test(primarySearchValue)) {
       setError({
         message: "En numero de documento ingresado es inválido.",
         show: true,
@@ -328,7 +328,7 @@ function MiBuscador(props) {
       const response = await getUsers();
       setUsuarios(response.data);
     } else {
-      const response = await getUserByDocument(docType, searchValue);
+      const response = await getUserByDocument(docType, primarySearchValue);
       setUsuarios(response.data ? [response.data] : []);
     }
     setError({ show: false });
@@ -336,7 +336,7 @@ function MiBuscador(props) {
   };
 
   const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
+    setPrimaryprimarySearchValue(event.target.value);
   };
 
   const handleFilterChange = (event) => {
@@ -344,7 +344,7 @@ function MiBuscador(props) {
     setFilter(value);
     setError({ show: false });
     if (value === "TODAS") {
-      setSearchValue("");
+      setPrimaryprimarySearchValue("");
     }
   };
 
@@ -402,7 +402,7 @@ function MiBuscador(props) {
           placeholder="Buscar..."
           onChange={handleSearchChange}
           disabled={filter === "TODAS"}
-          value={searchValue}
+          value={primarySearchValue}
         />
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
         <IconButton

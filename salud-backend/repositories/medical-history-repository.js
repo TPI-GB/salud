@@ -55,6 +55,36 @@ class MedicalHistoryRepository {
       "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
     );
   }
+  //tomas
+  async findByNameAndSurname(name, surname) {
+    console.log(name);
+    console.log(surname);
+    if (surname && name) {
+      return await MedicalHistory.find(
+        {
+          $and: [
+            { nombre: { $regex: name, $options: "i" } },
+            { apellido: { $regex: surname, $options: "i" } },
+          ],
+        },
+        "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
+      );
+    } else if (name) {
+      return await MedicalHistory.find(
+        {
+          nombre: { $regex: name, $options: "i" },
+        },
+        "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
+      );
+    } else {
+      return await MedicalHistory.find(
+        {
+          apellido: { $regex: surname, $options: "i" },
+        },
+        "numeroHistoriaClinica tipoDocumento numeroDocumento nombre apellido"
+      );
+    }
+  }
 
   async existsByDocument(docType, docNumber) {
     return await MedicalHistory.exists({
@@ -66,6 +96,13 @@ class MedicalHistoryRepository {
   async existsByNumber(medicalHistoryNumber) {
     return await MedicalHistory.exists({
       numeroHistoriaClinica: medicalHistoryNumber,
+    });
+  }
+  //tomas
+  async existsByNameAndSurname(name, surname) {
+    return await MedicalHistory.exists({
+      nombre: name,
+      apellido: surname,
     });
   }
 

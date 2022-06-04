@@ -23,12 +23,14 @@ import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 import {
   getAllMedicalHistories,
   getMedicalHistoryByDocument,
+  getMedicalHistoryByNameAndSurname,
 } from "../../services/medical-history-service";
 import "./SearchMH.scss";
 
 // Preguntar por el useState porque imprime siempre que cambia de estado
 export default function SearchMH() {
-  const [searchValue, setSearchValue] = useState("");
+  const [primarySearchValue, setPrimarySearchValue] = useState("");
+  const [secondarySearchValue, setSecondarySearchValue] = useState("");
   const [filter, setFilter] = useState("DOC");
   const [docType, setDocType] = useState("DNI");
   const [medicalHistories, setMedicalHistories] = useState([]);
@@ -36,16 +38,21 @@ export default function SearchMH() {
   const [firstTime, setFirstTime] = useState(true);
   const [error, setError] = useState({ message: "", show: false });
 
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
+  const handleSearchChangePrimary = (event) => {
+    setPrimarySearchValue(event.target.value);
   };
-
+  const handleSearchChangeSecondary = (event) => {
+    setSecondarySearchValue(event.target.value);
+  };
   const handleFilterChange = (event) => {
     const value = event.target.value;
     setFilter(value);
     setError({ show: false });
     if (value === "TODAS") {
-      setSearchValue("");
+      setPrimarySearchValue("");
+    }
+    if (value === "NOMBREYAPELLIDO") {
+      setSecondarySearchValue("");
     }
   };
 
@@ -55,12 +62,12 @@ export default function SearchMH() {
   };
 
   const validateSearchInput = () => {
-    if (!/^(?!\s*$).+/.test(searchValue)) {
+    if (!/^(?!\s*$).+/.test(primarySearchValue)) {
       setError({
         message: "El campo de busqueda esta vacío, ingrese un número.",
         show: true,
       });
-    } else if (!/^[1-9][0-9]{6,8}$/i.test(searchValue)) {
+    } else if (!/^[1-9][0-9]{6,8}$/i.test(primarySearchValue)) {
       setError({
         message: "En numero de documento ingresado es inválido.",
         show: true,
@@ -72,11 +79,22 @@ export default function SearchMH() {
 
   const handleSearch = async () => {
     setIsLoading(true);
+    console.log(filter);
     if (filter === "TODAS") {
       const response = await getAllMedicalHistories();
       setMedicalHistories(response.data);
+    } else if (filter === "NOMBREYAPELLIDO") {
+      const response = await getMedicalHistoryByNameAndSurname(
+        primarySearchValue,
+        secondarySearchValue
+      );
+      console.log(response.data);
+      setMedicalHistories(response.data);
     } else {
-      const response = await getMedicalHistoryByDocument(docType, searchValue);
+      const response = await getMedicalHistoryByDocument(
+        docType,
+        primarySearchValue
+      );
       setMedicalHistories(response.data ? [response.data] : []);
     }
     setError({ show: false });
@@ -99,8 +117,8 @@ export default function SearchMH() {
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
-              minWidth: 300,
-              maxWidth: 350,
+              minWidth: 500,
+              maxWidth: 650,
               mt: 2,
               ml: "auto",
               mr: "auto",
@@ -109,6 +127,7 @@ export default function SearchMH() {
             <Select value={filter} onChange={handleFilterChange} size="small">
               <MenuItem value={"DOC"}>DOC</MenuItem>
               <MenuItem value={"TODAS"}>TODAS</MenuItem>
+              <MenuItem value={"NOMBREYAPELLIDO"}>NOMBRE Y APELLIDO</MenuItem>
             </Select>
             {filter === "DOC" && (
               <Select
@@ -126,20 +145,46 @@ export default function SearchMH() {
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <InputBase
               sx={{ ml: 1, flex: 1 }}
-              placeholder="Buscar..."
-              onChange={handleSearchChange}
+              placeholder={
+                filter != "NOMBREYAPELLIDO" ? "Buscar..." : "Nombre..."
+              }
+              onChange={handleSearchChangePrimary}
               disabled={filter === "TODAS"}
-              value={searchValue}
+              value={primarySearchValue}
             />
             <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              type="button"
-              sx={{ p: "10px" }}
-              aria-label="search"
-              onClick={filter === "TODAS" ? handleSearch : validateSearchInput}
-            >
-              <SearchIcon />
-            </IconButton>
+            {filter != "NOMBREYAPELLIDO" && (
+              <IconButton
+                type="button"
+                sx={{ p: "10px" }}
+                aria-label="search"
+                onClick={
+                  filter === "TODAS" ? handleSearch : validateSearchInput
+                }
+              >
+                <SearchIcon />
+              </IconButton>
+            )}
+            {filter === "NOMBREYAPELLIDO" && (
+              <>
+                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Apellido..."
+                  onChange={handleSearchChangeSecondary}
+                  value={secondarySearchValue}
+                />
+                <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                  onClick={handleSearch}
+                >
+                  <SearchIcon />
+                </IconButton>
+              </>
+            )}
           </Paper>
           <Tooltip title="Crear nueva historia">
             <Fab
