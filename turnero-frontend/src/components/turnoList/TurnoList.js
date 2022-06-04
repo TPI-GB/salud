@@ -8,6 +8,7 @@ import { GetTurnos } from "../../services/turno-service";
 import "./TurnoList.scss";
 import "antd/dist/antd.min.css";
 import Search from "antd/lib/transfer/search";
+import AsignarTurno from "../asignarTurno/AsignarTurno"
 
 export default function TurnoList() {
   const [turnos, setTurnos] = useState([]);
@@ -130,8 +131,12 @@ export default function TurnoList() {
               showTotal={(total) => `Total ${total} Turnos`}
               onChange={handleChange}
             />
+
+              
           </Stack>
+          
         </div>
+        {AsignarTurno()}
       </Container>
     </React.Fragment>
   );
@@ -139,6 +144,21 @@ export default function TurnoList() {
 
 function CargarTurno() {
   return;
+}
+
+function AsignarTurnoBoton() {
+  let button = (
+    <Button
+      size="small"
+      variant="contained"
+      style={{ background: "green" }}
+      onClick={AsignarTurno}
+    >
+      <div style={{ marginRight: 8 }}>Asignar</div>
+      <AddBoxIcon />
+    </Button>
+  );
+  return button;
 }
 
 function CargarTurnoBoton() {

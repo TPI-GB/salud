@@ -5,6 +5,9 @@ class TurnoController {
   constructor() {
     this.turnoService = new TurnoService();
     this.router = express.Router();
+    this.router.get("/id", (req, res) => {
+      this.getTurnoById(req, res);
+    })
     this.router.get("/", (req, res) => {
       this.getTurnos(req, res);
     });
@@ -33,6 +36,21 @@ class TurnoController {
       this.anularTodosLosTurnos(req, res);
     });
 
+  }
+
+  getTurnoById(req, res){
+    const data = req.body;
+
+    const turnoPromise = this.turnoService.getTurnoById(data);
+
+    turnoPromise
+      .then((turnos) => {
+        res.status(200).json(turnos);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        res.status(400).json({ error: err.message });
+      });
   }
 
   getTurnos(req, res) {

@@ -4,17 +4,18 @@ const Schema = mongoose.Schema;
 
 const TurnoSchema = Schema(
   {
-    fecha: { type: Date, require: true },
+    fecha: { type: Date, required: true },
+    lugar: { type: String, required: true },
     horaInicio: { type: Number, require: true },
     minutoInicio: { type: Number, require: true },
     medico: { type: String },
-    paciente: { type: String, default: "" },
-    disponible: { type: Boolean, default: true },
-    esSobreTurno: { type: Boolean, default: true },
+    paciente: { type: Object, default: "" },
+    disponible: { type: Boolean, require: true },
+    esSobreTurno: { type: Boolean, require: true },
   },
   {
-    timestamps: true,
+    timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
   }
 );
 
-module.exports = mongoose.model("Turnos", TurnoSchema);
+module.exports = mongoose.model("Turno", TurnoSchema);

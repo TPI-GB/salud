@@ -1,0 +1,19 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20220602122416
+Nombre de usuario: LAPTOP-5OB49V3V\enzoe
+Usuario RunAs: LAPTOP-5OB49V3V\enzoe
+Nombre de la configuración: 
+Máquina: LAPTOP-5OB49V3V (Microsoft Windows NT 10.0.19044.0)
+Aplicación host: PowerShell.exe C:\Users\enzoe\salud-turnero-backend\salud\turnero-backend\agenda\GeneradorAgenda.ps1
+Id. de proceso: 22064
+PSVersion: 5.1.19041.1682
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.1682
+BuildVersion: 10.0.19041.1682
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es C:\Users\enzoe\salud-turnero-backend\salud\turnero-backend\agenda\log.txt

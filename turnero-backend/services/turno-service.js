@@ -5,6 +5,10 @@ class TurnoService {
     this.turnoRepository = new TurnoRepository();
   }
 
+  async getTurnoById(id){
+    return this.turnoRepository.getTurnoById(id);
+  }
+
   async getTurnos() {
     return this.turnoRepository.getTurnos();
   }
