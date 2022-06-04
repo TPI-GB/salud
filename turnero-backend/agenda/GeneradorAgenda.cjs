@@ -5,9 +5,11 @@ const Feriado = require("../models/feriadoModel");
 
 async function TryGeneradorAgenda(today, offset) {
   let attemps = 0;
-  while (attemps < 3) {
+  let success = false;
+  while (attemps < 3 && !success)  {
     try {
       await GeneradorAgenda(today, offset);
+      success=true;
     } catch (err) {
       console.log("Error ejecutando intento " + attemps);
       console.log(err);
@@ -97,4 +99,4 @@ async function esFeriadoElDia(day) {
   return feriado != null;
 }
 
-TryGeneradorAgenda(new Date(), 60).catch(console.dir);
+TryGeneradorAgenda(new Date(), 0).catch(console.dir);

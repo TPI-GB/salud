@@ -245,8 +245,12 @@ export default function TurnoList() {
               showTotal={(total) => `Total ${total} Turnos`}
               onChange={handleChange}
             />
+
+              
           </Stack>
+          
         </div>
+        {AsignarTurno()}
       </Container>
     </React.Fragment>
   );

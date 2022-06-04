@@ -1,6 +1,17 @@
 const Turno = require("../models/turno-model");
 
 class TurnoRepository {
+
+  async getTurnoById(id) {
+    try {
+      const turno = await Turno.findById(id);
+
+      return turno;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async getTurnos() {
     return await Turno.find();
   }

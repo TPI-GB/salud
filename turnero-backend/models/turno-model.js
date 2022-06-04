@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 
 const TurnoSchema = Schema(
   {
-    fecha: { type: Date, require: true },
+    fecha: { type: Date, required: true },
+    lugar: { type: String, required: true },
     horaInicio: { type: Number, require: true },
     minutoInicio: { type: Number, require: true },
     medico: { type: String },
@@ -15,8 +16,8 @@ const TurnoSchema = Schema(
     lugar: { type: String },
   },
   {
-    timestamps: true,
+    timestamps: { createdAt: "creacion", updatedAt: "ultimaModificacion" },
   }
 );
 
-module.exports = mongoose.model("Turnos", TurnoSchema);
+module.exports = mongoose.model("Turno", TurnoSchema);

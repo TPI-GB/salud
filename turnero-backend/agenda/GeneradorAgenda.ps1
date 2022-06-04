@@ -1,5 +1,5 @@
-Start-Transcript "./log.txt"
+Start-Transcript ".\log.txt" 
 
-node ./GeneradorAgenda.cjs
+node .\GeneradorAgenda.cjs
 
 Stop-Transcript
