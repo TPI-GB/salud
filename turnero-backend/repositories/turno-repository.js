@@ -114,14 +114,16 @@ class TurnoRepository {
 
   async getTurnoPorNombreYFecha(data) {
     const { fecha, medico } = data;
-    let fechaFilter = { fecha };
-    let medicoFilter = { medico: { $regex: medico } };
-
-    const turnoFilter = Turno.find({
-      $and: [fechaFilter, medicoFilter],
-    });
-
-    return turnoFilter;
+    const turnos = await Turno.find();
+    const fechaDate = new Date(fecha);
+    const turnosFilter = turnos.filter(
+      (t) =>
+        t.medico === medico &&
+        t.fecha.getDate() === fechaDate.getDate() &&
+        t.fecha.getMonth() === fechaDate.getMonth() &&
+        t.fecha.getFullYear() === fechaDate.getFullYear()
+    );
+    return turnosFilter;
   }
   async anularTurno() {
     try {

@@ -33,21 +33,19 @@ class TurnoService {
     return this.turnoRepository.borrarTurno(data);
   }
 
-  async getTurnoPorNombreYFecha(data){
+  async getTurnoPorNombreYFecha(data) {
     return this.turnoRepository.getTurnoPorNombreYFecha(data);
   }
 
   async anularTurno(data) {
     return this.turnoRepository.anularTurno(data);
-
   }
 
   async anularTodosLosTurnos(data) {
     return this.turnoRepository.anularTodosLosTurnos(data);
-
   }
 
-  async liberarTurno(data){
+  async liberarTurno(data) {
     return this.turnoRepository.liberarTurno(data);
   }
 }

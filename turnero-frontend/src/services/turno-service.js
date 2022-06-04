@@ -34,7 +34,7 @@ export async function AsignarTurno(data) {
 export async function GetTurnos() {
   try {
     const response = await axios({
-      url: `${baseUrl}/`,
+      url: `${baseUrl}/turns`,
       method: "GET",
     });
     return response.data;
@@ -98,4 +98,18 @@ export async function EditTurno(data, id) {
       confirmButtonText: "Ok",
     });
   }
+}
+
+export async function GetTurnosFilter(data) {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/turns/buscador`,
+      method: "POST",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+  return [];
 }
