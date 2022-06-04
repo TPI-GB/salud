@@ -31,17 +31,21 @@ class UserController {
     this.router.post("/login", (req, res) => {
       this.loginUser(req, res);
     });
-    this.router.put("/:id", 
-    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
-    (req, res) => {
-      this.updateUser(req, res);
-    });
-    
-    this.router.get("/:tipoDocumento/:numeroDocumento",
-    [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
-    (req, res) => {
-      this.getUserByDocument(req, res);
-    });
+    this.router.put(
+      "/:id",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.updateUser(req, res);
+      }
+    );
+
+    this.router.get(
+      "/:tipoDocumento/:numeroDocumento",
+      [auth, rolMiddleware(["Medico", "Secretaria", "Director", "Admin"])],
+      (req, res) => {
+        this.getUserByDocument(req, res);
+      }
+    );
   }
 
   getUserByDocument(req, res) {

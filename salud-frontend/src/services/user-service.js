@@ -75,7 +75,7 @@ export async function getUsers() {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const response = await axios.get(`${config.baseURL}:${config.port}/users`, {
-    //inyecta token
+
     headers: {
       Authorization: `Bearer ${user.data.token}`,
     },
