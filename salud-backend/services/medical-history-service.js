@@ -52,6 +52,13 @@ class MedicalHistoryService {
 
     return medicalHistory;
   }
+  //tomas
+  async getMedicalConsultationByNameAndSurname(name, surname) {
+    let medicalHistory =
+      await this.medicalHistoryRepository.findByNameAndSurname(name, surname);
+
+    return medicalHistory;
+  }
 
   async existsMedicalHistoryByDocument(docType, docNumber) {
     return await this.medicalHistoryRepository.existsByDocument(
@@ -63,6 +70,20 @@ class MedicalHistoryService {
   async existsMedicalHistoryByNumber(medicalHistoryNumber) {
     return await this.medicalHistoryRepository.existsByNumber(
       medicalHistoryNumber
+    );
+  }
+
+  //tomas
+  async existsMedicalHistoryByNameAndSurname(name, surname) {
+    return await this.medicalHistoryRepository.existsByNameAndSurname(
+      name,
+      surname
+    );
+  }
+  async getMedicalHistoryByNameAndSurname(name, surname) {
+    return await this.medicalHistoryRepository.findByNameAndSurname(
+      name,
+      surname
     );
   }
 

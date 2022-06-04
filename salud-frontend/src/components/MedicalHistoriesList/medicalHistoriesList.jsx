@@ -6,7 +6,7 @@ import ForwardIcon from "@mui/icons-material/Forward";
 
 export default function MedicalHistoriesList(props) {
   const { mhList } = props;
-
+  console.log(mhList);
   return (
     <List
       sx={{ minWidth: 300, maxWidth: 500, ml: "auto", mr: "auto", mt: "4px" }}
