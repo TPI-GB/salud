@@ -15,9 +15,6 @@ import {
   Select,
   TextField,
   Stack,
-  Modal,
-  Box,
-  Typography,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -30,7 +27,6 @@ import {
   GetTurnosFilter,
   AnularTurnoRequest,
   LiberarTurnoRequest,
-  EditarTurnoRequest,
 } from "../../services/turno-service";
 
 export default function TurnoList() {
@@ -230,7 +226,7 @@ export default function TurnoList() {
                   title={<h4>{LiberarTurnoBoton(turno, onSubmit)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{EditarTurnoBoton(turno, onSubmit)}</h4>}
+                  title={<h4>{EditarTurnoBoton(turno)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{AsignarTurnoBoton(turno)}</h4>}
@@ -336,81 +332,15 @@ function LiberarTurnoBoton(turno, actualizar) {
   return button;
 }
 
-async function EditarTurno(turno, actualizar) {
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-
-  const [open, setOpen] = React.useState(true);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const { register, handleSubmit } = useForm();
-
-  const onSubmit = async () => {
-    let data = {};
-    data.id = turno._id;
-    data.paciente = "Pepe 2";
-    await EditarTurnoRequest(data);
-    actualizar();
-  };
-
-  return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Button onClick={handleOpen}>Asignar</Button>
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Editar Turno
-            </Typography>
-            <Stack direction="row" ml={2} mt={2}>
-              <TextField
-                style={{ background: "white" }}
-                required
-                {...register("paciente")}
-                label="Nombre De Paciente"
-              />
-            </Stack>
-
-            <Stack direction="row" ml={2} mt={2}>
-              <Button
-                variant="contained"
-                type="submit"
-                style={{ background: "#39A2DB" }}
-              >
-                Guardar Cambio
-              </Button>
-            </Stack>
-          </Box>
-        </Modal>
-      </form>
-    </div>
-  );
-}
-
-function EditarTurnoBoton(turno, actualizar) {
+function EditarTurnoBoton(turno) {
   let button;
-  if (turno.anulado) {
+  if (turno.anulado || !turno.disponible) {
     button = (
       <Button
         size="small"
         variant="contained"
         disabled
         style={{ background: "blue" }}
-        onClick={() => EditarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Editar</div>
         <EditTwoToneIcon />
@@ -422,7 +352,8 @@ function EditarTurnoBoton(turno, actualizar) {
         size="small"
         variant="contained"
         style={{ background: "blue" }}
-        onClick={() => EditarTurno(turno, actualizar)}
+        href={`/edit/${turno._id}`}
+        target="_blank"
       >
         <div style={{ marginRight: 8 }}>Editar</div>
         <EditTwoToneIcon />
