@@ -398,7 +398,7 @@ function EditarTurnoBoton(
   };
 
   const getButton = () => {
-    if (turno.anulado || !turno.disponible) {
+    if (turno.anulado || turno.disponible) {
       return (
         <Button
           size="small"
