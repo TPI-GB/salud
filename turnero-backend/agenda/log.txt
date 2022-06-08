@@ -1,12 +1,12 @@
 ﻿**********************
 Inicio de la transcripción de Windows PowerShell
-Hora de inicio: 20220604111329
+Hora de inicio: 20220608190255
 Nombre de usuario: DESKTOP-6RFD0IG\Franco
 Usuario RunAs: DESKTOP-6RFD0IG\Franco
 Nombre de la configuración: 
 Máquina: DESKTOP-6RFD0IG (Microsoft Windows NT 10.0.19043.0)
 Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-Id. de proceso: 11276
+Id. de proceso: 22216
 PSVersion: 5.1.19041.1682
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.1682
@@ -18,10 +18,10 @@ SerializationVersion: 1.1.0.1
 **********************
 La transcripción ha comenzado. El archivo de salida es .\log.txt
 Mongoose connect
-Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argentina)
+Turnos para el dia: Sun Aug 07 2022 19:03:18 GMT-0300 (hora estándar de Argentina)
 ---Turnos generados este dia---
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 7,
   minutoInicio: 30,
@@ -30,13 +30,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688a3bae99387061750e"),
-  creacion: 2022-06-04T14:13:30.906Z,
-  ultimaModificacion: 2022-06-04T14:13:30.906Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26475"),
+  creacion: 2022-06-08T22:03:19.038Z,
+  ultimaModificacion: 2022-06-08T22:03:19.038Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 8,
   minutoInicio: 15,
@@ -45,13 +45,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617511"),
-  creacion: 2022-06-04T14:13:31.438Z,
-  ultimaModificacion: 2022-06-04T14:13:31.438Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26478"),
+  creacion: 2022-06-08T22:03:19.057Z,
+  ultimaModificacion: 2022-06-08T22:03:19.057Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 9,
   minutoInicio: 0,
@@ -60,13 +60,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617514"),
-  creacion: 2022-06-04T14:13:31.446Z,
-  ultimaModificacion: 2022-06-04T14:13:31.446Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd2647b"),
+  creacion: 2022-06-08T22:03:19.065Z,
+  ultimaModificacion: 2022-06-08T22:03:19.065Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 9,
   minutoInicio: 45,
@@ -75,13 +75,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617517"),
-  creacion: 2022-06-04T14:13:31.453Z,
-  ultimaModificacion: 2022-06-04T14:13:31.453Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd2647e"),
+  creacion: 2022-06-08T22:03:19.074Z,
+  ultimaModificacion: 2022-06-08T22:03:19.074Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 10,
   minutoInicio: 30,
@@ -90,13 +90,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae99387061751a"),
-  creacion: 2022-06-04T14:13:31.463Z,
-  ultimaModificacion: 2022-06-04T14:13:31.463Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26481"),
+  creacion: 2022-06-08T22:03:19.086Z,
+  ultimaModificacion: 2022-06-08T22:03:19.086Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 11,
   minutoInicio: 15,
@@ -105,13 +105,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae99387061751d"),
-  creacion: 2022-06-04T14:13:31.479Z,
-  ultimaModificacion: 2022-06-04T14:13:31.479Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26484"),
+  creacion: 2022-06-08T22:03:19.126Z,
+  ultimaModificacion: 2022-06-08T22:03:19.126Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 12,
   minutoInicio: 0,
@@ -120,13 +120,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617520"),
-  creacion: 2022-06-04T14:13:31.484Z,
-  ultimaModificacion: 2022-06-04T14:13:31.484Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26487"),
+  creacion: 2022-06-08T22:03:19.139Z,
+  ultimaModificacion: 2022-06-08T22:03:19.139Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 12,
   minutoInicio: 45,
@@ -135,13 +135,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617523"),
-  creacion: 2022-06-04T14:13:31.491Z,
-  ultimaModificacion: 2022-06-04T14:13:31.491Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd2648a"),
+  creacion: 2022-06-08T22:03:19.150Z,
+  ultimaModificacion: 2022-06-08T22:03:19.150Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 13,
   minutoInicio: 30,
@@ -150,13 +150,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617526"),
-  creacion: 2022-06-04T14:13:31.498Z,
-  ultimaModificacion: 2022-06-04T14:13:31.498Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd2648d"),
+  creacion: 2022-06-08T22:03:19.159Z,
+  ultimaModificacion: 2022-06-08T22:03:19.159Z,
   __v: 0
 }
 {
-  fecha: 2022-08-03T14:13:30.331Z,
+  fecha: 2022-08-07T22:03:18.006Z,
   lugar: 'Un Lugar',
   horaInicio: 14,
   minutoInicio: 15,
@@ -165,13 +165,13 @@ Turnos para el dia: Wed Aug 03 2022 11:13:30 GMT-0300 (hora estándar de Argenti
   disponible: true,
   anulado: false,
   esSobreTurno: true,
-  _id: new ObjectId("629b688b3bae993870617529"),
-  creacion: 2022-06-04T14:13:31.504Z,
-  ultimaModificacion: 2022-06-04T14:13:31.504Z,
+  _id: new ObjectId("62a11ca725ac80e8cfd26490"),
+  creacion: 2022-06-08T22:03:19.167Z,
+  ultimaModificacion: 2022-06-08T22:03:19.167Z,
   __v: 0
 }
 END
 **********************
 Fin de la transcripción de Windows PowerShell
-Hora de finalización: 20220604111331
+Hora de finalización: 20220608190319
 **********************
