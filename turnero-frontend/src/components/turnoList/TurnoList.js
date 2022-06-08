@@ -15,8 +15,14 @@ import {
   Select,
   TextField,
   Stack,
+  Box,
+  Modal,
+  Grid,
+  Card,
+  CardContent,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -27,6 +33,7 @@ import {
   GetTurnosFilter,
   AnularTurnoRequest,
   LiberarTurnoRequest,
+  EditarTurnoRequest,
 } from "../../services/turno-service";
 
 export default function TurnoList() {
@@ -38,6 +45,8 @@ export default function TurnoList() {
   const [medicos, setMedicos] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
+  const [pacienteEdit, setPacienteEdit] = useState("");
 
   const { handleSubmit } = useForm();
 
@@ -59,6 +68,15 @@ export default function TurnoList() {
     setTotal(turnos.length);
   };
 
+  const changePacienteEdit = async (turno) => {
+    let data = {};
+    data.id = turno._id;
+    data.paciente = pacienteEdit;
+    await EditarTurnoRequest(data);
+    changeClose();
+    onSubmit();
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -67,6 +85,18 @@ export default function TurnoList() {
     const response = await GetTurnos();
     const medicos = Array.from(new Set(response)).map((t) => t.medico);
     setMedicos([...new Set(medicos)]);
+  };
+
+  const changeOpen = () => {
+    setOpen(true);
+  };
+
+  const changeClose = () => {
+    setOpen(false);
+  };
+
+  const handleChangePacienteEdit = (e) => {
+    setPacienteEdit(e.target.value);
   };
 
   const handleChange = (event) => {
@@ -226,7 +256,19 @@ export default function TurnoList() {
                   title={<h4>{LiberarTurnoBoton(turno, onSubmit)}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{EditarTurnoBoton(turno)}</h4>}
+                  title={
+                    <h4>
+                      {EditarTurnoBoton(
+                        turno,
+                        changeOpen,
+                        changeClose,
+                        handleChangePacienteEdit,
+                        open,
+                        pacienteEdit,
+                        changePacienteEdit
+                      )}
+                    </h4>
+                  }
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={<h4>{AsignarTurnoBoton(turno)}</h4>}
@@ -332,35 +374,103 @@ function LiberarTurnoBoton(turno, actualizar) {
   return button;
 }
 
-function EditarTurnoBoton(turno) {
-  let button;
-  if (turno.anulado || !turno.disponible) {
-    button = (
-      <Button
-        size="small"
-        variant="contained"
-        disabled
-        style={{ background: "blue" }}
+function EditarTurnoBoton(
+  turno,
+  changeOpen,
+  changeClose,
+  handleChangePacienteEdit,
+  open,
+  pacienteEdit,
+  changePacienteEdit
+) {
+  const stylebox = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "90%",
+    width: 750,
+    overflow: "auto",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const getButton = () => {
+    if (turno.anulado || !turno.disponible) {
+      return (
+        <Button
+          size="small"
+          variant="contained"
+          disabled
+          style={{ background: "blue" }}
+        >
+          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+            Editar
+          </div>
+          <EditTwoToneIcon />
+        </Button>
+      );
+    } else {
+      return (
+        <Button size="small" variant="contained" style={{ background: "blue" }}>
+          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+            Editar
+          </div>
+          <EditTwoToneIcon />
+        </Button>
+      );
+    }
+  };
+  return (
+    <div>
+      {getButton()}
+      <Modal
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <div style={{ marginRight: 8 }}>Editar</div>
-        <EditTwoToneIcon />
-      </Button>
-    );
-  } else {
-    button = (
-      <Button
-        size="small"
-        variant="contained"
-        style={{ background: "blue" }}
-        href={`/edit/${turno._id}`}
-        target="_blank"
-      >
-        <div style={{ marginRight: 8 }}>Editar</div>
-        <EditTwoToneIcon />
-      </Button>
-    );
-  }
-  return button;
+        <Box sx={stylebox}>
+          <Grid item xs={4} style={{ textAlign: "center" }}>
+            <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
+              <CardContent>
+                <h1>Editar Turno</h1>
+                <Stack direction="row" ml={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEdit}
+                    value={pacienteEdit}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction="row" ml={2} mt={2}>
+                  <Button
+                    onClick={() => changePacienteEdit(turno)}
+                    variant="contained"
+                    style={{ background: "#39A2DB" }}
+                  >
+                    <CheckCircleTwoToneIcon /> Guardar Cambios
+                  </Button>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Button
+            size="small"
+            variant="contained"
+            style={{ background: "blue" }}
+          >
+            <div style={{ marginRight: 8 }} onClick={() => changeClose()}>
+              Cerrar
+            </div>
+          </Button>
+        </Box>
+      </Modal>
+    </div>
+  );
 }
 
 function AsignarTurno() {
