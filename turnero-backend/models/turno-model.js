@@ -12,7 +12,7 @@ const TurnoSchema = Schema(
     paciente: { type: String, default: "" },
     disponible: { type: Boolean, default: true },
     anulado: { type: Boolean, default: false },
-    esSobreTurno: { type: Boolean, default: true },
+    esSobreTurno: { type: Boolean, default: false },
     lugar: { type: String },
   },
   {
