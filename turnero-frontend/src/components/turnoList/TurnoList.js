@@ -46,7 +46,11 @@ export default function TurnoList() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [pacienteEdit, setPacienteEdit] = useState("");
+  const [pacienteEditNombre, setPacienteEditNombre] = useState("");
+  const [pacienteEditApellido, setPacienteEditApellido] = useState("");
+  const [pacienteEditObraSocial, setPacienteEditObraSocial] = useState("");
+  const [pacienteEditDni, setPacienteEditDni] = useState("");
+  const [pacienteEditTelefono, setPacienteEditTelefono] = useState("");
 
   const { handleSubmit } = useForm();
 
@@ -70,10 +74,21 @@ export default function TurnoList() {
 
   const changePacienteEdit = async (turno) => {
     let data = {};
+    let paciente = {};
+    paciente.nombre = pacienteEditNombre;
+    paciente.apellido = pacienteEditApellido;
+    paciente.dni = pacienteEditDni;
+    paciente.obraSocial = pacienteEditObraSocial;
+    paciente.telefono = pacienteEditTelefono;
     data.id = turno._id;
-    data.paciente = pacienteEdit;
+    data.paciente = paciente;
     await EditarTurnoRequest(data);
     changeClose();
+    setPacienteEditNombre("");
+    setPacienteEditApellido("");
+    setPacienteEditDni("");
+    setPacienteEditObraSocial("");
+    setPacienteEditTelefono("");
     onSubmit();
   };
 
@@ -93,10 +108,27 @@ export default function TurnoList() {
 
   const changeClose = () => {
     setOpen(false);
+    setPacienteEditNombre("");
+    setPacienteEditApellido("");
+    setPacienteEditDni("");
+    setPacienteEditObraSocial("");
+    setPacienteEditTelefono("");
   };
 
-  const handleChangePacienteEdit = (e) => {
-    setPacienteEdit(e.target.value);
+  const handleChangePacienteEditNombre = (e) => {
+    setPacienteEditNombre(e.target.value);
+  };
+  const handleChangePacienteEditApellido = (e) => {
+    setPacienteEditApellido(e.target.value);
+  };
+  const handleChangePacienteEditDni = (e) => {
+    setPacienteEditDni(e.target.value);
+  };
+  const handleChangePacienteEditObraSocial = (e) => {
+    setPacienteEditObraSocial(e.target.value);
+  };
+  const handleChangePacienteEditTelefono = (e) => {
+    setPacienteEditTelefono(e.target.value);
   };
 
   const handleChange = (event) => {
@@ -240,7 +272,7 @@ export default function TurnoList() {
                 ></List.Item.Meta>
                 <List.Item.Meta title={<h4>{turno.lugar}</h4>}></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{turno.paciente}</h4>}
+                  title={<h4>{turno.paciente.nombre}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
                   title={
@@ -262,9 +294,17 @@ export default function TurnoList() {
                         turno,
                         changeOpen,
                         changeClose,
-                        handleChangePacienteEdit,
                         open,
-                        pacienteEdit,
+                        handleChangePacienteEditNombre,
+                        handleChangePacienteEditApellido,
+                        handleChangePacienteEditDni,
+                        handleChangePacienteEditObraSocial,
+                        handleChangePacienteEditTelefono,
+                        pacienteEditNombre,
+                        pacienteEditApellido,
+                        pacienteEditDni,
+                        pacienteEditObraSocial,
+                        pacienteEditTelefono,
                         changePacienteEdit
                       )}
                     </h4>
@@ -378,9 +418,17 @@ function EditarTurnoBoton(
   turno,
   changeOpen,
   changeClose,
-  handleChangePacienteEdit,
   open,
-  pacienteEdit,
+  handleChangePacienteEditNombre,
+  handleChangePacienteEditApellido,
+  handleChangePacienteEditDni,
+  handleChangePacienteEditObraSocial,
+  handleChangePacienteEditTelefono,
+  pacienteEditNombre,
+  pacienteEditApellido,
+  pacienteEditDni,
+  pacienteEditObraSocial,
+  pacienteEditTelefono,
   changePacienteEdit
 ) {
   const stylebox = {
@@ -436,17 +484,73 @@ function EditarTurnoBoton(
             <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
               <CardContent>
                 <h1>Editar Turno</h1>
-                <Stack direction="row" ml={2}>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
                   <TextField
                     style={{ background: "white" }}
-                    onChange={handleChangePacienteEdit}
-                    value={pacienteEdit}
+                    onChange={handleChangePacienteEditNombre}
+                    value={pacienteEditNombre}
+                    label={"Nuevo nombre de paciente"}
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
                 </Stack>
-                <Stack direction="row" ml={2} mt={2}>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditNombre}
+                    value={pacienteEditNombre}
+                    label={"Nuevo nombre de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditApellido}
+                    value={pacienteEditApellido}
+                    label={"Nuevo apellido de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditDni}
+                    value={pacienteEditDni}
+                    label={"Nuevo DNI de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditObraSocial}
+                    value={pacienteEditObraSocial}
+                    label={"Nueva obra social de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditTelefono}
+                    value={pacienteEditTelefono}
+                    label={"Nueva obra social de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
                   <Button
                     onClick={() => changePacienteEdit(turno)}
                     variant="contained"
@@ -455,18 +559,23 @@ function EditarTurnoBoton(
                     <CheckCircleTwoToneIcon /> Guardar Cambios
                   </Button>
                 </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    style={{ background: "blue" }}
+                  >
+                    <div
+                      style={{ marginRight: 8 }}
+                      onClick={() => changeClose()}
+                    >
+                      Cerrar
+                    </div>
+                  </Button>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
-          <Button
-            size="small"
-            variant="contained"
-            style={{ background: "blue" }}
-          >
-            <div style={{ marginRight: 8 }} onClick={() => changeClose()}>
-              Cerrar
-            </div>
-          </Button>
         </Box>
       </Modal>
     </div>
