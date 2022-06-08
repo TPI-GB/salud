@@ -7,7 +7,7 @@ class TurnoController {
     this.router = express.Router();
     this.router.get("/id", (req, res) => {
       this.getTurnoById(req, res);
-    })
+    });
     this.router.get("/", (req, res) => {
       this.getTurnos(req, res);
     });
@@ -20,11 +20,14 @@ class TurnoController {
     this.router.post("/on", (req, res) => {
       this.crearSobreTurno(req, res);
     });
-    this.router.put("/", (req, res) => {
+    this.router.put("/edit", (req, res) => {
       this.editarTurno(req, res);
     });
     this.router.put("/asignar", (req, res) => {
       this.asignarTurno(req, res);
+    });
+    this.router.put("/liberar", (req, res) => {
+      this.liberarTurno(req, res);
     });
     this.router.delete("/", (req, res) => {
       this.borrarTurno(req, res);
@@ -37,7 +40,7 @@ class TurnoController {
     });
   }
 
-  getTurnoById(req, res){
+  getTurnoById(req, res) {
     const data = req.body;
 
     const turnoPromise = this.turnoService.getTurnoById(data);

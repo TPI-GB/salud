@@ -37,9 +37,15 @@ export default function TurnoList() {
   const [medicos, setMedicos] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
+  const [open, setOpen] = React.useState(false);
 
   const { handleSubmit } = useForm();
 
+  const chageOpen = () => {
+    setOpen(true)
+  }
+
+  
   const onSubmit = async () => {
     let data = {};
     data.medico = medico;
@@ -226,7 +232,7 @@ export default function TurnoList() {
                   title={<h4>{EditarTurnoBoton()}</h4>}
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{AsignarTurnoBoton(turno)}</h4>}
+                  title={<h4>{AsignarTurnoBoton(turno, open, changeOpen, changeClose, onSubmit)}</h4>}
                 ></List.Item.Meta>
               </List.Item>
             )}
@@ -332,7 +338,7 @@ function EditarTurnoBoton() {
   return button;
 }
 
-function AsignarTurnoBoton(turno) {
+function AsignarTurnoBoton(turno, open, chageOpen, changeClose, onSubmit) {
 
   const style = {
     position: 'absolute',
@@ -346,7 +352,6 @@ function AsignarTurnoBoton(turno) {
     p: 4,
   };
 
-  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit } = useForm();
