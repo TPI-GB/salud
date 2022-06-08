@@ -13,7 +13,7 @@ import { Link, useHistory } from "react-router-dom";
 import loginImg from "../../assets/img/loginlogo.svg";
 import { loginUser } from "../../services/user-service";
 import "./Login.scss";
-import "./recuperarPass";
+import "./resetPass";
 
 export default function Login() {
   const [valores, setValores] = useState({
@@ -105,7 +105,7 @@ export default function Login() {
             Usuario o contraseña incorrectos, por favor, inténtelo nuevamente.
           </Alert>
         </Collapse>
-        <Link className="reset" to="./recuperarPass">
+        <Link className="reset" to="./resetPass">
           He olvidado mi contraseña
         </Link>
         <Button

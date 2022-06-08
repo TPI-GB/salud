@@ -3,36 +3,31 @@ import {
     Box,
     TextField,
     Button,
+    Alert,
+    Collapse
 } from "@mui/material";
 import "./Login.scss";
-import Alerta from "./Alerta";
 import axios from "axios";
 
-export default function RecuperarPass() {
+export default function ResetPass() {
 
     const [email, setEmail] = useState('');
-	const [alerta, setAlerta] = useState({});
+    const [alerta, setAlerta] = useState(false);
     
     const handleSubmit = async e => {
         e.preventDefault();
         
 	if(email === '' || email.length <6) {
-		setAlerta({
-			msg: 'El Email es obligatorio',
-			error: true
-		});
+		setAlerta(true);
 		return
 	}
     try {
         const { data } = await axios.post(`http://localhost:8080/users/reset`, { email })
 
-        console.log(data)
     } catch (error) {
-        console.log(error.response)
+        setAlerta(false);
     }
       }
-	
-	const { msg } = alerta
 
     return (
         <div className="loginBackground">
@@ -40,7 +35,6 @@ export default function RecuperarPass() {
                 Reestablece tu contraseña
             </h1>
             <Box component="form" className="loginForm">
-                { msg && <Alerta alerta={alerta} /> }
                 <TextField
                     fullWidth
                     sx={{ marginTop: "20px" }}
@@ -50,6 +44,17 @@ export default function RecuperarPass() {
                     value={email}
                     onChange={ e => setEmail(e.target.value)}
                 />
+                <Collapse in={alerta} sx={{ mt: "20px" }}>
+                    <Alert
+                        variant="filled"
+                        severity="error"
+                        onClose={() => {
+                            setAlerta(false);
+                        }}
+                    >
+                        El email es obligatorio.
+                    </Alert>
+                </Collapse>
                 <Button
                     type="submit"
                     sx={{ marginTop: "20px" }}
