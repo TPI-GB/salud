@@ -17,8 +17,8 @@ import CreateConsultation from "./pages/createConsultation";
 import CreateMT from "./pages/createMT";
 import GuardedRoute from "./components/GuardedRoute";
 import Navbar from "./components/Header/Navbar";
-import confirmarRecuperarPass from "./pages/login/confirmarRecuperarPass";
-import recuperarPass from "./pages/login/recuperarPass";
+import ConfirmarPass from "./pages/login/confirmarPass";
+import RecuperarPass from "./pages/login/recuperarPass";
 import error401 from "./pages/error401/error401";
 import jwtInterceptor from "./services/interceptors";
 
@@ -27,8 +27,8 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/recuperarPass" component={recuperarPass} />
-        <Route exact path="/confirmarPass/:token" component={confirmarRecuperarPass} />
+        <Route exact path="/resetPass" component={RecuperarPass} />
+        <Route exact path="/confirmarPass/:token" component={ConfirmarPass} />
         <Route exact path="/login" component={Login} />
         <Redirect exact from="/" to={"/Home"} />
         <>

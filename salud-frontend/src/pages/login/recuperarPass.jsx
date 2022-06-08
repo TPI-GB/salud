@@ -55,7 +55,7 @@ export default function RecuperarPass() {
                     sx={{ marginTop: "20px" }}
                     variant="contained"
                     color="success"
-                    onClick={handleSubmit}
+                    onSubmit={handleSubmit}
                 >
                     Enviar email
                 </Button>

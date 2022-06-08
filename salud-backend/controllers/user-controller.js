@@ -1,6 +1,7 @@
 const express = require("express");
 const UserService = require("../services/user-service");
 const emailResetPass = require("../helpers/email");
+
 const auth = require("../middleware/auth");
 const rolMiddleware = require("../middleware/roles");
 
@@ -38,7 +39,7 @@ class UserController {
       this.updateUser(req, res);
     });
     this.router.post("/reset", (req, res) => {
-      emailResetPass(req, res);
+      resetPass(req, res);
     });
     
     this.router.get("/:tipoDocumento/:numeroDocumento",
@@ -186,7 +187,7 @@ class UserController {
       });
   }
 
-  emailResetPass = async (req, res) => {
+  resetPass = async (req, res) => {
     const { email } = req.body;
     console.log(email)
     const user = await this.userService.getUserByEmail(email);
@@ -196,8 +197,11 @@ class UserController {
       }
 
       try {
+        user.token = generarId();
+        await user.save();
+        console.log(token)
         //Enviar mail
-        emailOlvidePassword({
+        emailResetPass({
           email: user.email,
           nombre: user.nombre,
           token: user.token,
