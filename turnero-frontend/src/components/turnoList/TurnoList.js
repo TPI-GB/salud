@@ -15,6 +15,9 @@ import {
   Select,
   TextField,
   Stack,
+  Modal,
+  Box,
+  Typography
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -22,7 +25,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { GetTurnos, GetTurnosFilter } from "../../services/turno-service";
+import { GetTurnos, GetTurnosFilter, AsignarTurno } from "../../services/turno-service";
+import { Link } from "react-router-dom";
 
 export default function TurnoList() {
   const [date, setDate] = useState("");
@@ -246,14 +250,17 @@ export default function TurnoList() {
           </Stack>
           
         </div>
-        {AsignarTurno()}
       </Container>
     </React.Fragment>
   );
 }
 
 function AnularTurno() {
-  return;
+  <Link to={``}>
+    <Button variant="contained" style={{ background: "#053742" }}>
+        Asignar  
+    </Button>
+  </Link>
 }
 
 function AnularTurnoBoton() {
@@ -325,11 +332,30 @@ function EditarTurnoBoton() {
   return button;
 }
 
-function AsignarTurno() {
-  return;
-}
-
 function AsignarTurnoBoton(turno) {
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const { register, handleSubmit } = useForm();
+ 
+  const onSubmit = async (data) => {
+    await AsignarTurno(data)
+    console.log(data);
+  };
+
   let button;
   if (!turno.disponible) {
     button = (
@@ -338,24 +364,102 @@ function AsignarTurnoBoton(turno) {
         disabled
         variant="contained"
         style={{ background: "green" }}
-        onClick={() => AsignarTurno()}
+        onClick={handleOpen}
       >
         <div style={{ marginRight: 8 }}>Asignar</div>
         <AssignmentTurnedInIcon />
       </Button>
     );
   } else {
+    
     button = (
+
       <Button
         size="small"
         variant="contained"
         style={{ background: "green" }}
-        onClick={() => AsignarTurno()}
+        onClick={handleOpen} 
       >
         <div style={{ marginRight: 8 }}>Asignar</div>
         <AssignmentTurnedInIcon />
       </Button>
+      
     );
+    
   }
-  return button;
+  return (
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {button}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Asignar Turno
+          </Typography>
+          <Stack direction="row" ml={2} mt={2}>
+          <TextField
+            style={{ background: "white" }}
+            required
+            {...register("nombre")}
+            label="Nombre"
+            />
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+           <TextField
+            style={{ background: "white" }}
+            required
+            {...register("apellido")}
+            label="Apellido"
+            />
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+           <TextField
+            style={{ background: "white" }}
+            required
+            {...register("obraSocial")}
+            label="Obra social"
+            /> 
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+            <TextField
+            style={{ background: "white" }}
+            required
+            {...register("dni")}
+            label="DNI"
+            />     
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+            <TextField
+            style={{ background: "white" }}
+            required
+            {...register("telefono")}
+            label="Numero de telefono"
+            />     
+            </Stack>
+
+            <Stack direction="row" ml={2} mt={2}>
+            <Button
+              variant="contained"
+              type="submit"
+              style={{ background: "#39A2DB" }}
+            >
+               Guardar
+            </Button>
+            </Stack>
+        </Box>
+        
+      </Modal>
+      </form>
+    </div>
+  );
+  
 }
