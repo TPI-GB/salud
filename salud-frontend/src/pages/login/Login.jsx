@@ -35,8 +35,8 @@ export default function Login() {
       .then((usuario) => {
         // Guarga los datos del usuario registrado en localStorage
         sessionStorage.setItem("user", JSON.stringify(usuario));
-        // Para que el hook useHistory funcione, este componente debe estar envuelto
-        // en un componente Router, de lo contrario history quedara indefinido
+        // Para que ry quedara indefinidoel hook useHistory funcione, este componente debe estar envuelto
+        // en un componente Router, de lo contrario histo
         history.push("/Home");
       })
       .catch((err) => {

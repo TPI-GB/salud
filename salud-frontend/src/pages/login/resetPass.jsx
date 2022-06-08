@@ -10,13 +10,24 @@ import "./Login.scss";
 import axios from "axios";
 
 export default function ResetPass() {
-
+    const [valores, setValores] = useState({
+        email: "",
+      });
     const [email, setEmail] = useState('');
     const [alerta, setAlerta] = useState(false);
+
+    const handleChange = (event) => {
+        const { email, value } = event.target;
+        setValores({ ...valores, [email]: value });
+      };
     
     const handleSubmit = async e => {
-        e.preventDefault();
-        
+        event.preventDefault();
+        loginUser(valores)
+            .then((usuario) => {
+                // Comprobar que un mail valido
+                
+
 	if(email === '' || email.length <6) {
 		setAlerta(true);
 		return
