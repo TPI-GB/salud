@@ -12,7 +12,7 @@ const DisponibilidadUsuario = Schema({
       minutoInicio: { type: Number },
       horaFin: { type: Number },
       minutoFin: { type: Number },
-      diaDeSemana: { type: String },
+      diaDeSemana: { type: Number }, // 0: Domingo, 1: Lunes, 2: Martes, 3: Miercoles, 4: Jueves, 5: Viernes, 6: Sabado.
       duracion: { type: Number },
       lugar: { type: String },
     },
