@@ -34,7 +34,7 @@ import {
   AnularTurnoRequest,
   LiberarTurnoRequest,
   EditarTurnoRequest,
-  AsignarTurno
+  AsignarTurno,
 } from "../../services/turno-service";
 
 export default function TurnoList() {
@@ -89,18 +89,18 @@ export default function TurnoList() {
   };
 
   const changeOpen = (turno) => {
-    setTurnoAsignar(turno)
+    setTurnoAsignar(turno);
     setOpen(true);
-  }
+  };
 
-    const changeClose = () => {
-      setOpen(false);
-      setPacienteNombre("");
-      setPacienteApellido("");
-      setPacienteDni("");
-      setPacienteObraSocial("");
-      setPacienteTelefono("");
-    };
+  const changeClose = () => {
+    setOpen(false);
+    setPacienteNombre("");
+    setPacienteApellido("");
+    setPacienteDni("");
+    setPacienteObraSocial("");
+    setPacienteTelefono("");
+  };
 
   const changeOpenEdit = (turno) => {
     setTurnoEdit(turno);
@@ -121,7 +121,7 @@ export default function TurnoList() {
     setPacienteEditTelefono("");
   };
 
-  const changePaciente = async (turno) => {
+  const changePaciente = async () => {
     let data = {};
     data.id = turnoAsignar._id;
     data.pacienteNombre = pacienteNombre;
@@ -129,12 +129,9 @@ export default function TurnoList() {
     data.pacienteObraSocial = pacienteObraSocial;
     data.pacienteDni = pacienteDni;
     data.pacienteTelefono = pacienteTelefono;
-    
-    console.log(turno._id)
     await AsignarTurno(data);
     changeClose();
     onSubmit();
-    
   };
 
   const changePacienteEdit = async () => {
@@ -383,23 +380,27 @@ export default function TurnoList() {
                   }
                 ></List.Item.Meta>
                 <List.Item.Meta
-                  title={<h4>{AsignarTurnoBoton(
-                    turno,
-                    changeOpen,
-                    changeClose,
-                    handleChangePacienteNombre,
-                    handleChangePacienteApellido,
-                    handleChangePacienteObraSocial,
-                    handleChangePacienteDni,
-                    handleChangePacienteTelefono,
-                    open,
-                    pacienteNombre,
-                    pacienteApellido,
-                    pacienteObraSocial,
-                    pacienteDni,
-                    pacienteTelefono,
-                    changePaciente
-                    )}</h4>}
+                  title={
+                    <h4>
+                      {AsignarTurnoBoton(
+                        turno,
+                        changeOpen,
+                        changeClose,
+                        handleChangePacienteNombre,
+                        handleChangePacienteApellido,
+                        handleChangePacienteObraSocial,
+                        handleChangePacienteDni,
+                        handleChangePacienteTelefono,
+                        open,
+                        pacienteNombre,
+                        pacienteApellido,
+                        pacienteObraSocial,
+                        pacienteDni,
+                        pacienteTelefono,
+                        changePaciente
+                      )}
+                    </h4>
+                  }
                 ></List.Item.Meta>
               </List.Item>
             )}
@@ -632,7 +633,7 @@ function EditarTurnoBoton(
                     variant="contained"
                     style={{ background: "#39A2DB" }}
                   >
-                    <CheckCircleTwoToneIcon /> Guardar Cambi
+                    <CheckCircleTwoToneIcon /> Guardar Cambios
                   </Button>
                 </Stack>
                 <Stack direction={"row"} justifyContent="center" mt={2}>
@@ -658,7 +659,8 @@ function EditarTurnoBoton(
   );
 }
 
-function AsignarTurnoBoton(turno,
+function AsignarTurnoBoton(
+  turno,
   changeOpen,
   changeClose,
   handleChangePacienteNombre,
@@ -672,127 +674,138 @@ function AsignarTurnoBoton(turno,
   pacienteObraSocial,
   pacienteDni,
   pacienteTelefono,
-  changePaciente) {
-
-    console.log(turno)
-    const stylebox = {
-      position: "absolute",
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
-      height: "90%",
-      width: 750,
-      overflow: "auto",
-      bgcolor: "background.paper",
-      border: "2px solid #000",
-      boxShadow: 24,
-      p: 4,
-    };
-    const getButton = () => {
-      if (!turno.disponible || turno.anulado) {
-        return (
-          <Button
-            size="small"
-            disabled
-            variant="contained"
-            style={{ background: "green" }}
-          >
-            <div style={{ marginRight: 8 }} onClick={() => changeOpen(turno)}>Asignar</div>
-            <AssignmentTurnedInIcon />
-          </Button>
-        );
-      } else {
-        return(
-          <Button
-            size="small"
-            variant="contained"
-            style={{ background: "green" }} 
-          >
-            <div style={{ marginRight: 8 }} onClick={() => changeOpen(turno)}>Asignar</div>
-            <AssignmentTurnedInIcon />
-          </Button>
-        );
-    };
-  }
-  return (<div>
-    {getButton()}
-    <Modal
-      open={open}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={stylebox}>
-        <Grid item xs={4} style={{ textAlign: "center" }}>
-          <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
-            <CardContent>
-              <h1>Asignar Turno</h1>
-            <Stack direction="row" ml={2}>
-            <TextField
-            style={{ background: "white" }}
-            onChange={handleChangePacienteNombre}
-            value={pacienteNombre}
-            label="Nombre"
-            />
-            </Stack>
-
-            <Stack direction="row" ml={2} mt={2}>
-           <TextField
-            style={{ background: "white" }}
-            onChange={handleChangePacienteApellido}
-            value={pacienteApellido}
-            label="Apellido"
-            />
-            </Stack>
-
-            <Stack direction="row" ml={2} mt={2}>
-           <TextField
-            style={{ background: "white" }}
-            onChange={handleChangePacienteObraSocial}
-            value={pacienteObraSocial}
-            label="Obra social"
-            /> 
-            </Stack>
-
-            <Stack direction="row" ml={2} mt={2}>
-            <TextField
-            style={{ background: "white" }}
-            onChange={handleChangePacienteDni}
-            value={pacienteDni}
-            label="DNI"
-            />     
-            </Stack>
-
-            <Stack direction="row" ml={2} mt={2}>
-            <TextField
-            style={{ background: "white" }}
-            onChange={handleChangePacienteTelefono}
-            value={pacienteTelefono}
-            label="Numero de telefono"
-            />     
-            </Stack>
-
-              <Stack direction="row" ml={2} mt={2}>
-                <Button
-                  onClick={() => changePaciente(turno)}
-                  variant="contained"
-                  style={{ background: "#39A2DB" }}
-                >
-                  <CheckCircleTwoToneIcon /> Asignar
-                </Button>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Grid>
+  changePaciente
+) {
+  console.log(turno);
+  const stylebox = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "90%",
+    width: 750,
+    overflow: "auto",
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+  const getButton = () => {
+    if (!turno.disponible || turno.anulado) {
+      return (
+        <Button
+          size="small"
+          disabled
+          variant="contained"
+          style={{ background: "green" }}
+        >
+          <div style={{ marginRight: 8 }} onClick={() => changeOpen(turno)}>
+            Asignar
+          </div>
+          <AssignmentTurnedInIcon />
+        </Button>
+      );
+    } else {
+      return (
         <Button
           size="small"
           variant="contained"
-          style={{ background: "blue" }}
+          style={{ background: "green" }}
         >
-          <div style={{ marginRight: 8 }} onClick={() => changeClose()}>
-            Cerrar
+          <div style={{ marginRight: 8 }} onClick={() => changeOpen(turno)}>
+            Asignar
           </div>
+          <AssignmentTurnedInIcon />
         </Button>
-      </Box>
-    </Modal>
-  </div>);
+      );
+    }
+  };
+  return (
+    <div>
+      {getButton()}
+      <Modal
+        open={open}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={stylebox}>
+          <Grid item xs={4} style={{ textAlign: "center" }}>
+            <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
+              <CardContent>
+                <h1>Asignar Turno</h1>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteNombre}
+                    value={pacienteNombre}
+                    label="Nombre"
+                  />
+                </Stack>
+
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteApellido}
+                    value={pacienteApellido}
+                    label="Apellido"
+                  />
+                </Stack>
+
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteObraSocial}
+                    value={pacienteObraSocial}
+                    label="Obra social"
+                  />
+                </Stack>
+
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteDni}
+                    value={pacienteDni}
+                    label="DNI"
+                  />
+                </Stack>
+
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteTelefono}
+                    value={pacienteTelefono}
+                    label="Numero de telefono"
+                  />
+                </Stack>
+
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <Button
+                    onClick={() => changePaciente(turno)}
+                    variant="contained"
+                    style={{ background: "#39A2DB" }}
+                  >
+                    <CheckCircleTwoToneIcon /> Asignar
+                  </Button>
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    style={{ background: "blue" }}
+                  >
+                    <div
+                      style={{ marginRight: 8 }}
+                      onClick={() => changeClose()}
+                    >
+                      Cerrar
+                    </div>
+                  </Button>
+                </Stack>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Box>
+      </Modal>
+    </div>
+  );
 }
