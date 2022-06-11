@@ -1,13 +1,9 @@
 import axios from "axios";
-
-const config = {
-  baseURL: process.env.REACT_APP_API_URL,
-  port: process.env.REACT_APP_API_PORT,
-};
+import config from "../config";
 
 export async function getObrasSociales() {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/obras-sociales`
+    `${config.baseURL}${config.port}/obras-sociales`
   );
   return response;
 }

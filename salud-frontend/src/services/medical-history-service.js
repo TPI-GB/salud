@@ -1,14 +1,10 @@
 import axios from "axios";
 import moment from "moment";
-
-const config = {
-  baseURL: process.env.REACT_APP_API_URL,
-  port: process.env.REACT_APP_API_PORT,
-};
+import config from "../config";
 
 export async function getAllMedicalHistories() {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/`
+    `${config.baseURL}${config.port}/medical-histories/`
   );
 
   return response;
@@ -16,7 +12,7 @@ export async function getAllMedicalHistories() {
 
 export async function getMedicalHistoryById(id) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/${id}`
+    `${config.baseURL}${config.port}/medical-histories/${id}`
   );
 
   return response;
@@ -24,7 +20,7 @@ export async function getMedicalHistoryById(id) {
 
 export async function getMedicalHistoryDetailsById(id) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/details/${id}`
+    `${config.baseURL}${config.port}/medical-histories/details/${id}`
   );
 
   return response;
@@ -32,7 +28,7 @@ export async function getMedicalHistoryDetailsById(id) {
 
 export async function getMedicalTestByIds(idHistory, idTest) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test/${idTest}`
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/test/${idTest}`
   );
 
   return response;
@@ -50,7 +46,7 @@ export async function createMedicalTest(idHistory, medicalTestData) {
   console.log(formData);
 
   const response = await axios.post(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test`,
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/test`,
     medicalTestData
   );
 
@@ -61,7 +57,7 @@ export async function saveImageAndGetName(file) {
   const formdata = new FormData();
   formdata.append("image", file);
   const response = await fetch(
-    `${config.baseURL}:${config.port}/medical-histories/img`,
+    `${config.baseURL}${config.port}/medical-histories/img`,
     {
       method: "POST",
       enctype: "multipart/form-data",
@@ -75,7 +71,7 @@ export async function saveImageAndGetName(file) {
 
 export async function editMedicalTest(idHistory, idTest, medicalTestData) {
   const response = await axios.put(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/test/${idTest}`,
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/test/${idTest}`,
     medicalTestData
   );
 
@@ -84,7 +80,7 @@ export async function editMedicalTest(idHistory, idTest, medicalTestData) {
 
 export async function getMedicalConsultationByIds(idHistory, idConsultation) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`
   );
 
   return response;
@@ -95,7 +91,7 @@ export async function createMedicalConsultation(
   medicalConsultationData
 ) {
   const response = await axios.post(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation`,
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/consultation`,
     medicalConsultationData
   );
 
@@ -108,7 +104,7 @@ export async function editMedicalConsultation(
   medicalConsultationData
 ) {
   const response = await axios.put(
-    `${config.baseURL}:${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`,
+    `${config.baseURL}${config.port}/medical-histories/${idHistory}/consultation/${idConsultation}`,
     medicalConsultationData
   );
 
@@ -117,7 +113,7 @@ export async function editMedicalConsultation(
 
 export async function getMedicalHistoryByDocument(docType, docNumber) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories/${docType}/${docNumber}`
+    `${config.baseURL}${config.port}/medical-histories/${docType}/${docNumber}`
   );
 
   return response;
@@ -125,7 +121,7 @@ export async function getMedicalHistoryByDocument(docType, docNumber) {
 
 export async function getMedicalHistoryByNameAndSurname(name, surname) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/medical-histories?nombre=${name}&apellido=${surname}`
+    `${config.baseURL}${config.port}/medical-histories?nombre=${name}&apellido=${surname}`
   );
 
   return response;
@@ -133,7 +129,7 @@ export async function getMedicalHistoryByNameAndSurname(name, surname) {
 
 export async function createMedicalHistory(medicalHistoryData) {
   const response = await axios.post(
-    `${config.baseURL}:${config.port}/medical-histories/create`,
+    `${config.baseURL}${config.port}/medical-histories/create`,
     medicalHistoryData
   );
 
@@ -142,7 +138,7 @@ export async function createMedicalHistory(medicalHistoryData) {
 
 export async function editMedicalHistory(id, medicalHistoryData) {
   const response = await axios.put(
-    `${config.baseURL}:${config.port}/medical-histories/${id}`,
+    `${config.baseURL}${config.port}/medical-histories/${id}`,
     medicalHistoryData
   );
 

@@ -1,8 +1,5 @@
 import axios from "axios";
-const config = {
-  baseURL: process.env.REACT_APP_API_URL,
-  port: process.env.REACT_APP_API_PORT,
-};
+import config from "../config";
 
 export async function loginUser(credentials) {
   const { email, contrasenia } = credentials;
@@ -46,7 +43,7 @@ export async function createUser(data) {
 
   try {
     const response = await axios.post(
-      `${config.baseURL}:${config.port}/users/register`,
+      `${config.baseURL}${config.port}/users/register`,
       usuario,
       {
         headers: {
@@ -64,7 +61,7 @@ export async function createUser(data) {
 
 export async function updateUser(id, data) {
   const response = await axios.put(
-    `${config.baseURL}:${config.port}/users/${id}`,
+    `${config.baseURL}${config.port}/users/${id}`,
     data
   );
 
@@ -74,7 +71,7 @@ export async function updateUser(id, data) {
 export async function getUsers() {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  const response = await axios.get(`${config.baseURL}:${config.port}/users`, {
+  const response = await axios.get(`${config.baseURL}${config.port}/users`, {
     //inyecta token
     headers: {
       Authorization: `Bearer ${user.data.token}`,
@@ -85,7 +82,7 @@ export async function getUsers() {
 
 export async function getUserById(id) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/users/${id}`
+    `${config.baseURL}${config.port}/users/${id}`
   );
 
   return response;
@@ -93,7 +90,7 @@ export async function getUserById(id) {
 
 export async function getUserByDocument(tipodocumento, numerodocumento) {
   const response = await axios.get(
-    `${config.baseURL}:${config.port}/users/${tipodocumento}/${numerodocumento}`
+    `${config.baseURL}${config.port}/users/${tipodocumento}/${numerodocumento}`
   );
 
   return response;

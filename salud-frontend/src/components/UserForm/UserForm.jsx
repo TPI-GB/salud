@@ -67,7 +67,7 @@ export default function UserForm(props) {
     resolver: yupResolver(!id ? schema : schema2),
   });
   const onSubmit = async (data) => {
-    if (!id && (await verificarContrasenias(data))) {
+    if (!id && verificarContrasenias()) {
       createUser(data)
         .then(() => {
           mostrarAlertaConfirmacion();
@@ -89,7 +89,7 @@ export default function UserForm(props) {
     message: "",
   });
 
-  async function verificarContrasenias(data) {
+  function verificarContrasenias() {
     var contra1 = document.getElementById("contraseniaid1").value;
     var contra2 = document.getElementById("confirmContrasenia").value;
     if (contra1 !== contra2) {
