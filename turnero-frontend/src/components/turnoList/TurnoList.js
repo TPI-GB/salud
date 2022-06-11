@@ -47,14 +47,20 @@ export default function TurnoList() {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [open, setOpen] = useState(false);
-  const [pacienteEdit, setPacienteEdit] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
   const [pacienteApellido, setPacienteApellido] = useState("");
   const [pacienteObraSocial, setPacienteObraSocial] = useState("");
   const [pacienteDni, setPacienteDni] = useState("");
   const [pacienteTelefono, setPacienteTelefono] = useState("");
-  const [turnoAsiganar, setTurnoAsignar] = useState("");
+  const [turnoAsignar, setTurnoAsignar] = useState("");
 
+  const [turnoEdit, setTurnoEdit] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [pacienteEditNombre, setPacienteEditNombre] = useState("");
+  const [pacienteEditApellido, setPacienteEditApellido] = useState("");
+  const [pacienteEditObraSocial, setPacienteEditObraSocial] = useState("");
+  const [pacienteEditDni, setPacienteEditDni] = useState("");
+  const [pacienteEditTelefono, setPacienteEditTelefono] = useState("");
 
   const { handleSubmit } = useForm();
 
@@ -65,10 +71,16 @@ export default function TurnoList() {
     const turnos = await GetTurnosFilter(data);
     setAllTurnos(
       turnos.sort(function (a, b) {
-        if (a.name > b.name) {
+        if (a.horaInicio > b.horaInicio) {
           return 1;
-        } else {
+        } else if (b.horaInicio > a.horaInicio) {
           return -1;
+        } else {
+          if (a.minutoInicio > b.minutoInicio) {
+            return 1;
+          } else {
+            return -1;
+          }
         }
       })
     );
@@ -76,18 +88,42 @@ export default function TurnoList() {
     setTotal(turnos.length);
   };
 
-  const changePacienteEdit = async (turno) => {
-    let data = {};
-    data.id = turno._id;
-    data.paciente = pacienteEdit;
-    await EditarTurnoRequest(data);
-    changeClose();
-    onSubmit();
+  const changeOpen = (turno) => {
+    setTurnoAsignar(turno)
+    setOpen(true);
+  }
+
+    const changeClose = () => {
+      setOpen(false);
+      setPacienteNombre("");
+      setPacienteApellido("");
+      setPacienteDni("");
+      setPacienteObraSocial("");
+      setPacienteTelefono("");
+    };
+
+  const changeOpenEdit = (turno) => {
+    setTurnoEdit(turno);
+    setPacienteEditNombre(turno.paciente.nombre);
+    setPacienteEditApellido(turno.paciente.apellido);
+    setPacienteEditDni(turno.paciente.dni);
+    setPacienteEditObraSocial(turno.paciente.obraSocial);
+    setPacienteEditTelefono(turno.paciente.telefono);
+    setOpenEdit(true);
+  };
+
+  const changeCloseEdit = () => {
+    setOpenEdit(false);
+    setPacienteEditNombre("");
+    setPacienteEditApellido("");
+    setPacienteEditDni("");
+    setPacienteEditObraSocial("");
+    setPacienteEditTelefono("");
   };
 
   const changePaciente = async (turno) => {
     let data = {};
-    data.id = turnoAsiganar._id;
+    data.id = turnoAsignar._id;
     data.pacienteNombre = pacienteNombre;
     data.pacienteApellido = pacienteApellido;
     data.pacienteObraSocial = pacienteObraSocial;
@@ -101,6 +137,26 @@ export default function TurnoList() {
     
   };
 
+  const changePacienteEdit = async () => {
+    let data = {};
+    let paciente = {};
+    paciente.nombre = pacienteEditNombre;
+    paciente.apellido = pacienteEditApellido;
+    paciente.dni = pacienteEditDni;
+    paciente.obraSocial = pacienteEditObraSocial;
+    paciente.telefono = pacienteEditTelefono;
+    data.id = turnoEdit._id;
+    data.paciente = paciente;
+    await EditarTurnoRequest(data);
+    changeCloseEdit();
+    setPacienteEditNombre("");
+    setPacienteEditApellido("");
+    setPacienteEditDni("");
+    setPacienteEditObraSocial("");
+    setPacienteEditTelefono("");
+    onSubmit();
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -111,17 +167,20 @@ export default function TurnoList() {
     setMedicos([...new Set(medicos)]);
   };
 
-  const changeOpen = (turno) => {
-    setTurnoAsignar(turno)
-    setOpen(true);
+  const handleChangePacienteEditNombre = (e) => {
+    setPacienteEditNombre(e.target.value);
   };
-
-  const changeClose = () => {
-    setOpen(false);
+  const handleChangePacienteEditApellido = (e) => {
+    setPacienteEditApellido(e.target.value);
   };
-
-  const handleChangePacienteEdit = (e) => {
-    setPacienteEdit(e.target.value);
+  const handleChangePacienteEditDni = (e) => {
+    setPacienteEditDni(e.target.value);
+  };
+  const handleChangePacienteEditObraSocial = (e) => {
+    setPacienteEditObraSocial(e.target.value);
+  };
+  const handleChangePacienteEditTelefono = (e) => {
+    setPacienteEditTelefono(e.target.value);
   };
 
   const handleChangePacienteNombre = (e) => {
@@ -305,11 +364,19 @@ export default function TurnoList() {
                     <h4>
                       {EditarTurnoBoton(
                         turno,
-                        changeOpen,
-                        changeClose,
-                        handleChangePacienteEdit,
-                        open,
-                        pacienteEdit,
+                        changeOpenEdit,
+                        changeCloseEdit,
+                        openEdit,
+                        handleChangePacienteEditNombre,
+                        handleChangePacienteEditApellido,
+                        handleChangePacienteEditDni,
+                        handleChangePacienteEditObraSocial,
+                        handleChangePacienteEditTelefono,
+                        pacienteEditNombre,
+                        pacienteEditApellido,
+                        pacienteEditDni,
+                        pacienteEditObraSocial,
+                        pacienteEditTelefono,
                         changePacienteEdit
                       )}
                     </h4>
@@ -436,11 +503,19 @@ function LiberarTurnoBoton(turno, actualizar) {
 
 function EditarTurnoBoton(
   turno,
-  changeOpen,
-  changeClose,
-  handleChangePacienteEdit,
-  open,
-  pacienteEdit,
+  changeOpenEdit,
+  changeCloseEdit,
+  openEdit,
+  handleChangePacienteEditNombre,
+  handleChangePacienteEditApellido,
+  handleChangePacienteEditDni,
+  handleChangePacienteEditObraSocial,
+  handleChangePacienteEditTelefono,
+  pacienteEditNombre,
+  pacienteEditApellido,
+  pacienteEditDni,
+  pacienteEditObraSocial,
+  pacienteEditTelefono,
   changePacienteEdit
 ) {
   const stylebox = {
@@ -466,7 +541,7 @@ function EditarTurnoBoton(
           disabled
           style={{ background: "blue" }}
         >
-          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+          <div style={{ marginRight: 8 }} onClick={() => changeOpenEdit(turno)}>
             Editar
           </div>
           <EditTwoToneIcon />
@@ -475,7 +550,7 @@ function EditarTurnoBoton(
     } else {
       return (
         <Button size="small" variant="contained" style={{ background: "blue" }}>
-          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+          <div style={{ marginRight: 8 }} onClick={() => changeOpenEdit(turno)}>
             Editar
           </div>
           <EditTwoToneIcon />
@@ -487,7 +562,7 @@ function EditarTurnoBoton(
     <div>
       {getButton()}
       <Modal
-        open={open}
+        open={openEdit}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -496,17 +571,62 @@ function EditarTurnoBoton(
             <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
               <CardContent>
                 <h1>Editar Turno</h1>
-                <Stack direction="row" ml={2}>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
                   <TextField
                     style={{ background: "white" }}
-                    onChange={handleChangePacienteEdit}
-                    value={pacienteEdit}
+                    onChange={handleChangePacienteEditNombre}
+                    value={pacienteEditNombre}
+                    label={"Nuevo nombre de paciente"}
                     InputLabelProps={{
                       shrink: true,
                     }}
                   />
                 </Stack>
-                <Stack direction="row" ml={2} mt={2}>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditApellido}
+                    value={pacienteEditApellido}
+                    label={"Nuevo apellido de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditDni}
+                    value={pacienteEditDni}
+                    label={"Nuevo DNI de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditObraSocial}
+                    value={pacienteEditObraSocial}
+                    label={"Nueva obra social de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <TextField
+                    style={{ background: "white" }}
+                    onChange={handleChangePacienteEditTelefono}
+                    value={pacienteEditTelefono}
+                    label={"Nuevo telefono de paciente"}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
                   <Button
                     onClick={() => changePacienteEdit(turno)}
                     variant="contained"
@@ -515,18 +635,23 @@ function EditarTurnoBoton(
                     <CheckCircleTwoToneIcon /> Guardar Cambi
                   </Button>
                 </Stack>
+                <Stack direction={"row"} justifyContent="center" mt={2}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    style={{ background: "blue" }}
+                  >
+                    <div
+                      style={{ marginRight: 8 }}
+                      onClick={() => changeCloseEdit()}
+                    >
+                      Cerrar
+                    </div>
+                  </Button>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>
-          <Button
-            size="small"
-            variant="contained"
-            style={{ background: "blue" }}
-          >
-            <div style={{ marginRight: 8 }} onClick={() => changeClose()}>
-              Cerrar
-            </div>
-          </Button>
         </Box>
       </Modal>
     </div>
