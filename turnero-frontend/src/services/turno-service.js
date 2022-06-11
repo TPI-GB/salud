@@ -5,7 +5,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 export async function AsignarTurno(data) {
   try {
     const response = await axios({
-      url: `${baseUrl}/asignar`,
+      url: `${baseUrl}/turns/asignar`,
       method: "PUT",
       data: data,
     });
@@ -24,7 +24,7 @@ export async function AsignarTurno(data) {
     console.error(err);
     Swal.fire({
       title: "Error!",
-      text: "Error al editar el lugar, asegurese de no haber ingresado una dirección ya registrada u otro dato incorrecto",
+      text: "Error al asignar",
       icon: "error",
       confirmButtonText: "Ok",
     });

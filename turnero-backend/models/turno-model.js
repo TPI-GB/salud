@@ -9,7 +9,7 @@ const TurnoSchema = Schema(
     horaInicio: { type: Number, require: true },
     minutoInicio: { type: Number, require: true },
     medico: { type: String },
-    paciente: { type: String, default: "" },
+    paciente: { type: Object, default: {nombre: "", apellido: "", obraSocial: "", dni: "", telefono: ""} }, //nombre, apellido, obraSocial, dni, nroTelefono
     disponible: { type: Boolean, default: true },
     anulado: { type: Boolean, default: false },
     esSobreTurno: { type: Boolean, default: true },

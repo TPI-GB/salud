@@ -131,7 +131,7 @@ class TurnoController {
     const data = req.body;
 
     const turnoPromise = this.turnoService.asignarTurno(data);
-
+    
     turnoPromise
       .then((turno) => {
         res.status(200).json(turno);
