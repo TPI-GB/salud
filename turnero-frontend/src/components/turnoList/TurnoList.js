@@ -144,8 +144,6 @@ export default function TurnoList() {
             direction="row"
             ml={10}
             mr={10}
-            mb={0.1}
-            mt={0.1}
             justifyContent="right"
             alignItems="flex"
           >
@@ -155,8 +153,6 @@ export default function TurnoList() {
             direction="row"
             ml={10}
             mr={10}
-            mb={0.1}
-            mt={0.1}
             justifyContent="right"
             alignItems="flex"
           >
@@ -202,13 +198,14 @@ export default function TurnoList() {
                 variant="contained"
                 type="submit"
                 style={{ background: "#39A2DB" }}
-                sx={{ mt: 1, ml: 2, mr: 2 }}
+                sx={{ mt: 1, ml: 2, mr: 2, mb: 4 }}
               >
                 <SearchIcon />
               </Button>
             </div>
           </form>
           <List
+            size="small"
             style={{ background: "#485d887d" }}
             dataSource={["this data is to show a single column"]}
             bordered="true"
@@ -226,6 +223,7 @@ export default function TurnoList() {
             )}
           />
           <List
+            size="small"
             style={{ background: "#747f8a99" }}
             dataSource={turnos}
             bordered="true"
@@ -317,7 +315,6 @@ function AnularTurnoBoton(turno, actualizar) {
         onClick={() => AnularTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Anular</div>
-        <DoDisturbAltTwoToneIcon />
       </Button>
     );
   } else {
@@ -355,7 +352,6 @@ function LiberarTurnoBoton(turno, actualizar) {
         onClick={() => LiberarTurno(turno, actualizar)}
       >
         <div style={{ marginRight: 8 }}>Liberar</div>
-        <PanToolOutlinedIcon />
       </Button>
     );
   } else {
@@ -409,7 +405,6 @@ function EditarTurnoBoton(
           <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
             Editar
           </div>
-          <EditTwoToneIcon />
         </Button>
       );
     } else {
@@ -489,7 +484,6 @@ function AsignarTurnoBoton(turno) {
         onClick={() => AsignarTurno()}
       >
         <div style={{ marginRight: 8 }}>Asignar</div>
-        <AssignmentTurnedInIcon />
       </Button>
     );
   } else {
