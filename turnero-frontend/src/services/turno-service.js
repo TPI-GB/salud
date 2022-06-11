@@ -5,7 +5,7 @@ const baseUrl = process.env.REACT_APP_BASE_URL;
 export async function AsignarTurno(data) {
   try {
     const response = await axios({
-      url: `${baseUrl}/asignar`,
+      url: `${baseUrl}/turns/asignar`,
       method: "PUT",
       data: data,
     });
@@ -14,17 +14,13 @@ export async function AsignarTurno(data) {
       text: "El turno se asigno correctamente",
       icon: "success",
       confirmButtonText: "Regresar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location = "/";
-      }
     });
     return response;
   } catch (err) {
     console.error(err);
     Swal.fire({
       title: "Error!",
-      text: "Error al editar el lugar, asegurese de no haber ingresado una dirección ya registrada u otro dato incorrecto",
+      text: "Error al asignar",
       icon: "error",
       confirmButtonText: "Ok",
     });
@@ -49,25 +45,9 @@ export async function GetTurnoById(id) {
       url: `${baseUrl}/${id}`,
       method: "GET",
     });
-    Swal.fire({
-      title: "Listo!",
-      text: "El turno ha sido editado correctamente",
-      icon: "success",
-      confirmButtonText: "Regresar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location = "/";
-      }
-    });
     return response;
   } catch (err) {
     console.error(err);
-    Swal.fire({
-      title: "Error!",
-      text: "Error al editar el turno, asegurese de no haber ingresado datos incorrectos",
-      icon: "error",
-      confirmButtonText: "Ok",
-    });
   }
 }
 
@@ -78,9 +58,21 @@ export async function EditarTurnoRequest(data) {
       method: "PUT",
       data: data,
     });
+    Swal.fire({
+      title: "Hecho!",
+      text: "El turno se edito correctamente",
+      icon: "success",
+      confirmButtonText: "Regresar",
+    });
     return response;
   } catch (err) {
     console.error(err);
+    Swal.fire({
+      title: "Error!",
+      text: "Error al editar",
+      icon: "error",
+      confirmButtonText: "Ok",
+    });
   }
 }
 

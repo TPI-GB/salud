@@ -66,11 +66,11 @@ class TurnoRepository {
   }
 
   async asignarTurno(data) {
-    const { paciente } = data;
+    const {id, pacienteNombre, pacienteApellido, pacienteObraSocial, pacienteDni, pacienteTelefono } = data;
     try {
       let newData = {};
 
-      newData.paciente = paciente;
+      newData.paciente = {nombre: pacienteNombre, apellido: pacienteApellido, obraSocial: pacienteObraSocial, dni: pacienteDni, telefono: pacienteTelefono};
       newData.disponible = false;
 
       await Turno.findByIdAndUpdate({ _id: id }, newData);

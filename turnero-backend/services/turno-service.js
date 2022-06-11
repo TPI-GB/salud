@@ -26,7 +26,7 @@ class TurnoService {
   }
 
   async asignarTurno(data) {
-    return this.turnoRepository.editarTurno(data);
+    return this.turnoRepository.asignarTurno(data);
   }
 
   async borrarTurno(data) {
