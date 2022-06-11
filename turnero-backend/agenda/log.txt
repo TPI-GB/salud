@@ -1,12 +1,12 @@
 ﻿**********************
 Inicio de la transcripción de Windows PowerShell
-Hora de inicio: 20220608190255
+Hora de inicio: 20220611093319
 Nombre de usuario: DESKTOP-6RFD0IG\Franco
 Usuario RunAs: DESKTOP-6RFD0IG\Franco
 Nombre de la configuración: 
 Máquina: DESKTOP-6RFD0IG (Microsoft Windows NT 10.0.19043.0)
 Aplicación host: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
-Id. de proceso: 22216
+Id. de proceso: 19900
 PSVersion: 5.1.19041.1682
 PSEdition: Desktop
 PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.1682
@@ -18,160 +18,176 @@ SerializationVersion: 1.1.0.1
 **********************
 La transcripción ha comenzado. El archivo de salida es .\log.txt
 Mongoose connect
-Turnos para el dia: Sun Aug 07 2022 19:03:18 GMT-0300 (hora estándar de Argentina)
+Turnos para el dia: Wed Aug 10 2022 09:33:31 GMT-0300 (hora estándar de Argentina)
 ---Turnos generados este dia---
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
+  lugar: 'consultorioDeCarlitos',
+  horaInicio: 9,
+  minutoInicio: 0,
+  medico: 'Carlitos',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
+  disponible: true,
+  anulado: false,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9bcc42057449314004"),
+  creacion: 2022-06-11T12:33:31.833Z,
+  ultimaModificacion: 2022-06-11T12:33:31.833Z,
+  __v: 0
+}
+---Turnos generados este dia---
+{
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 7,
   minutoInicio: 30,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26475"),
-  creacion: 2022-06-08T22:03:19.038Z,
-  ultimaModificacion: 2022-06-08T22:03:19.038Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314008"),
+  creacion: 2022-06-11T12:33:32.367Z,
+  ultimaModificacion: 2022-06-11T12:33:32.367Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 8,
   minutoInicio: 15,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26478"),
-  creacion: 2022-06-08T22:03:19.057Z,
-  ultimaModificacion: 2022-06-08T22:03:19.057Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc4205744931400b"),
+  creacion: 2022-06-11T12:33:32.376Z,
+  ultimaModificacion: 2022-06-11T12:33:32.376Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 9,
   minutoInicio: 0,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd2647b"),
-  creacion: 2022-06-08T22:03:19.065Z,
-  ultimaModificacion: 2022-06-08T22:03:19.065Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc4205744931400e"),
+  creacion: 2022-06-11T12:33:32.384Z,
+  ultimaModificacion: 2022-06-11T12:33:32.384Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 9,
   minutoInicio: 45,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd2647e"),
-  creacion: 2022-06-08T22:03:19.074Z,
-  ultimaModificacion: 2022-06-08T22:03:19.074Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314011"),
+  creacion: 2022-06-11T12:33:32.394Z,
+  ultimaModificacion: 2022-06-11T12:33:32.394Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 10,
   minutoInicio: 30,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26481"),
-  creacion: 2022-06-08T22:03:19.086Z,
-  ultimaModificacion: 2022-06-08T22:03:19.086Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314014"),
+  creacion: 2022-06-11T12:33:32.404Z,
+  ultimaModificacion: 2022-06-11T12:33:32.404Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 11,
   minutoInicio: 15,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26484"),
-  creacion: 2022-06-08T22:03:19.126Z,
-  ultimaModificacion: 2022-06-08T22:03:19.126Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314017"),
+  creacion: 2022-06-11T12:33:32.412Z,
+  ultimaModificacion: 2022-06-11T12:33:32.412Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 12,
   minutoInicio: 0,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26487"),
-  creacion: 2022-06-08T22:03:19.139Z,
-  ultimaModificacion: 2022-06-08T22:03:19.139Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc4205744931401a"),
+  creacion: 2022-06-11T12:33:32.422Z,
+  ultimaModificacion: 2022-06-11T12:33:32.422Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 12,
   minutoInicio: 45,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd2648a"),
-  creacion: 2022-06-08T22:03:19.150Z,
-  ultimaModificacion: 2022-06-08T22:03:19.150Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc4205744931401d"),
+  creacion: 2022-06-11T12:33:32.430Z,
+  ultimaModificacion: 2022-06-11T12:33:32.430Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 13,
   minutoInicio: 30,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd2648d"),
-  creacion: 2022-06-08T22:03:19.159Z,
-  ultimaModificacion: 2022-06-08T22:03:19.159Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314020"),
+  creacion: 2022-06-11T12:33:32.439Z,
+  ultimaModificacion: 2022-06-11T12:33:32.439Z,
   __v: 0
 }
 {
-  fecha: 2022-08-07T22:03:18.006Z,
+  fecha: 2022-08-10T12:33:31.456Z,
   lugar: 'Un Lugar',
   horaInicio: 14,
   minutoInicio: 15,
   medico: 'Pepe',
-  paciente: '',
+  paciente: { nombre: '', apellido: '', dni: '', obraSocial: '', telefono: '' },
   disponible: true,
   anulado: false,
-  esSobreTurno: true,
-  _id: new ObjectId("62a11ca725ac80e8cfd26490"),
-  creacion: 2022-06-08T22:03:19.167Z,
-  ultimaModificacion: 2022-06-08T22:03:19.167Z,
+  esSobreTurno: false,
+  _id: new ObjectId("62a48b9ccc42057449314023"),
+  creacion: 2022-06-11T12:33:32.447Z,
+  ultimaModificacion: 2022-06-11T12:33:32.447Z,
   __v: 0
 }
 END
 **********************
 Fin de la transcripción de Windows PowerShell
-Hora de finalización: 20220608190319
+Hora de finalización: 20220611093332
 **********************

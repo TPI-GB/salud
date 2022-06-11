@@ -45,7 +45,8 @@ export default function TurnoList() {
   const [medicos, setMedicos] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
-  const [open, setOpen] = useState(false);
+  const [turnoEdit, setTurnoEdit] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
   const [pacienteEditNombre, setPacienteEditNombre] = useState("");
   const [pacienteEditApellido, setPacienteEditApellido] = useState("");
   const [pacienteEditObraSocial, setPacienteEditObraSocial] = useState("");
@@ -61,10 +62,16 @@ export default function TurnoList() {
     const turnos = await GetTurnosFilter(data);
     setAllTurnos(
       turnos.sort(function (a, b) {
-        if (a.name > b.name) {
+        if (a.horaInicio > b.horaInicio) {
           return 1;
-        } else {
+        } else if (b.horaInicio > a.horaInicio) {
           return -1;
+        } else {
+          if (a.minutoInicio > b.minutoInicio) {
+            return 1;
+          } else {
+            return -1;
+          }
         }
       })
     );
@@ -72,7 +79,7 @@ export default function TurnoList() {
     setTotal(turnos.length);
   };
 
-  const changePacienteEdit = async (turno) => {
+  const changePacienteEdit = async () => {
     let data = {};
     let paciente = {};
     paciente.nombre = pacienteEditNombre;
@@ -80,10 +87,10 @@ export default function TurnoList() {
     paciente.dni = pacienteEditDni;
     paciente.obraSocial = pacienteEditObraSocial;
     paciente.telefono = pacienteEditTelefono;
-    data.id = turno._id;
+    data.id = turnoEdit._id;
     data.paciente = paciente;
     await EditarTurnoRequest(data);
-    changeClose();
+    changeCloseEdit();
     setPacienteEditNombre("");
     setPacienteEditApellido("");
     setPacienteEditDni("");
@@ -102,12 +109,18 @@ export default function TurnoList() {
     setMedicos([...new Set(medicos)]);
   };
 
-  const changeOpen = () => {
-    setOpen(true);
+  const changeOpenEdit = (turno) => {
+    setTurnoEdit(turno);
+    setPacienteEditNombre(turno.paciente.nombre);
+    setPacienteEditApellido(turno.paciente.apellido);
+    setPacienteEditDni(turno.paciente.dni);
+    setPacienteEditObraSocial(turno.paciente.obraSocial);
+    setPacienteEditTelefono(turno.paciente.telefono);
+    setOpenEdit(true);
   };
 
-  const changeClose = () => {
-    setOpen(false);
+  const changeCloseEdit = () => {
+    setOpenEdit(false);
     setPacienteEditNombre("");
     setPacienteEditApellido("");
     setPacienteEditDni("");
@@ -292,9 +305,9 @@ export default function TurnoList() {
                     <h4>
                       {EditarTurnoBoton(
                         turno,
-                        changeOpen,
-                        changeClose,
-                        open,
+                        changeOpenEdit,
+                        changeCloseEdit,
+                        openEdit,
                         handleChangePacienteEditNombre,
                         handleChangePacienteEditApellido,
                         handleChangePacienteEditDni,
@@ -416,9 +429,9 @@ function LiberarTurnoBoton(turno, actualizar) {
 
 function EditarTurnoBoton(
   turno,
-  changeOpen,
-  changeClose,
-  open,
+  changeOpenEdit,
+  changeCloseEdit,
+  openEdit,
   handleChangePacienteEditNombre,
   handleChangePacienteEditApellido,
   handleChangePacienteEditDni,
@@ -454,7 +467,7 @@ function EditarTurnoBoton(
           disabled
           style={{ background: "blue" }}
         >
-          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+          <div style={{ marginRight: 8 }} onClick={() => changeOpenEdit(turno)}>
             Editar
           </div>
           <EditTwoToneIcon />
@@ -463,7 +476,7 @@ function EditarTurnoBoton(
     } else {
       return (
         <Button size="small" variant="contained" style={{ background: "blue" }}>
-          <div style={{ marginRight: 8 }} onClick={() => changeOpen()}>
+          <div style={{ marginRight: 8 }} onClick={() => changeOpenEdit(turno)}>
             Editar
           </div>
           <EditTwoToneIcon />
@@ -475,7 +488,7 @@ function EditarTurnoBoton(
     <div>
       {getButton()}
       <Modal
-        open={open}
+        open={openEdit}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -484,17 +497,6 @@ function EditarTurnoBoton(
             <Card style={{ background: "#E8F0F2" }} sx={{ minWidth: 400 }}>
               <CardContent>
                 <h1>Editar Turno</h1>
-                <Stack direction={"row"} justifyContent="center" mt={2}>
-                  <TextField
-                    style={{ background: "white" }}
-                    onChange={handleChangePacienteEditNombre}
-                    value={pacienteEditNombre}
-                    label={"Nuevo nombre de paciente"}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                  />
-                </Stack>
                 <Stack direction={"row"} justifyContent="center" mt={2}>
                   <TextField
                     style={{ background: "white" }}
@@ -544,7 +546,7 @@ function EditarTurnoBoton(
                     style={{ background: "white" }}
                     onChange={handleChangePacienteEditTelefono}
                     value={pacienteEditTelefono}
-                    label={"Nueva obra social de paciente"}
+                    label={"Nuevo telefono de paciente"}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -567,7 +569,7 @@ function EditarTurnoBoton(
                   >
                     <div
                       style={{ marginRight: 8 }}
-                      onClick={() => changeClose()}
+                      onClick={() => changeCloseEdit()}
                     >
                       Cerrar
                     </div>
