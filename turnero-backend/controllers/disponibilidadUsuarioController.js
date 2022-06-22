@@ -19,9 +19,6 @@ class DisponibilidadUsuarioController {
 
   createDisponibilidadUsuario(req, res) {
     const data = req.body;
-    if (!data.user && !data.disponibilidades) {
-      return res.status(400).send("All fields are required");
-    }
     const disponibilidadUsuarioPromise =
       this.disponibilidadUsuarioService.createDisponibilidadUsuario(data);
     disponibilidadUsuarioPromise

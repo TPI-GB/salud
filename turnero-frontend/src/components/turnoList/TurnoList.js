@@ -259,6 +259,22 @@ export default function TurnoList() {
           >
             <h3>Fecha: {dateRender}</h3>
           </Stack>
+          <Stack
+            direction="row"
+            ml={10}
+            mr={10}
+            justifyContent="right"
+            alignItems="flex"
+          >
+            <Button
+              variant="contained"
+              style={{ background: "#053742" }}
+              href="/crearDisponibilidad"
+              target="_blank"
+            >
+              Crear Disponibilidad
+            </Button>
+          </Stack>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="estilosDeSelect">
               <FormControl sx={{ ml: 2, mr: 2, width: 250 }}>
@@ -803,38 +819,4 @@ function AsignarTurnoBoton(
       </Modal>
     </div>
   );
-}
-
-function AsignarTurno() {
-  return;
-}
-
-function AsignarTurnoBoton(turno) {
-  let button;
-  if (!turno.disponible || turno.anulado) {
-    button = (
-      <Button
-        size="small"
-        disabled
-        variant="contained"
-        style={{ background: "green" }}
-        onClick={() => AsignarTurno()}
-      >
-        <div style={{ marginRight: 8 }}>Asignar</div>
-      </Button>
-    );
-  } else {
-    button = (
-      <Button
-        size="small"
-        variant="contained"
-        style={{ background: "green" }}
-        onClick={() => AsignarTurno()}
-      >
-        <div style={{ marginRight: 8 }}>Asignar</div>
-        <AssignmentTurnedInIcon />
-      </Button>
-    );
-  }
-  return button;
 }

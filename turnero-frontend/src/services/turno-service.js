@@ -117,3 +117,29 @@ export async function LiberarTurnoRequest(data) {
   }
   return [];
 }
+
+export async function CrearDisponibilidadRequest(data) {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/disponibilidadUsuario`,
+      method: "POST",
+      data: data,
+    });
+    Swal.fire({
+      title: "Hecho!",
+      text: "La disponibilidad fue cargada",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+    return response.data;
+  } catch (err) {
+    Swal.fire({
+      title: "Error!",
+      text: "La disponibilidad no pudo ser cargada",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    console.error(err);
+  }
+  return [];
+}
