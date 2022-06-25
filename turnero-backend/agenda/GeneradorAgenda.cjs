@@ -138,4 +138,4 @@ async function esFeriadoElDia(day) {
   return feriado != null;
 }
 
-TryGeneradorAgenda(new Date(), 60).catch(console.dir);
+TryGeneradorAgenda(new Date(), 30).catch(console.dir);

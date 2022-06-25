@@ -29,12 +29,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
-  GetTurnos,
   GetTurnosFilter,
   AnularTurnoRequest,
   LiberarTurnoRequest,
   EditarTurnoRequest,
   AsignarTurno,
+  GetAllDisponibilidades,
 } from "../../services/turno-service";
 
 export default function TurnoList() {
@@ -159,8 +159,8 @@ export default function TurnoList() {
   }, []);
 
   const getData = async () => {
-    const response = await GetTurnos();
-    const medicos = Array.from(new Set(response)).map((t) => t.medico);
+    const response = await GetAllDisponibilidades();
+    const medicos = Array.from(new Set(response)).map((t) => t.user);
     setMedicos([...new Set(medicos)]);
   };
 

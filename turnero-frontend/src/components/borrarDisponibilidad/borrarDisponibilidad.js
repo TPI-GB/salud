@@ -34,7 +34,7 @@ export default function BorrarDisponibilidad() {
 
   const getData = async () => {
     const response = await GetAllDisponibilidades();
-    const users = Array.from(new Set(response)).map((t) => t.medico);
+    const users = Array.from(new Set(response)).map((r) => r.user);
     setUsers([...new Set(users)]);
   };
 

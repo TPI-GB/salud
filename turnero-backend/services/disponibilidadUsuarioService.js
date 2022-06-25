@@ -16,7 +16,7 @@ class DisponibilidadUsuarioService {
 
   async getDisponibilidadUsuario() {
     const disponibilidadUsuario =
-      await this.disponibilidadMedicaRepository.getDisponibilidadUsuario();
+      await this.disponibilidadUsuarioRepository.getDisponibilidadUsuario();
     return disponibilidadUsuario;
   }
 
