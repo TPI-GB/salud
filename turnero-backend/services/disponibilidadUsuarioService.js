@@ -1,29 +1,46 @@
 const DisponibilidadUsuarioRepository = require("../repositories/disponibilidadUsuarioRepository");
 
 class DisponibilidadUsuarioService {
-    constructor() {
-        this.disponibilidadUsuarioRepository = new DisponibilidadUsuarioRepository();
-      }
+  constructor() {
+    this.disponibilidadUsuarioRepository =
+      new DisponibilidadUsuarioRepository();
+  }
 
-    async createDisponibilidadUsuario(data){
-    const disponibilidadUsuario = await this.disponibilidadUsuarioRepository.createDisponibilidadUsuario(data);
+  async createDisponibilidadUsuario(data) {
+    const disponibilidadUsuario =
+      await this.disponibilidadUsuarioRepository.createDisponibilidadUsuario(
+        data
+      );
     return disponibilidadUsuario;
-    }
+  }
 
-    async editDisponibilidadUsuario(data) {
-        const newDisponibilidadUsuario = await this.disponibilidadUsuarioRepository.editDisponibilidadUsuario(data);
-        return newDisponibilidadUsuario;
-      }
+  async getDisponibilidadUsuario() {
+    const disponibilidadUsuario =
+      await this.disponibilidadMedicaRepository.getDisponibilidadUsuario();
+    return disponibilidadUsuario;
+  }
 
-    async getDisponibilidadUsuario() {
-        const disponibilidadUsuario = await this.disponibilidadMedicaRepository.getDisponibilidadUsuario();
-        return disponibilidadUsuario;
-      }
+  async deleteDisponibilidadUsuario(data) {
+    const disponibilidadUsuario =
+      await this.disponibilidadUsuarioRepository.deleteDisponibilidadUsuario(
+        data
+      );
+    return disponibilidadUsuario;
+  }
 
-      async deleteDisponibilidadUsuario(id) {
-        const disponibilidadUsuario = await this.disponibilidadUsuarioRepository.deleteDisponibilidadUsuario(id);
-        return disponibilidadUsuario;
-      }
+  async deleteDisponibilidadDeUsuario(data) {
+    const disponibilidadUsuario =
+      await this.disponibilidadUsuarioRepository.deleteDisponibilidadDeUsuario(
+        data
+      );
+    return disponibilidadUsuario;
+  }
+
+  async getByUser(data) {
+    const disponibilidadUsuario =
+      await this.disponibilidadUsuarioRepository.getByUser(data);
+    return disponibilidadUsuario;
+  }
 }
 
 module.exports = DisponibilidadUsuarioService;

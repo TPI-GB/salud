@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
 import CrearDisponibilidad from "./components/crearDisponibilidad";
+import BorrarDisponibilidad from "./components/borrarDisponibilidad";
 
 function App() {
   return (
@@ -14,6 +15,12 @@ function App() {
           <Route
             path="/crearDisponibilidad"
             element={<CrearDisponibilidad />}
+          />
+        </Routes>
+        <Routes>
+          <Route
+            path="/borrarDisponibilidad"
+            element={<BorrarDisponibilidad />}
           />
         </Routes>
       </Router>

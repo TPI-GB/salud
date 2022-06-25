@@ -275,6 +275,23 @@ export default function TurnoList() {
               Crear Disponibilidad
             </Button>
           </Stack>
+          <Stack
+            direction="row"
+            ml={10}
+            mr={10}
+            mt={2}
+            justifyContent="right"
+            alignItems="flex"
+          >
+            <Button
+              variant="contained"
+              style={{ background: "#f44336" }}
+              href="/borrarDisponibilidad"
+              target="_blank"
+            >
+              Borrar Disponibilidad
+            </Button>
+          </Stack>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="estilosDeSelect">
               <FormControl sx={{ ml: 2, mr: 2, width: 250 }}>

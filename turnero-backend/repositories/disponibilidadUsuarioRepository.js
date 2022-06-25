@@ -72,8 +72,42 @@ class DisponibilidadUsuarioRepository {
     return await DisponibilidadUsuario.find().lean().exec();
   }
 
-  async deleteDisponibilidadUsuario(id) {
-    return await DisponibilidadUsuario.deleteOne({ _id: id });
+  async getByUser(data) {
+    const { user } = data;
+    return await DisponibilidadUsuario.findOne({ user: user }).exec();
+  }
+
+  async deleteDisponibilidadUsuario(data) {
+    const { user } = data;
+    const userDisponibilidad = await DisponibilidadUsuario.findOne({
+      user: user,
+    }).exec();
+    return await DisponibilidadUsuario.deleteOne({
+      _id: userDisponibilidad._id,
+    });
+  }
+
+  async deleteDisponibilidadDeUsuario(data) {
+    try {
+      const { user, disponibilidad } = data;
+      const userDisponibilidad = await DisponibilidadUsuario.findOne({
+        user: user,
+      }).exec();
+      const newData = {};
+      newData.disponibilidades = userDisponibilidad.disponibilidades.filter(
+        (d) => disponibilidad._id != d._id
+      );
+      await DisponibilidadUsuario.findByIdAndUpdate(
+        { _id: userDisponibilidad._id },
+        newData
+      );
+      const disponibilidadUsuarioStored = await DisponibilidadUsuario.findById(
+        userDisponibilidad._id
+      );
+      return disponibilidadUsuarioStored;
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 

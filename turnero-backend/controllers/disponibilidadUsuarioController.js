@@ -5,16 +5,17 @@ class DisponibilidadUsuarioController {
   constructor() {
     this.disponibilidadUsuarioService = new DisponibilidadUsuarioService();
     this.router = express.Router();
-    this.router.put("/:id", (req, res) =>
-      this.editDisponibilidadUsuario(req, res)
-    );
     this.router.get("/", (req, res) => this.getDisponibilidadUsuario(req, res));
     this.router.delete("/", (req, res) =>
       this.deleteDisponibilidadUsuario(req, res)
     );
+    this.router.delete("/disponibilidad", (req, res) =>
+      this.deleteDisponibilidadDeUsuario(req, res)
+    );
     this.router.post("/", (req, res) =>
       this.createDisponibilidadUsuario(req, res)
     );
+    this.router.put("/getByUser", (req, res) => this.getByUser(req, res));
   }
 
   createDisponibilidadUsuario(req, res) {
@@ -31,22 +32,6 @@ class DisponibilidadUsuarioController {
       });
   }
 
-  editDisponibilidadUsuario(req, res) {
-    const data = req.body;
-    const { id } = req.params;
-    data.id = id;
-    const disponibilidadUsuarioPromise =
-      this.disponibilidadUsuarioService.editDisponibilidadUsuario(data);
-    disponibilidadUsuarioPromise
-      .then((disponibilidadUsuario) => {
-        res.json(disponibilidadUsuario);
-      })
-      .catch((err) => {
-        res.status(400).json(err);
-        console.log(err);
-      });
-  }
-
   getDisponibilidadUsuario(req, res) {
     const disponibilidadUsuarioPromise =
       this.disponibilidadUsuarioService.getDisponibilidadUsuario();
@@ -60,12 +45,38 @@ class DisponibilidadUsuarioController {
       });
   }
 
+  getByUser(req, res) {
+    const data = req.body;
+    const disponibilidadUsuarioPromise =
+      this.disponibilidadUsuarioService.getByUser(data);
+    disponibilidadUsuarioPromise
+      .then((disponibilidadUsuario) => {
+        res.json(disponibilidadUsuario);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  }
+
   deleteDisponibilidadUsuario(req, res) {
     const data = req.body;
-    console.log(data);
-    const { id } = data;
     const disponibilidadUsuario =
-      this.disponibilidadUsuarioService.deleteDisponibilidadUsuario(id);
+      this.disponibilidadUsuarioService.deleteDisponibilidadUsuario(data);
+    disponibilidadUsuario
+      .then((disponibilidadUsuario) => {
+        res.json(disponibilidadUsuario);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+        console.log(err);
+      });
+  }
+
+  deleteDisponibilidadDeUsuario(req, res) {
+    const data = req.body;
+    const disponibilidadUsuario =
+      this.disponibilidadUsuarioService.deleteDisponibilidadDeUsuario(data);
     disponibilidadUsuario
       .then((disponibilidadUsuario) => {
         res.json(disponibilidadUsuario);

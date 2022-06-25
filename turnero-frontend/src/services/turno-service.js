@@ -51,6 +51,21 @@ export async function GetTurnoById(id) {
   }
 }
 
+export async function GetDisponibilidadByUser(user) {
+  const data = {};
+  data.user = user;
+  try {
+    const response = await axios({
+      url: `${baseUrl}/disponibilidadUsuario/getByUser`,
+      method: "PUT",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 export async function EditarTurnoRequest(data) {
   try {
     const response = await axios({
@@ -139,6 +154,35 @@ export async function CrearDisponibilidadRequest(data) {
       icon: "error",
       confirmButtonText: "OK",
     });
+    console.error(err);
+  }
+  return [];
+}
+
+export async function BorrarDisponibilidadRequest(data) {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/disponibilidadUsuario/disponibilidad`,
+      method: "DELETE",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+  return [];
+}
+
+export async function BorrarUserDisponibilidadRequest(data) {
+  console.log(data);
+  try {
+    const response = await axios({
+      url: `${baseUrl}/disponibilidadUsuario`,
+      method: "DELETE",
+      data: data,
+    });
+    return response.data;
+  } catch (err) {
     console.error(err);
   }
   return [];
