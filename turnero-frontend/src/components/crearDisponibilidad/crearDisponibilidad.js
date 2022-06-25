@@ -113,7 +113,7 @@ export default function CrearDisponibilidad() {
                     type="submit"
                     style={{ background: "#39A2DB" }}
                   >
-                    <CheckCircleTwoToneIcon /> Guardar Disponibilidades
+                    <CheckCircleTwoToneIcon /> Guardar Disponibilidad
                   </Button>
                 </Stack>
               </form>
