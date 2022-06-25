@@ -174,12 +174,24 @@ export async function BorrarDisponibilidadRequest(data) {
 }
 
 export async function BorrarUserDisponibilidadRequest(data) {
-  console.log(data);
   try {
     const response = await axios({
       url: `${baseUrl}/disponibilidadUsuario`,
       method: "DELETE",
       data: data,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+  return [];
+}
+
+export async function GetAllDisponibilidades() {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/disponibilidadUsuario`,
+      method: "GET",
     });
     return response.data;
   } catch (err) {

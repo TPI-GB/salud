@@ -6,10 +6,10 @@ import "antd/dist/antd.min.css";
 import { InputLabel, MenuItem, Select, Stack, Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import {
-  GetTurnos,
   GetDisponibilidadByUser,
   BorrarDisponibilidadRequest,
   BorrarUserDisponibilidadRequest,
+  GetAllDisponibilidades,
 } from "../../services/turno-service";
 import SearchIcon from "@mui/icons-material/Search";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,7 @@ export default function BorrarDisponibilidad() {
   }, []);
 
   const getData = async () => {
-    const response = await GetTurnos();
+    const response = await GetAllDisponibilidades();
     const users = Array.from(new Set(response)).map((t) => t.medico);
     setUsers([...new Set(users)]);
   };
